@@ -14,7 +14,8 @@
   --font-display: "Archivo", "Arial Narrow", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
-  --hero-col: clamp(220px, 30vw, 460px);
+  --hero-col: clamp(260px, 34vw, 520px);
+  --hero-grid-h: clamp(280px, 38vw, 640px);
   --watermark-h: clamp(72px, 8vw, 104px);
   --h1-vw: 6.25vw;
 
@@ -82,16 +83,10 @@ main, header, footer, section{position:relative; z-index:1;}
 .nav{
   position:fixed; top:0; left:0; right:0;
   z-index:50;
-  display:flex; align-items:center; justify-content:space-between;
+  display:flex; align-items:center; justify-content:flex-end;
   padding:20px var(--edge);
   max-width:var(--maxw);
   margin:0 auto; right:0;
-}
-.nav-mark{
-  font-family:var(--font-mono);
-  font-size:13px;
-  letter-spacing:.04em;
-  color:var(--ink);
 }
 .nav-toggle{
   appearance:none; border:none;
@@ -171,26 +166,36 @@ main, header, footer, section{position:relative; z-index:1;}
 
 .hero-grid{
   display:grid;
-  grid-template-columns:var(--hero-col) 1px 1fr;
-  column-gap:28px;
-  min-height:clamp(280px, 38vw, 640px);
+  grid-template-columns:var(--hero-col) 1fr;
+  column-gap:57px;
+  min-height:var(--hero-grid-h);
   margin-bottom:12px;
 }
 .hero-left{
   display:flex; flex-direction:column;
   padding-bottom:6px;
 }
-.hero-mark{width:clamp(64px, 8vw, 128px); color:var(--ink);}
+.hero-mark{
+  width:clamp(64px, 8vw, 128px);
+  color:var(--ink);
+  margin-left:auto;
+}
 .hero-mark svg{width:100%; height:auto; display:block;}
 .hero-role{
   margin:auto 0 0;
+  width:fit-content;
   font-family:var(--font-mono);
   font-weight:600;
   font-size:13px;
   line-height:1.35;
+  transform:translateX(calc(var(--hero-col) + 28px - 50%));
 }
 .hero-divider{
+  position:absolute;
+  left:calc(var(--hero-col) + 28px);
+  top:0;
   width:1px;
+  height:calc(120px + var(--hero-grid-h));
   background:var(--ink-12);
 }
 .hero-right{
@@ -219,14 +224,12 @@ main, header, footer, section{position:relative; z-index:1;}
   line-height:.88;
   letter-spacing:-.02em;
 }
-.hero-group.offset{margin-left:var(--hero-col);}
-
-.hero-statement{
-  max-width:46ch;
-  font-size:clamp(16px, 1.6vw, 20px);
-  line-height:1.45;
-  color:var(--ink-60);
+.hero-group:not(.offset){
+  display:inline-block;
+  transform:translateX(calc(var(--hero-col) + 28px - 50%));
 }
+.hero-group.offset{margin-left:calc(var(--hero-col) + 57px);}
+
 .hero-bigwords{margin-top:96px;}
 .hero-bigwords h2{
   font-size:clamp(40px, var(--h1-vw), 160px);

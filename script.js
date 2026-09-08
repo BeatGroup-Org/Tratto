@@ -64,8 +64,7 @@
       .to('.hero-meta-row .line', { y: '0%', duration: .7, stagger: .06 }, '-=.3')
       .to('.hero-name .line', { y: '0%', duration: .9, stagger: .07 }, '-=.45')
       .from('.hero-divider', { scaleY: 0, transformOrigin: 'top', duration: .8 }, '-=.9')
-      .to('.hero-group .line', { y: '0%', duration: .8, stagger: .05 }, '-=.5')
-      .to('.hero-statement .line', { y: '0%', duration: .7 }, '-=.3');
+      .to('.hero-group .line', { y: '0%', duration: .8, stagger: .05 }, '-=.3');
   }
   if (reduce) { document.body.classList.add('loaded'); }
 

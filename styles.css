@@ -434,6 +434,49 @@ main, header, footer, section{position:relative; z-index:1;}
 .mail-link [data-shadow]{position:absolute; inset:0; transform:translateY(100%);}
 .mail-link:hover [data-label]{transform:translateY(-100%);}
 .mail-link:hover [data-shadow]{transform:translateY(0);}
+
+.contact-form{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  max-width:320px;
+  margin-top:36px;
+}
+.contact-form input,
+.contact-form textarea{
+  font-family:var(--font-mono);
+  font-size:13px;
+  padding:10px 12px;
+  border:1px solid var(--ink-30);
+  border-radius:2px;
+  background:var(--paper);
+  color:var(--ink);
+  outline:none;
+  resize:vertical;
+}
+.contact-form input:focus,
+.contact-form textarea:focus{border-color:var(--ink);}
+.contact-form button{
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  padding:11px 12px;
+  border:1px solid var(--ink);
+  border-radius:2px;
+  background:var(--ink);
+  color:var(--paper);
+  cursor:pointer;
+  transition:opacity var(--dur-s) var(--ease-out);
+}
+.contact-form button:hover{opacity:.85;}
+.contact-form button:disabled{opacity:.5; cursor:default;}
+.contact-form-status{
+  font-family:var(--font-mono);
+  font-size:12px;
+  color:var(--ink-60);
+}
+.contact-form-status.is-error{color:#c0392b;}
 .footer-bottom{
   margin-top:64px;
   padding:18px 0 32px;

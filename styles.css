@@ -638,7 +638,7 @@ main, header, footer, section{position:relative; z-index:1;}
   width:9%;
   left:89.9%; top:73%;
   color:var(--ink);
-  transform:translate(-50%,-50%) rotate(240deg);
+  transform:translate(-50%,-50%) rotate(330deg);
 }
 .dial-hole{
   position:absolute;

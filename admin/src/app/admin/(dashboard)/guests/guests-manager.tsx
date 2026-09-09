@@ -14,6 +14,7 @@ type Guest = {
   photo_url: string | null;
   section: string | null;
   sort_order: number;
+  featured: boolean;
 };
 
 const emptyForm = {
@@ -25,6 +26,7 @@ const emptyForm = {
   bio: "",
   photo_url: "",
   section: "",
+  featured: true,
 };
 
 function slugify(name: string) {
@@ -81,6 +83,7 @@ export default function GuestsManager({ initialGuests }: { initialGuests: Guest[
       bio: guest.bio ?? "",
       photo_url: guest.photo_url ?? "",
       section: guest.section ?? "",
+      featured: guest.featured,
     });
     setError(null);
     setModalOpen(true);
@@ -107,6 +110,7 @@ export default function GuestsManager({ initialGuests }: { initialGuests: Guest[
       bio: form.bio.trim() || null,
       photo_url: form.photo_url.trim() || null,
       section: form.section.trim() || null,
+      featured: form.featured,
     };
 
     if (editingId) {
@@ -138,6 +142,20 @@ export default function GuestsManager({ initialGuests }: { initialGuests: Guest[
 
     setSaving(false);
     closeModal();
+  }
+
+  async function toggleFeatured(guest: Guest) {
+    const { data, error } = await supabase
+      .from("guests")
+      .update({ featured: !guest.featured })
+      .eq("id", guest.id)
+      .select()
+      .single();
+    if (error) {
+      setError(error.message);
+      return;
+    }
+    setGuests((prev) => prev.map((g) => (g.id === guest.id ? (data as Guest) : g)));
   }
 
   async function handleDelete(id: string) {
@@ -178,13 +196,14 @@ export default function GuestsManager({ initialGuests }: { initialGuests: Guest[
               <th className="px-4 py-3 font-semibold">Ruolo</th>
               <th className="px-4 py-3 font-semibold">Naz.</th>
               <th className="px-4 py-3 font-semibold">Sezione</th>
+              <th className="px-4 py-3 text-center font-semibold">In evidenza</th>
               <th className="px-4 py-3 text-right font-semibold">Azioni</th>
             </tr>
           </thead>
           <tbody>
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-sm text-neutral-500">
+                <td colSpan={7} className="px-4 py-8 text-center text-sm text-neutral-500">
                   {guests.length === 0 ? "Nessun ospite ancora." : "Nessun risultato."}
                 </td>
               </tr>
@@ -215,6 +234,19 @@ export default function GuestsManager({ initialGuests }: { initialGuests: Guest[
                 <td className="px-4 py-3 text-neutral-600">{guest.role || "—"}</td>
                 <td className="px-4 py-3 text-neutral-600">{guest.nationality || "—"}</td>
                 <td className="px-4 py-3 text-neutral-600">{guest.section || "—"}</td>
+                <td className="px-4 py-3 text-center">
+                  <button
+                    onClick={() => toggleFeatured(guest)}
+                    title={guest.featured ? "In evidenza sul sito" : "Nascosto dal sito"}
+                    className={`flex h-6 w-6 items-center justify-center rounded-full text-xs ${
+                      guest.featured
+                        ? "bg-neutral-900 text-white"
+                        : "border border-neutral-300 text-neutral-300"
+                    }`}
+                  >
+                    ★
+                  </button>
+                </td>
                 <td className="px-4 py-3">
                   <div className="flex justify-end gap-2">
                     <button
@@ -358,6 +390,18 @@ export default function GuestsManager({ initialGuests }: { initialGuests: Guest[
                   rows={4}
                   className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
                 />
+              </div>
+
+              <div className="col-span-full">
+                <label className="flex items-center gap-2 text-sm font-medium text-neutral-900">
+                  <input
+                    type="checkbox"
+                    checked={form.featured}
+                    onChange={(e) => setForm((f) => ({ ...f, featured: e.target.checked }))}
+                    className="h-4 w-4 rounded border-neutral-300"
+                  />
+                  In evidenza sul sito pubblico
+                </label>
               </div>
 
               {error && <p className="col-span-full text-sm text-red-600">{error}</p>}

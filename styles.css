@@ -555,6 +555,12 @@ main, header, footer, section{position:relative; z-index:1;}
   padding:96px var(--edge) 40px;
 }
 .ospiti[hidden]{display:none;}
+.ospiti-page{padding-top:clamp(120px, 18vh, 220px); min-height:60vh;}
+.ospiti-empty{
+  font-family:var(--font-mono);
+  font-size:13px;
+  color:var(--ink-60);
+}
 .ospiti-header{margin-bottom:32px;}
 .ospiti-header .line{
   font-family:var(--font-mono);

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tratto</title>
+<title>Ospiti · Tratto</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,700;0,800;0,900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -57,9 +57,6 @@
       <feTurbulence type="fractalNoise" baseFrequency="0.01 0.017" numOctaves="2" seed="7" result="noise"/>
       <feDisplacementMap in="thresholded" in2="noise" scale="70" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
-    <mask id="heroMask" maskUnits="userSpaceOnUse" x="-4000" y="-4000" width="8000" height="8000" maskContentUnits="userSpaceOnUse">
-      <g id="maskDots" filter="url(#goo)"></g>
-    </mask>
   </defs>
 </svg>
 
@@ -79,7 +76,7 @@
 <nav class="nav-overlay" id="navOverlay" aria-hidden="true">
   <div class="nav-col">
     <span class="nav-badge">1</span>
-    <a href="#top" data-nav-link>Home</a>
+    <a href="index.html#top" data-nav-link>Home</a>
   </div>
   <div class="nav-col">
     <span class="nav-badge">2</span>
@@ -87,7 +84,7 @@
   </div>
   <div class="nav-col">
     <span class="nav-badge">3</span>
-    <a href="#contact" data-nav-link>Contact</a>
+    <a href="index.html#contact" data-nav-link>Contact</a>
   </div>
 </nav>
 
@@ -95,50 +92,12 @@
 
 <main id="top">
 
-  <section class="hero">
-    <div class="hero-reveal" id="heroReveal" aria-hidden="true">
-      <div class="reveal-tile" style="left:6%; top:38%; width:15%; --t1:#c9d0ff; --t2:#eef0ff;"><div class="fill"></div><span class="label">Tidewatch</span></div>
-      <div class="reveal-tile" style="left:24%; top:30%; width:12%; --t1:#ffe3cf; --t2:#fff4ea;"><div class="fill"></div><span class="label">Fernweh</span></div>
-      <div class="reveal-tile" style="left:60%; top:48%; width:14%; --t1:#d5f0da; --t2:#f0faf1;"><div class="fill"></div><span class="label">Ledger &amp; Co.</span></div>
-      <div class="reveal-tile" style="left:78%; top:20%; width:11%; --t1:#f4d9ea; --t2:#fcf0f7;"><div class="fill"></div><span class="label">Cairn</span></div>
-      <div class="reveal-tile" style="left:42%; top:58%; width:13%; --t1:#f6e7c8; --t2:#fdf7e9;"><div class="fill"></div><span class="label">Northbound</span></div>
+  <section class="ospiti ospiti-page" id="ospiti">
+    <div class="ospiti-header">
+      <span class="line-mask"><span class="line">Ospiti</span></span>
     </div>
-
-    <div class="hero-divider" aria-hidden="true"></div>
-    <div class="hero-divider hero-divider-2" aria-hidden="true"></div>
-
-    <div class="hero-content">
-      <div class="hero-grid">
-        <div class="hero-left">
-          <div class="hero-mark">
-            <svg viewBox="0 0 60 100" fill="none" stroke="currentColor"><path d="M30 3C14 3 5 22 5 42c0 22 12 36 20 53 3 6 7 6 10 0 8-17 20-31 20-53C55 22 46 3 30 3Z" stroke-width="3"/><circle cx="20" cy="40" r="3.4" fill="currentColor" stroke="none"/><circle cx="40" cy="40" r="3.4" fill="currentColor" stroke="none"/><path d="M20 40h20" stroke-width="3" stroke-linecap="round"/></svg>
-          </div>
-          <p class="hero-role line-mask"><span class="line">Designer<br>&amp; Developer</span></p>
-        </div>
-        <div class="hero-right">
-          <p class="hero-meta-row">
-            <span class="line-mask"><span class="line">Based in Kyiv</span></span>
-            <span class="line-mask"><span class="line">Working w/ TFTL</span></span>
-          </p>
-          <h1 class="hero-name">
-            <span class="line-mask"><span class="line">Maksym</span></span>
-            <span class="line-mask"><span class="line">Bleibtgleich</span></span>
-          </h1>
-        </div>
-      </div>
-
-      <div class="hero-group">
-        <span class="line-mask"><span class="line">Des<span id="designI">i</span>gn</span></span>
-        <span class="line-mask"><span class="line">Digital</span></span>
-        <span class="line-mask"><span class="line">Products,</span></span>
-      </div>
-      <div class="hero-group offset">
-        <span class="line-mask"><span class="line">UX/UI</span></span>
-        <span class="line-mask"><span class="line">&amp; Web-</span></span>
-        <span class="line-mask"><span class="line">flow</span></span>
-        <span class="line-mask dev-indent"><span class="line">dev.</span></span>
-      </div>
-    </div>
+    <div class="ospiti-grid" id="ospitiGrid"></div>
+    <p class="ospiti-empty" id="ospitiEmpty" hidden>Nessun ospite ancora.</p>
   </section>
 
 </main>
@@ -167,7 +126,6 @@
     <a href="#" aria-label="Behance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h6M3 7v10h5.5a3 3 0 0 0 0-6H3M15 15.5c1 1 4 1 5-.5M14 13h7a4 4 0 0 0-7-2.3"/></svg></a>
     <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.6"/><path d="M16.6 7.4h.01"/></svg></a>
   </div>
-
 
 </footer>
 

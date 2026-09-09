@@ -502,9 +502,9 @@
   var SUPABASE_URL = 'https://mtunqzrmozbbhxezxmmc.supabase.co';
   var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dW5xenJtb3piYmh4ZXp4bW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg5NTYxNDUsImV4cCI6MjEwNDUzMjE0NX0.JKdcWHs3Ex_UZWKhYMv0Dzsu0mstTDOusyyr0jmqfCY';
 
-  var section = document.getElementById('ospiti');
   var grid = document.getElementById('ospitiGrid');
-  if (!section || !grid) return;
+  var empty = document.getElementById('ospitiEmpty');
+  if (!grid) return;
 
   function escapeHtml(value) {
     return String(value)
@@ -538,7 +538,7 @@
     );
   }
 
-  fetch(SUPABASE_URL + '/rest/v1/guests?select=name,role,bio_short,photo_url&order=sort_order.asc,created_at.desc', {
+  fetch(SUPABASE_URL + '/rest/v1/guests?select=name,role,bio_short,photo_url&featured=eq.true&order=sort_order.asc,created_at.desc', {
     headers: {
       apikey: SUPABASE_ANON_KEY,
       Authorization: 'Bearer ' + SUPABASE_ANON_KEY
@@ -546,9 +546,13 @@
   })
     .then(function (res) { return res.ok ? res.json() : []; })
     .then(function (guests) {
-      if (!guests || !guests.length) return;
+      if (!guests || !guests.length) {
+        if (empty) empty.hidden = false;
+        return;
+      }
       grid.innerHTML = guests.map(renderCard).join('');
-      section.hidden = false;
     })
-    .catch(function () {});
+    .catch(function () {
+      if (empty) empty.hidden = false;
+    });
 })();

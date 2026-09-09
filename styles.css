@@ -179,6 +179,7 @@ main, header, footer, section{position:relative; z-index:1;}
   width:clamp(64px, 8vw, 128px);
   color:var(--ink);
   margin-left:auto;
+  transform:translateY(-32px);
 }
 .hero-mark svg{width:100%; height:auto; display:block;}
 .hero-role{
@@ -209,6 +210,7 @@ main, header, footer, section{position:relative; z-index:1;}
   letter-spacing:.03em;
   color:var(--ink-60);
   margin-bottom:auto;
+  transform:translateY(-32px);
 }
 .hero-name{
   font-size:clamp(40px, var(--h1-vw), 160px);

@@ -621,7 +621,7 @@ main, header, footer, section{position:relative; z-index:1;}
 }
 .dial-line{
   flex:1 1 auto;
-  height:4px;
+  height:12px;
   border-top:1px solid var(--ink-12);
   border-bottom:1px solid var(--ink-12);
 }
@@ -652,9 +652,9 @@ main, header, footer, section{position:relative; z-index:1;}
 .dial-stop{
   position:absolute;
   width:9%;
-  left:89.9%; top:73%;
+  left:92.3%; top:50%;
   color:var(--ink);
-  transform:translate(-50%,-50%) rotate(150deg);
+  transform:translate(-50%,-50%) rotate(90deg);
 }
 .dial-hole{
   position:absolute;

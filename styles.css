@@ -614,8 +614,17 @@ main, header, footer, section{position:relative; z-index:1;}
   display:flex;
   align-items:center;
   gap:clamp(16px, 4vw, 48px);
+  width:100vw;
+  margin-left:calc(50% - 50vw);
+  margin-right:calc(50% - 50vw);
+  padding:0 var(--edge);
 }
-.dial-line{flex:1 1 auto; height:1px; background:var(--ink-12);}
+.dial-line{
+  flex:1 1 auto;
+  height:4px;
+  border-top:1px solid var(--ink-12);
+  border-bottom:1px solid var(--ink-12);
+}
 .dial{
   position:relative;
   flex:0 0 auto;

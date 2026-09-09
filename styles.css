@@ -546,6 +546,65 @@ main, header, footer, section{position:relative; z-index:1;}
   :root{ --h1-vw: 11.45vw; }
 }
 
+/* ---------- ospiti: guest cards loaded from Supabase ---------- */
+.ospiti{
+  position:relative;
+  z-index:1;
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:96px var(--edge) 40px;
+}
+.ospiti[hidden]{display:none;}
+.ospiti-header{margin-bottom:32px;}
+.ospiti-header .line{
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-60);
+}
+.ospiti-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));
+  gap:24px;
+}
+.ospiti-card{display:flex; flex-direction:column; gap:10px;}
+.ospiti-card-photo{
+  aspect-ratio:3/4;
+  border-radius:2px;
+  overflow:hidden;
+  background:#ececea;
+  display:flex; align-items:center; justify-content:center;
+}
+.ospiti-card-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+.ospiti-card-photo .initials{
+  font-family:var(--font-mono);
+  font-size:24px;
+  color:var(--ink-30);
+}
+.ospiti-card-name{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:16px;
+  color:var(--ink);
+}
+.ospiti-card-role{
+  font-family:var(--font-mono);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  color:var(--ink-60);
+}
+.ospiti-card-bio{
+  font-family:var(--font-display);
+  font-size:13px;
+  line-height:1.4;
+  color:var(--ink-60);
+}
+@media (max-width:520px){
+  .ospiti-grid{grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));}
+}
+
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;}
 }

@@ -162,7 +162,7 @@ main, header, footer, section{position:relative; z-index:1;}
 [data-underline]:hover{background-size:0% 1px;}
 
 /* ---------- hero ---------- */
-.hero{padding:120px 0 60px;}
+.hero{padding:96px 0 60px;}
 
 .hero-grid{
   display:grid;
@@ -193,9 +193,9 @@ main, header, footer, section{position:relative; z-index:1;}
 .hero-divider{
   position:absolute;
   left:calc(var(--hero-col) + 28px);
-  top:0;
+  top:40px;
   width:1px;
-  height:calc(120px + var(--hero-grid-h));
+  height:calc(56px + var(--hero-grid-h));
   background:var(--ink-12);
 }
 .hero-right{

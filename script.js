@@ -268,6 +268,99 @@
   }
 
 
+  /* ---------------- page blob: goo trail following the cursor across the whole page ---------------- */
+  if (fine && !reduce) {
+    var pageBlobDots = document.getElementById('pageBlobDots');
+    var SVG_NS_PAGE = 'http://www.w3.org/2000/svg';
+    var P_MAX_OPACITY = 0.55;
+
+    if (pageBlobDots) {
+      var P_LIFETIME = 2600;
+      var P_BASE_R = 120;
+      var P_MIN_GAP = 20;
+      var P_POOL_SIZE = 40;
+      var pTrail = [];
+      var pLastSpawn = 0;
+      var pPool = [];
+
+      for (var pi = 0; pi < P_POOL_SIZE; pi++) {
+        var pc = document.createElementNS(SVG_NS_PAGE, 'circle');
+        pc.setAttribute('fill', '#dcdcda');
+        pc.setAttribute('fill-opacity', '0');
+        pc.setAttribute('r', '0');
+        pageBlobDots.appendChild(pc);
+        pPool.push(pc);
+      }
+
+      function pAddPoint(x, y, born, rf, life) {
+        pTrail.push({ x: x, y: y, born: born, rf: rf, life: life });
+        if (pTrail.length > P_POOL_SIZE) pTrail.shift();
+      }
+
+      function pRandomLife() { return P_LIFETIME * (0.5 + Math.random() * 1.1); }
+
+      // idle pool circles default to (0,0); left untouched, they can sit far
+      // from the cursor once the page is scrolled, inflating the <g>'s
+      // bounding box enough to break the goo filter's region. Snap every
+      // circle to the first real cursor position before anything spawns.
+      var pInitialized = false;
+      function pSyncPoolTo(x, y) {
+        for (var k = 0; k < pPool.length; k++) {
+          pPool[k].setAttribute('cx', x.toFixed(1));
+          pPool[k].setAttribute('cy', y.toFixed(1));
+        }
+        pInitialized = true;
+      }
+
+      window.addEventListener('mousemove', function (e) {
+        var now = performance.now();
+        if (now - pLastSpawn < P_MIN_GAP) return;
+        pLastSpawn = now;
+        var bx = e.clientX + window.scrollX, by = e.clientY + window.scrollY;
+        if (!pInitialized) pSyncPoolTo(bx, by);
+
+        pAddPoint(bx, by, now, 0.7 + Math.random() * 0.55, pRandomLife());
+        var satellites = 2 + Math.floor(Math.random() * 3);
+        for (var s = 0; s < satellites; s++) {
+          var ang = Math.random() * Math.PI * 2;
+          var dist = 10 + Math.random() * 46;
+          pAddPoint(
+            bx + Math.cos(ang) * dist,
+            by + Math.sin(ang) * dist * 0.8,
+            now + Math.random() * 8,
+            0.22 + Math.random() * 0.45,
+            pRandomLife() * 0.7
+          );
+        }
+      });
+
+      function pRevealFrame() {
+        var now = performance.now();
+        pTrail = pTrail.filter(function (p) { return now - p.born < p.life; });
+
+        for (var i = 0; i < P_POOL_SIZE; i++) {
+          var p = pTrail[i];
+          var circle = pPool[i];
+          if (!p) {
+            circle.setAttribute('fill-opacity', '0');
+            continue;
+          }
+          var t = (now - p.born) / p.life;
+          var eased = 1 - Math.pow(1 - t, 2);
+          var r = P_BASE_R * p.rf * (0.9 + 0.35 * eased);
+          var a = Math.pow(1 - t, 0.6);
+          circle.setAttribute('cx', p.x.toFixed(1));
+          circle.setAttribute('cy', p.y.toFixed(1));
+          circle.setAttribute('r', r.toFixed(1));
+          circle.setAttribute('fill-opacity', (a * P_MAX_OPACITY).toFixed(2));
+        }
+
+        requestAnimationFrame(pRevealFrame);
+      }
+      pRevealFrame();
+    }
+  }
+
   /* ---------------- hero reveal: goo-mask trail unmasking hidden project tiles ---------------- */
   if (fine && !reduce) {
     var heroReveal = document.getElementById('heroReveal');

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ospiti · Tratto</title>
+<title>Contatti · Tratto</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,700;0,800;0,900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -92,12 +92,18 @@
 
 <main id="top">
 
-  <section class="ospiti ospiti-page" id="ospiti">
+  <section class="contatti-page">
     <div class="ospiti-header">
-      <span class="line-mask"><span class="line">Ospiti</span></span>
+      <span class="line-mask"><span class="line">Contatti</span></span>
     </div>
-    <div class="ospiti-grid" id="ospitiGrid"></div>
-    <p class="ospiti-empty" id="ospitiEmpty" hidden>Nessun ospite ancora.</p>
+
+    <form class="contact-form" id="contactForm">
+      <input type="text" name="name" placeholder="Nome" autocomplete="name" required>
+      <input type="email" name="email" placeholder="Email" autocomplete="email" required>
+      <textarea name="message" placeholder="Messaggio" rows="4" required></textarea>
+      <button type="submit">Invia messaggio</button>
+      <p class="contact-form-status" id="contactFormStatus" hidden></p>
+    </form>
   </section>
 
 </main>

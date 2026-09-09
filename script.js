@@ -197,7 +197,8 @@
       .to('.hero-meta-row .line', { y: '0%', duration: .7, stagger: .06 }, '-=.3')
       .to('.hero-name .line', { y: '0%', duration: .9, stagger: .07 }, '-=.45')
       .from('.hero-divider', { scaleY: 0, transformOrigin: 'top', duration: .8 }, '-=.9')
-      .to('.hero-group .line', { y: '0%', duration: .8, stagger: .05 }, '-=.3');
+      .to('.hero-group .line', { y: '0%', duration: .8, stagger: .05 }, '-=.3')
+      .to('.ospiti-header .line', { y: '0%', duration: .6 }, '-=.2');
   }
   if (reduce) { document.body.classList.add('loaded'); }
 

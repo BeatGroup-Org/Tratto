@@ -2,6 +2,139 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(pointer:fine)').matches;
 
+  /* ---------------- align "i"->line, "Designer & Developer"->"Design", logo->"Designer & Developer" ---------------- */
+  (function () {
+    var group = document.querySelector('.hero-group:not(.offset)');
+    var role = document.querySelector('.hero-role');
+    var mark = document.querySelector('.hero-mark');
+    var designI = document.getElementById('designI');
+    var divider = document.querySelector('.hero-divider');
+    var divider2 = document.querySelector('.hero-divider-2');
+    var offsetGroup = document.querySelector('.hero-group.offset');
+    var heroEl = document.querySelector('.hero');
+    if (!group || !role || !mark || !designI || !divider) return;
+
+    function align() {
+      group.style.transform = 'none';
+      var iRect = designI.getBoundingClientRect();
+      var dRect = divider.getBoundingClientRect();
+      var iCenter = iRect.left + iRect.width / 2;
+      var dCenter = dRect.left + dRect.width / 2;
+      group.style.transform = 'translateX(' + (dCenter - iCenter) + 'px)';
+
+      role.style.transform = 'none';
+      var groupLeft = group.getBoundingClientRect().left;
+      var roleLeft = role.getBoundingClientRect().left;
+      role.style.transform = 'translateX(' + (groupLeft - roleLeft) + 'px)';
+
+      mark.style.transform = 'translateY(-16px)';
+      var roleLeft2 = role.getBoundingClientRect().left;
+      var markLeft = mark.getBoundingClientRect().left;
+      mark.style.transform = 'translateY(-16px) translateX(' + (roleLeft2 - markLeft) + 'px)';
+
+      // first segment stops at the bottom of "Designer & Developer"
+      var heroRect = heroEl.getBoundingClientRect();
+      var topRect = divider.getBoundingClientRect();
+      var roleRect = role.getBoundingClientRect();
+      divider.style.height = (roleRect.bottom - topRect.top) + 'px';
+
+      // second segment resumes at the top of "UX/UI & Web-flow dev.", same x
+      if (divider2 && offsetGroup) {
+        var offRect = offsetGroup.getBoundingClientRect();
+        divider2.style.top = (offRect.top - heroRect.top) + 'px';
+        divider2.style.height = (offRect.bottom - offRect.top) + 'px';
+      }
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+  })();
+
+  /* ---------------- align "more" ("m") to the "t" of "nothing" ---------------- */
+  (function () {
+    var nothingT = document.getElementById('nothingT');
+    var moreLine = document.getElementById('moreLine');
+    if (!nothingT || !moreLine) return;
+
+    function align() {
+      moreLine.style.transform = 'none';
+      var tRect = nothingT.getBoundingClientRect();
+      var mRect = moreLine.getBoundingClientRect();
+      moreLine.style.transform = 'translateX(' + (tRect.left - mRect.left) + 'px)';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+  })();
+
+  /* ---------------- align "than a" ("t") to the "e" of "more" ---------------- */
+  (function () {
+    var moreE = document.getElementById('moreE');
+    var thanT = document.getElementById('thanT');
+    var offsetEl = document.querySelector('.footer-statement-offset');
+    if (!moreE || !thanT || !offsetEl) return;
+
+    function align() {
+      offsetEl.style.transform = 'none';
+      var eRect = moreE.getBoundingClientRect();
+      var tRect = thanT.getBoundingClientRect();
+      offsetEl.style.transform = 'translateX(' + (eRect.left - tRect.left) + 'px)';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+  })();
+
+  /* ---------------- align "sentence." to start under the "m" of "more" ---------------- */
+  (function () {
+    var moreM = document.getElementById('moreM');
+    var sentenceLine = document.getElementById('sentenceLine');
+    if (!moreM || !sentenceLine) return;
+
+    function align() {
+      sentenceLine.style.transform = 'none';
+      var mRect = moreM.getBoundingClientRect();
+      var sRect = sentenceLine.getBoundingClientRect();
+      sentenceLine.style.transform = 'translateX(' + (mRect.left - sRect.left) + 'px)';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+  })();
+
+  /* ---------------- align footer-contact top to "than a" top, shifted right ---------------- */
+  (function () {
+    var contact = document.querySelector('.footer-contact');
+    var target = document.getElementById('thanT');
+    if (!contact || !target) return;
+
+    function align() {
+      contact.style.transform = 'none';
+      var cRect = contact.getBoundingClientRect();
+      var tRect = target.getBoundingClientRect();
+      var dy = tRect.top - cRect.top - 52;
+      contact.style.transform = 'translate(350px, ' + dy + 'px)';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+  })();
+
   /* ---------------- preloader: big bottom-left counter, fades out ---------------- */
   var preloaderCount = document.getElementById('preloaderCount');
   var loadState = { n: 0 };
@@ -83,173 +216,57 @@
       scrollTrigger: { trigger: '.hero-copyright', start: 'top 90%', toggleActions: 'play none none reverse' }
     });
 
-    gsap.from('.ring-section', {
-      opacity: 0, y: 40, duration: .9,
-      scrollTrigger: { trigger: '.ring-section', start: 'top 80%', toggleActions: 'play none none reverse' }
-    });
-
-    gsap.utils.toArray('.featured-head .line').forEach(function (l, i) {
-      gsap.to(l, {
-        y: '0%', duration: .7, delay: i * .05,
-        scrollTrigger: { trigger: '.featured-head', start: 'top 85%', toggleActions: 'play none none reverse' }
-      });
-    });
-    gsap.from('.strip-item', {
-      opacity: 0, x: 30, duration: .6, stagger: .08,
-      scrollTrigger: { trigger: '.strip', start: 'top 85%', toggleActions: 'play none none reverse' }
-    });
-
-    gsap.utils.toArray('.ledger-head .line').forEach(function (l, i) {
-      gsap.to(l, {
-        y: '0%', duration: .7, delay: i * .05,
-        scrollTrigger: { trigger: '.ledger-head', start: 'top 85%', toggleActions: 'play none none reverse' }
-      });
-    });
-    gsap.from('.ledger-row', {
-      opacity: 0, y: 16, duration: .5, stagger: .06,
-      scrollTrigger: { trigger: '.ledger-table', start: 'top 85%', toggleActions: 'play none none reverse' }
-    });
-
     gsap.utils.toArray('.footer .line').forEach(function (l, i) {
       gsap.to(l, {
         y: '0%', duration: .7, delay: i * .04,
         scrollTrigger: { trigger: '.footer-statement', start: 'top 85%', toggleActions: 'play none none reverse' }
       });
     });
-    gsap.from('.footer-socials, .footer-wordmark', {
+    gsap.from('.footer-socials', {
       opacity: 0, y: 16, duration: .6, stagger: .1,
       scrollTrigger: { trigger: '.footer-statement', start: 'top 75%', toggleActions: 'play none none reverse' }
     });
+
+    /* ---------------- watermark merges into "bleibtgleich" once it passes the social circles ---------------- */
+    (function () {
+      var wmLeft = document.querySelector('.watermark-half.left');
+      var wmRight = document.querySelector('.watermark-half.right');
+      var watermarkEl = document.querySelector('.watermark');
+      var socialsEl = document.querySelector('.footer-socials');
+      if (!wmLeft || !wmRight || !watermarkEl || !socialsEl) return;
+
+      function mergeIn() {
+        gsap.set([wmLeft, wmRight], { clearProps: 'transform' });
+        var wRect = watermarkEl.getBoundingClientRect();
+        var lRect = wmLeft.getBoundingClientRect();
+        var rRect = wmRight.getBoundingClientRect();
+        var centerX = wRect.left + wRect.width / 2;
+        var totalW = lRect.width + rRect.width;
+        var targetLeftX = centerX - totalW / 2;
+        var targetRightX = targetLeftX + lRect.width;
+        gsap.to(wmLeft, { x: targetLeftX - lRect.left, opacity: 1, duration: .6, ease: 'power3.out' });
+        gsap.to(wmRight, { x: targetRightX - rRect.left, opacity: 1, duration: .6, ease: 'power3.out' });
+      }
+      function mergeOut() {
+        gsap.to([wmLeft, wmRight], { x: 0, opacity: .1, duration: .5, ease: 'power3.out' });
+      }
+
+      function getStart() {
+        var wmH = watermarkEl.getBoundingClientRect().height;
+        return 'bottom bottom-=' + (wmH + 24);
+      }
+
+      ScrollTrigger.create({
+        trigger: socialsEl,
+        start: getStart,
+        onEnter: mergeIn,
+        onLeaveBack: mergeOut
+      });
+    })();
   } else {
     document.querySelectorAll('.line').forEach(function (l) { l.style.transform = 'none'; });
   }
 
-  /* ---------------- ring: 3D orbit of tiles, drag + auto-rotate ---------------- */
-  (function () {
-    var wrap = document.getElementById('ringWrap');
-    var tiles = Array.from(wrap.querySelectorAll('.ring-tile'));
-    var n = tiles.length;
-    var radius = Math.min(window.innerWidth * .34, 460);
-    var rotation = 0;
-    var autoSpeed = reduce ? 0 : .05;
-    var dragging = false;
-    var lastX = 0;
-
-    function layout() {
-      radius = Math.min(window.innerWidth * .34, 460);
-      tiles.forEach(function (tile, i) {
-        var angle = (360 / n) * i;
-        tile.style.transform =
-          'translate(-50%,-50%) rotateY(' + angle + 'deg) translateZ(' + radius + 'px)';
-      });
-    }
-
-    function render() {
-      wrap.style.transform = 'rotateY(' + rotation + 'deg)';
-    }
-
-    function frame() {
-      if (!dragging) rotation += autoSpeed;
-      render();
-      requestAnimationFrame(frame);
-    }
-
-    wrap.addEventListener('pointerdown', function (e) {
-      dragging = true; lastX = e.clientX; wrap.setPointerCapture(e.pointerId);
-    });
-    wrap.addEventListener('pointermove', function (e) {
-      if (!dragging) return;
-      rotation += (e.clientX - lastX) * .3;
-      lastX = e.clientX;
-    });
-    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (evt) {
-      wrap.addEventListener(evt, function () { dragging = false; });
-    });
-
-    layout();
-    window.addEventListener('resize', layout);
-    frame();
-  })();
-
-  /* ---------------- fluid-ish canvas ripple ---------------- */
-  (function () {
-    var canvas = document.getElementById('fluidCanvas');
-    var ctx = canvas.getContext('2d');
-    var ripples = [];
-    var section = document.getElementById('ringSection');
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    function resize() {
-      canvas.width = section.clientWidth * dpr;
-      canvas.height = section.clientHeight * dpr;
-      canvas.style.width = section.clientWidth + 'px';
-      canvas.style.height = section.clientHeight + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    section.addEventListener('pointermove', function (e) {
-      var rect = section.getBoundingClientRect();
-      ripples.push({ x: e.clientX - rect.left, y: e.clientY - rect.top, r: 0, a: .18 });
-      if (ripples.length > 40) ripples.shift();
-    });
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ripples.forEach(function (p) {
-        p.r += 2.4;
-        p.a *= .96;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(13,13,12,' + p.a + ')';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      });
-      ripples = ripples.filter(function (p) { return p.a > .01; });
-      requestAnimationFrame(draw);
-    }
-    if (!reduce) draw();
-  })();
-
-  /* ---------------- custom scrollbar thumb ---------------- */
-  (function () {
-    var thumb = document.getElementById('scrollThumb');
-    var dragging = false;
-    var startY = 0, startScroll = 0;
-
-    function layout() {
-      var doc = document.documentElement;
-      var viewport = window.innerHeight;
-      var total = doc.scrollHeight;
-      var ratio = viewport / total;
-      var h = Math.max(viewport * ratio, 40);
-      var scrollable = total - viewport;
-      var progress = scrollable > 0 ? doc.scrollTop / scrollable : 0;
-      thumb.style.height = h + 'px';
-      thumb.style.top = progress * (viewport - h) + 'px';
-    }
-
-    thumb.addEventListener('pointerdown', function (e) {
-      dragging = true; startY = e.clientY; startScroll = window.scrollY;
-      thumb.setPointerCapture(e.pointerId);
-    });
-    window.addEventListener('pointermove', function (e) {
-      if (!dragging) return;
-      var doc = document.documentElement;
-      var viewport = window.innerHeight;
-      var scrollable = doc.scrollHeight - viewport;
-      var thumbTrack = viewport - parseFloat(thumb.style.height || 40);
-      var dy = e.clientY - startY;
-      var deltaScroll = thumbTrack > 0 ? (dy / thumbTrack) * scrollable : 0;
-      window.scrollTo(0, startScroll + deltaScroll);
-    });
-    window.addEventListener('pointerup', function () { dragging = false; });
-
-    window.addEventListener('scroll', layout, { passive: true });
-    window.addEventListener('resize', layout);
-    layout();
-  })();
 
   /* ---------------- hero reveal: goo-mask trail unmasking hidden project tiles ---------------- */
   if (fine && !reduce) {
@@ -259,7 +276,7 @@
     var SVG_NS = 'http://www.w3.org/2000/svg';
 
     if (heroReveal && heroEl && maskDots) {
-      var LIFETIME = 1400;
+      var LIFETIME = 2600;
       var BASE_R = 120;
       var MIN_GAP = 20;
       var POOL_SIZE = 40;
@@ -327,7 +344,7 @@
           var t = (now - p.born) / p.life;
           var eased = 1 - Math.pow(1 - t, 2);
           var r = BASE_R * p.rf * (0.9 + 0.35 * eased);
-          var a = 1 - eased;
+          var a = Math.pow(1 - t, 0.6);
           circle.setAttribute('cx', p.x.toFixed(1));
           circle.setAttribute('cy', p.y.toFixed(1));
           circle.setAttribute('r', r.toFixed(1));

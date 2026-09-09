@@ -15,10 +15,12 @@
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <filter id="goo" x="-60%" y="-60%" width="220%" height="220%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="blur"/>
+    <filter id="goo" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="26" result="blur"/>
       <feColorMatrix in="blur" mode="matrix"
-        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -12" result="thresholded"/>
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 14 -5" result="thresholded"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.01 0.017" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="thresholded" in2="noise" scale="70" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
     <mask id="heroMask" maskUnits="userSpaceOnUse" x="-4000" y="-4000" width="8000" height="8000" maskContentUnits="userSpaceOnUse">
       <g id="maskDots" filter="url(#goo)"></g>
@@ -27,8 +29,8 @@
 </svg>
 
 <div class="watermark" aria-hidden="true">
-  <span class="watermark-half left">nadia</span>
-  <span class="watermark-half right">voss</span>
+  <span class="watermark-half left">bleibt</span>
+  <span class="watermark-half right">gleich</span>
 </div>
 
 <header class="nav">
@@ -51,7 +53,6 @@
 </nav>
 
 <div class="cursor-note" id="cursorNote"></div>
-<div class="cursor-hint">Press <kbd>/</kbd> to leave a note</div>
 
 <main id="top">
 
@@ -65,6 +66,7 @@
     </div>
 
     <div class="hero-divider" aria-hidden="true"></div>
+    <div class="hero-divider hero-divider-2" aria-hidden="true"></div>
 
     <div class="hero-content">
       <div class="hero-grid">
@@ -75,92 +77,41 @@
           <p class="hero-role line-mask"><span class="line">Designer<br>&amp; Developer</span></p>
         </div>
         <div class="hero-right">
-          <div class="hero-meta-row">
-            <p class="line-mask inline"><span class="line">Based in Porto, PT</span></p>
-            <p class="line-mask inline"><span class="line">Currently @ Perimeter Studio</span></p>
-          </div>
+          <p class="hero-meta-row">
+            <span class="line-mask"><span class="line">Based in Kyiv</span></span>
+            <span class="line-mask"><span class="line">Working w/ TFTL</span></span>
+          </p>
           <h1 class="hero-name">
-            <span class="line-mask"><span class="line">Nadia</span></span>
-            <span class="line-mask"><span class="line">Voss</span></span>
+            <span class="line-mask"><span class="line">Maksym</span></span>
+            <span class="line-mask"><span class="line">Bleibtgleich</span></span>
           </h1>
         </div>
       </div>
 
       <div class="hero-group">
-        <span class="line-mask"><span class="line">Interfaces,</span></span>
-        <span class="line-mask"><span class="line">systems,</span></span>
+        <span class="line-mask"><span class="line">Des<span id="designI">i</span>gn</span></span>
+        <span class="line-mask"><span class="line">Digital</span></span>
+        <span class="line-mask"><span class="line">Products,</span></span>
       </div>
       <div class="hero-group offset">
-        <span class="line-mask"><span class="line">& motion</span></span>
-        <span class="line-mask"><span class="line">between them.</span></span>
+        <span class="line-mask"><span class="line">UX/UI</span></span>
+        <span class="line-mask"><span class="line">&amp; Web-</span></span>
+        <span class="line-mask"><span class="line">flow</span></span>
+        <span class="line-mask dev-indent"><span class="line">dev.</span></span>
       </div>
-
-
-      <div class="hero-bigwords">
-        <h2 class="line-mask"><span class="line">the</span></h2>
-        <h2 class="line-mask"><span class="line">work</span></h2>
-        <div class="hero-bigwords-offset">
-          <h2 class="line-mask"><span class="line">speaks for</span></h2>
-          <h2 class="line-mask"><span class="line">itself.</span></h2>
-        </div>
-      </div>
-      <p class="hero-copyright line-mask"><span class="line">© '26</span></p>
     </div>
   </section>
 
-  <section class="ring-section" id="ringSection">
-    <canvas class="fluid-canvas" id="fluidCanvas"></canvas>
-    <div class="ring-wrap" id="ringWrap">
-      <div class="ring-tile" style="--t1:#c9d0ff; --t2:#eef0ff;"><div class="fill"></div><span class="label">01 — Tidewatch</span></div>
-      <div class="ring-tile" style="--t1:#ffe3cf; --t2:#fff4ea;"><div class="fill"></div><span class="label">02 — Fernweh</span></div>
-      <div class="ring-tile" style="--t1:#d5f0da; --t2:#f0faf1;"><div class="fill"></div><span class="label">03 — Ledger &amp; Co.</span></div>
-      <div class="ring-tile" style="--t1:#f4d9ea; --t2:#fcf0f7;"><div class="fill"></div><span class="label">04 — Cairn</span></div>
-      <div class="ring-tile" style="--t1:#f6e7c8; --t2:#fdf7e9;"><div class="fill"></div><span class="label">05 — Northbound</span></div>
-      <div class="ring-tile" style="--t1:#d8e2f3; --t2:#f1f5fb;"><div class="fill"></div><span class="label">06 — Quietroom</span></div>
-    </div>
-  </section>
-
-  <section class="featured" id="work">
-    <div class="featured-head">
-      <h2 class="line-mask"><span class="line">Work</span></h2>
-      <h2 class="line-mask"><span class="line">24—26</span></h2>
-      <a class="featured-link" data-underline href="#work">All works</a>
-    </div>
-    <div class="strip" id="strip">
-      <div class="strip-item" style="--t1:#c9d0ff; --t2:#eef0ff;"><div class="fill"></div><span class="label">Tidewatch</span></div>
-      <div class="strip-item" style="--t1:#ffe3cf; --t2:#fff4ea;"><div class="fill"></div><span class="label">Fernweh</span></div>
-      <div class="strip-item" style="--t1:#d5f0da; --t2:#f0faf1;"><div class="fill"></div><span class="label">Ledger &amp; Co.</span></div>
-      <div class="strip-item" style="--t1:#f4d9ea; --t2:#fcf0f7;"><div class="fill"></div><span class="label">Cairn</span></div>
-      <div class="strip-item" style="--t1:#f6e7c8; --t2:#fdf7e9;"><div class="fill"></div><span class="label">Northbound</span></div>
-      <div class="strip-item" style="--t1:#d8e2f3; --t2:#f1f5fb;"><div class="fill"></div><span class="label">Quietroom</span></div>
-    </div>
-  </section>
-
-  <section class="ledger" id="toolkit">
-    <div class="ledger-head">
-      <h2 class="line-mask"><span class="line">Toolkit</span></h2>
-      <h2 class="line-mask"><span class="line">&amp;</span></h2>
-      <h2 class="line-mask"><span class="line">capabi-</span></h2>
-      <h2 class="line-mask"><span class="line">lities</span></h2>
-    </div>
-    <div class="ledger-table">
-      <div class="ledger-row"><span class="yr">01</span><span class="name">Interface design</span><span class="detail">Figma · UI systems</span></div>
-      <div class="ledger-row"><span class="yr">02</span><span class="name">Front-end engineering</span><span class="detail">React · TypeScript</span></div>
-      <div class="ledger-row"><span class="yr">03</span><span class="name">Motion &amp; interaction</span><span class="detail">GSAP · WebGL</span></div>
-      <div class="ledger-row"><span class="yr">04</span><span class="name">Design systems</span><span class="detail">Tokens · Documentation</span></div>
-      <div class="ledger-row"><span class="yr">05</span><span class="name">Prototyping</span><span class="detail">Framer · Webflow</span></div>
-    </div>
-  </section>
 
 </main>
 
 <footer class="footer" id="contact">
   <div class="footer-statement">
-    <h2 class="line-mask"><span class="line">built</span></h2>
-    <h2 class="line-mask"><span class="line">to last,</span></h2>
+    <h2 class="line-mask"><span class="line">no<span id="nothingT">t</span>hing</span></h2>
+    <h2 class="line-mask" id="moreLine"><span class="line"><span id="moreM">m</span>or<span id="moreE">e</span></span></h2>
     <div class="footer-statement-offset">
-      <h2 class="line-mask"><span class="line">not just</span></h2>
-      <h2 class="line-mask"><span class="line">to launch.</span></h2>
+      <h2 class="line-mask"><span class="line"><span id="thanT">t</span>han a</span></h2>
+      <h2 class="line-mask" id="sentenceLine"><span class="line">sentence.</span></h2>
     </div>
   </div>
 
@@ -179,17 +130,8 @@
     <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.6"/><path d="M16.6 7.4h.01"/></svg></a>
   </div>
 
-  <div class="footer-wordmark">nadia voss</div>
 
-  <div class="footer-bottom">
-    <span>© 2026 Nadia Voss — template preview, not a real studio</span>
-    <span>Structure &amp; motion study — content is placeholder</span>
-  </div>
 </footer>
-
-<div class="scrollbar-wrap" aria-hidden="true">
-  <div class="scrollbar-thumb" id="scrollThumb"></div>
-</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>

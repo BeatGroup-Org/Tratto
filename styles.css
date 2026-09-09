@@ -604,7 +604,7 @@ main, header, footer, section{position:relative; z-index:1;}
   z-index:1;
   max-width:var(--maxw);
   margin:0 auto;
-  padding:clamp(120px, 18vh, 220px) var(--edge) 40px;
+  padding:clamp(120px, 18vh, 220px) var(--edge) clamp(160px, 22vh, 280px);
   min-height:60vh;
 }
 .contatti-page .contact-form{margin:56px auto 0;}

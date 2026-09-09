@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/admin", "destination": "https://tratto-27pj.vercel.app/admin" },
+    { "source": "/admin/:path*", "destination": "https://tratto-27pj.vercel.app/admin/:path*" }
+  ]
+}

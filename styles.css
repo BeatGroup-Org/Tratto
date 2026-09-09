@@ -670,14 +670,6 @@ a.dial-hole:hover{background:var(--ink); color:var(--paper);}
   border-radius:50%;
   background:var(--ink-30);
 }
-.dial-wordmark{
-  margin:clamp(32px, 6vw, 64px) 0 0;
-  font-family:var(--font-display);
-  font-weight:800;
-  font-size:clamp(48px, 9vw, 120px);
-  letter-spacing:-.02em;
-  text-align:center;
-}
 @media (max-width:640px){
   .dial-line{display:none;}
 }

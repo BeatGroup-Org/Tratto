@@ -607,7 +607,80 @@ main, header, footer, section{position:relative; z-index:1;}
   padding:clamp(120px, 18vh, 220px) var(--edge) 40px;
   min-height:60vh;
 }
-.contatti-page .contact-form{margin-top:0;}
+.contatti-page .contact-form{margin:56px auto 0;}
+
+/* ---------- dial: rotary-phone style contact hub ---------- */
+.dial-wrap{
+  display:flex;
+  align-items:center;
+  gap:clamp(16px, 4vw, 48px);
+}
+.dial-line{flex:1 1 auto; height:1px; background:var(--ink-12);}
+.dial{
+  position:relative;
+  flex:0 0 auto;
+  width:min(560px, 78vw);
+  aspect-ratio:1;
+}
+.dial-ring{position:absolute; inset:0; width:100%; height:100%;}
+.dial-hub{
+  position:absolute; top:50%; left:50%;
+  width:52%; aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:var(--ink);
+  color:var(--paper);
+  display:flex; align-items:center; justify-content:center;
+}
+.dial-hub svg{width:34%;}
+.dial-stop{
+  position:absolute;
+  width:11%;
+  left:81%; top:60%;
+  color:var(--ink);
+  transform:translate(-50%,-50%) rotate(130deg);
+}
+.dial-hole{
+  position:absolute;
+  width:15.5%;
+  aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:#f4f4f2;
+  border:1px solid var(--ink-12);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-mono);
+  font-size:clamp(11px, 1.6vw, 15px);
+  font-weight:600;
+  color:var(--ink);
+  text-decoration:none;
+}
+a.dial-hole{transition:background var(--dur-s) var(--ease-out), color var(--dur-s) var(--ease-out);}
+a.dial-hole:hover{background:var(--ink); color:var(--paper);}
+.dial-hole svg{width:44%; height:44%;}
+.dial-hole-ring{
+  width:42%; aspect-ratio:1;
+  border-radius:50%;
+  border:1.5px solid var(--ink-30);
+}
+.dial-hole[data-ring="red"] .dial-hole-ring{border-color:#e0846f;}
+.dial-hole[data-ring="green"] .dial-hole-ring{border-color:#a9c08a;}
+.dial-hole-dot{
+  width:16%; aspect-ratio:1;
+  border-radius:50%;
+  background:var(--ink-30);
+}
+.dial-wordmark{
+  margin:clamp(32px, 6vw, 64px) 0 0;
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:clamp(48px, 9vw, 120px);
+  letter-spacing:-.02em;
+  text-align:center;
+}
+@media (max-width:640px){
+  .dial-line{display:none;}
+}
 .ospiti-empty{
   font-family:var(--font-mono);
   font-size:13px;

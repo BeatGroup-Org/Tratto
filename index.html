@@ -9,7 +9,43 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,700;0,800;0,900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="is-locked">
+
+<div class="site-lock" id="siteLock">
+  <form class="site-lock-form" id="siteLockForm" autocomplete="off">
+    <p class="site-lock-title">Tratto</p>
+    <input type="password" id="siteLockInput" placeholder="Password" autocomplete="off" required>
+    <button type="submit">Enter</button>
+    <p class="site-lock-error" id="siteLockError" hidden>Incorrect password.</p>
+  </form>
+</div>
+
+<script>
+(function () {
+  var PASSWORD = 'Tratto1234';
+  var body = document.body;
+  var form = document.getElementById('siteLockForm');
+  var input = document.getElementById('siteLockInput');
+  var error = document.getElementById('siteLockError');
+
+  if (sessionStorage.getItem('tratto_unlocked') === '1') {
+    body.classList.remove('is-locked');
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (input.value === PASSWORD) {
+      sessionStorage.setItem('tratto_unlocked', '1');
+      body.classList.remove('is-locked');
+      error.hidden = true;
+    } else {
+      error.hidden = false;
+      input.value = '';
+      input.focus();
+    }
+  });
+})();
+</script>
 
 <div class="preloader-count" id="preloaderCount">0%</div>
 

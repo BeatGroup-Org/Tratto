@@ -7,13 +7,25 @@ type Guest = {
   id: string;
   name: string;
   role: string | null;
+  nationality: string | null;
+  slug: string | null;
+  bio_short: string | null;
   bio: string | null;
   photo_url: string | null;
   section: string | null;
   sort_order: number;
 };
 
-const emptyForm = { name: "", role: "", bio: "", photo_url: "", section: "" };
+const emptyForm = {
+  name: "",
+  role: "",
+  nationality: "",
+  slug: "",
+  bio_short: "",
+  bio: "",
+  photo_url: "",
+  section: "",
+};
 
 function slugify(name: string) {
   return name
@@ -63,6 +75,9 @@ export default function GuestsManager({ initialGuests }: { initialGuests: Guest[
     setForm({
       name: guest.name,
       role: guest.role ?? "",
+      nationality: guest.nationality ?? "",
+      slug: guest.slug ?? "",
+      bio_short: guest.bio_short ?? "",
       bio: guest.bio ?? "",
       photo_url: guest.photo_url ?? "",
       section: guest.section ?? "",
@@ -86,6 +101,9 @@ export default function GuestsManager({ initialGuests }: { initialGuests: Guest[
     const payload = {
       name: form.name.trim(),
       role: form.role.trim() || null,
+      nationality: form.nationality.trim().toUpperCase() || null,
+      slug: form.slug.trim() || slugify(form.name),
+      bio_short: form.bio_short.trim() || null,
       bio: form.bio.trim() || null,
       photo_url: form.photo_url.trim() || null,
       section: form.section.trim() || null,
@@ -158,6 +176,7 @@ export default function GuestsManager({ initialGuests }: { initialGuests: Guest[
               <th className="px-4 py-3 font-semibold">Foto</th>
               <th className="px-4 py-3 font-semibold">Nome</th>
               <th className="px-4 py-3 font-semibold">Ruolo</th>
+              <th className="px-4 py-3 font-semibold">Naz.</th>
               <th className="px-4 py-3 font-semibold">Sezione</th>
               <th className="px-4 py-3 text-right font-semibold">Azioni</th>
             </tr>
@@ -165,7 +184,7 @@ export default function GuestsManager({ initialGuests }: { initialGuests: Guest[
           <tbody>
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-sm text-neutral-500">
+                <td colSpan={6} className="px-4 py-8 text-center text-sm text-neutral-500">
                   {guests.length === 0 ? "Nessun ospite ancora." : "Nessun risultato."}
                 </td>
               </tr>
@@ -191,9 +210,10 @@ export default function GuestsManager({ initialGuests }: { initialGuests: Guest[
                 </td>
                 <td className="px-4 py-3">
                   <p className="font-medium text-neutral-900">{guest.name}</p>
-                  <p className="text-xs text-neutral-400">{slugify(guest.name)}</p>
+                  <p className="text-xs text-neutral-400">{guest.slug || slugify(guest.name)}</p>
                 </td>
                 <td className="px-4 py-3 text-neutral-600">{guest.role || "—"}</td>
+                <td className="px-4 py-3 text-neutral-600">{guest.nationality || "—"}</td>
                 <td className="px-4 py-3 text-neutral-600">{guest.section || "—"}</td>
                 <td className="px-4 py-3">
                   <div className="flex justify-end gap-2">
@@ -232,39 +252,113 @@ export default function GuestsManager({ initialGuests }: { initialGuests: Guest[
                 ✕
               </button>
             </div>
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <input
-                placeholder="Nome"
-                value={form.name}
-                onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                required
-                className="rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
-              />
-              <input
-                placeholder="Ruolo (es. Regista, Attore)"
-                value={form.role}
-                onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
-                className="rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
-              />
-              <input
-                placeholder="Sezione del festival"
-                value={form.section}
-                onChange={(e) => setForm((f) => ({ ...f, section: e.target.value }))}
-                className="rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
-              />
-              <input
-                placeholder="URL foto"
-                value={form.photo_url}
-                onChange={(e) => setForm((f) => ({ ...f, photo_url: e.target.value }))}
-                className="rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
-              />
-              <textarea
-                placeholder="Bio"
-                value={form.bio}
-                onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))}
-                rows={3}
-                className="col-span-full rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
-              />
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="col-span-full">
+                <label className="mb-1 block text-sm font-semibold text-neutral-900">
+                  Nome e cognome
+                </label>
+                <input
+                  placeholder="Nome e cognome"
+                  value={form.name}
+                  onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                  required
+                  className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
+                />
+              </div>
+
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-neutral-900">
+                  Ruolo
+                </label>
+                <input
+                  placeholder="Es. regista, attore, docente"
+                  value={form.role}
+                  onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
+                  className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
+                />
+                <p className="mt-1 text-xs text-neutral-500">
+                  Es. regista, attore, docente, musicista.
+                </p>
+              </div>
+
+              <div>
+                <label className="mb-1 block text-sm font-semibold text-neutral-900">
+                  Nazionalità
+                </label>
+                <input
+                  placeholder="IT"
+                  maxLength={2}
+                  value={form.nationality}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, nationality: e.target.value.toUpperCase() }))
+                  }
+                  className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm uppercase outline-none focus:border-neutral-900"
+                />
+                <p className="mt-1 text-xs text-neutral-500">
+                  Codice ISO 2-lettere (es. IT, FR, US).
+                </p>
+              </div>
+
+              <div className="col-span-full">
+                <label className="mb-1 block text-sm font-semibold text-neutral-900">Slug</label>
+                <input
+                  placeholder="mario-rossi"
+                  value={form.slug}
+                  onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
+                  className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
+                />
+                <p className="mt-1 text-xs text-neutral-500">Lascia vuoto per generarlo dal nome.</p>
+              </div>
+
+              <div className="col-span-full">
+                <label className="mb-1 block text-sm font-semibold text-neutral-900">
+                  Sezione del festival
+                </label>
+                <input
+                  placeholder="Sezione del festival"
+                  value={form.section}
+                  onChange={(e) => setForm((f) => ({ ...f, section: e.target.value }))}
+                  className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
+                />
+              </div>
+
+              <div className="col-span-full">
+                <label className="mb-1 block text-sm font-semibold text-neutral-900">
+                  URL foto
+                </label>
+                <input
+                  placeholder="URL foto"
+                  value={form.photo_url}
+                  onChange={(e) => setForm((f) => ({ ...f, photo_url: e.target.value }))}
+                  className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
+                />
+              </div>
+
+              <div className="col-span-full">
+                <label className="mb-1 block text-sm font-semibold text-neutral-900">
+                  Bio breve
+                </label>
+                <textarea
+                  placeholder="Una riga di presentazione"
+                  value={form.bio_short}
+                  onChange={(e) => setForm((f) => ({ ...f, bio_short: e.target.value }))}
+                  rows={2}
+                  className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
+                />
+              </div>
+
+              <div className="col-span-full">
+                <label className="mb-1 block text-sm font-semibold text-neutral-900">
+                  Bio completa
+                </label>
+                <textarea
+                  placeholder="Biografia completa"
+                  value={form.bio}
+                  onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))}
+                  rows={4}
+                  className="w-full rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
+                />
+              </div>
 
               {error && <p className="col-span-full text-sm text-red-600">{error}</p>}
 

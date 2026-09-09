@@ -635,10 +635,10 @@ main, header, footer, section{position:relative; z-index:1;}
 .dial-hub svg{width:34%;}
 .dial-stop{
   position:absolute;
-  width:11%;
-  left:81%; top:60%;
+  width:8.5%;
+  left:92.7%; top:74.65%;
   color:var(--ink);
-  transform:translate(-50%,-50%) rotate(130deg);
+  transform:translate(-50%,-50%) rotate(105deg);
 }
 .dial-hole{
   position:absolute;

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
@@ -125,12 +124,12 @@ export default function LoginPage() {
 
           <hr className="my-6 border-neutral-200" />
 
-          <Link
+          <a
             href="/"
             className="text-sm text-neutral-500 hover:text-neutral-800"
           >
             ← Torna al sito pubblico
-          </Link>
+          </a>
         </form>
 
         {DEV_ACCOUNTS.length > 0 && (

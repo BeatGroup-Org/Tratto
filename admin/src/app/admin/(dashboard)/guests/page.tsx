@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import GuestsManager from "./guests-manager";
+
+export const metadata: Metadata = {
+  title: "Ospiti",
+};
 
 export default async function GuestsPage() {
   const supabase = await createClient();

@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import MessagesManager from "./messages-manager";
+
+export const metadata: Metadata = {
+  title: "Messaggi",
+};
 
 export default async function MessagesPage() {
   const supabase = await createClient();

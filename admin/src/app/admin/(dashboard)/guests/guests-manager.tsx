@@ -1,0 +1,293 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+
+type Guest = {
+  id: string;
+  name: string;
+  role: string | null;
+  bio: string | null;
+  photo_url: string | null;
+  section: string | null;
+  sort_order: number;
+};
+
+const emptyForm = { name: "", role: "", bio: "", photo_url: "", section: "" };
+
+function slugify(name: string) {
+  return name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+function initials(name: string) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase())
+    .join("");
+}
+
+export default function GuestsManager({ initialGuests }: { initialGuests: Guest[] }) {
+  const supabase = createClient();
+  const [guests, setGuests] = useState<Guest[]>(initialGuests);
+  const [search, setSearch] = useState("");
+  const [form, setForm] = useState(emptyForm);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return guests;
+    return guests.filter((g) =>
+      [g.name, g.role, g.section].filter(Boolean).join(" ").toLowerCase().includes(q)
+    );
+  }, [guests, search]);
+
+  function openNew() {
+    setEditingId(null);
+    setForm(emptyForm);
+    setError(null);
+    setModalOpen(true);
+  }
+
+  function openEdit(guest: Guest) {
+    setEditingId(guest.id);
+    setForm({
+      name: guest.name,
+      role: guest.role ?? "",
+      bio: guest.bio ?? "",
+      photo_url: guest.photo_url ?? "",
+      section: guest.section ?? "",
+    });
+    setError(null);
+    setModalOpen(true);
+  }
+
+  function closeModal() {
+    setModalOpen(false);
+    setEditingId(null);
+    setForm(emptyForm);
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!form.name.trim()) return;
+    setSaving(true);
+    setError(null);
+
+    const payload = {
+      name: form.name.trim(),
+      role: form.role.trim() || null,
+      bio: form.bio.trim() || null,
+      photo_url: form.photo_url.trim() || null,
+      section: form.section.trim() || null,
+    };
+
+    if (editingId) {
+      const { data, error } = await supabase
+        .from("guests")
+        .update(payload)
+        .eq("id", editingId)
+        .select()
+        .single();
+      if (error) {
+        setError(error.message);
+        setSaving(false);
+        return;
+      }
+      setGuests((prev) => prev.map((g) => (g.id === editingId ? (data as Guest) : g)));
+    } else {
+      const { data, error } = await supabase
+        .from("guests")
+        .insert(payload)
+        .select()
+        .single();
+      if (error) {
+        setError(error.message);
+        setSaving(false);
+        return;
+      }
+      setGuests((prev) => [data as Guest, ...prev]);
+    }
+
+    setSaving(false);
+    closeModal();
+  }
+
+  async function handleDelete(id: string) {
+    if (!confirm("Eliminare questo ospite?")) return;
+    const { error } = await supabase.from("guests").delete().eq("id", id);
+    if (error) {
+      setError(error.message);
+      return;
+    }
+    setGuests((prev) => prev.filter((g) => g.id !== id));
+  }
+
+  return (
+    <div>
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Cerca per nome, ruolo, sezione…"
+          className="w-full rounded-lg border border-neutral-300 bg-white px-4 py-2.5 text-sm outline-none focus:border-neutral-900 sm:w-80"
+        />
+        <button
+          onClick={openNew}
+          className="shrink-0 rounded-lg bg-neutral-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-neutral-800"
+        >
+          + Nuovo ospite
+        </button>
+      </div>
+
+      {error && !modalOpen && <p className="mb-4 text-sm text-red-600">{error}</p>}
+
+      <div className="overflow-x-auto rounded-xl border border-neutral-200 bg-white shadow-sm">
+        <table className="w-full text-left text-sm">
+          <thead>
+            <tr className="border-b border-neutral-200 text-[11px] uppercase tracking-wider text-neutral-400">
+              <th className="px-4 py-3 font-semibold">Foto</th>
+              <th className="px-4 py-3 font-semibold">Nome</th>
+              <th className="px-4 py-3 font-semibold">Ruolo</th>
+              <th className="px-4 py-3 font-semibold">Sezione</th>
+              <th className="px-4 py-3 text-right font-semibold">Azioni</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.length === 0 && (
+              <tr>
+                <td colSpan={5} className="px-4 py-8 text-center text-sm text-neutral-500">
+                  {guests.length === 0 ? "Nessun ospite ancora." : "Nessun risultato."}
+                </td>
+              </tr>
+            )}
+            {filtered.map((guest) => (
+              <tr
+                key={guest.id}
+                className="border-b border-neutral-100 last:border-0 hover:bg-neutral-50"
+              >
+                <td className="px-4 py-3">
+                  {guest.photo_url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={guest.photo_url}
+                      alt={guest.name}
+                      className="h-10 w-10 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-200 text-xs font-semibold text-neutral-600">
+                      {initials(guest.name)}
+                    </div>
+                  )}
+                </td>
+                <td className="px-4 py-3">
+                  <p className="font-medium text-neutral-900">{guest.name}</p>
+                  <p className="text-xs text-neutral-400">{slugify(guest.name)}</p>
+                </td>
+                <td className="px-4 py-3 text-neutral-600">{guest.role || "—"}</td>
+                <td className="px-4 py-3 text-neutral-600">{guest.section || "—"}</td>
+                <td className="px-4 py-3">
+                  <div className="flex justify-end gap-2">
+                    <button
+                      onClick={() => openEdit(guest)}
+                      className="rounded-full border border-neutral-300 px-3 py-1 text-xs font-medium hover:bg-neutral-100"
+                    >
+                      Modifica
+                    </button>
+                    <button
+                      onClick={() => handleDelete(guest.id)}
+                      className="rounded-full border border-red-200 px-3 py-1 text-xs font-medium text-red-600 hover:bg-red-50"
+                    >
+                      Elimina
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl">
+            <div className="mb-5 flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-neutral-900">
+                {editingId ? "Modifica ospite" : "Nuovo ospite"}
+              </h2>
+              <button
+                onClick={closeModal}
+                className="text-neutral-400 hover:text-neutral-700"
+                aria-label="Chiudi"
+              >
+                ✕
+              </button>
+            </div>
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <input
+                placeholder="Nome"
+                value={form.name}
+                onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                required
+                className="rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
+              />
+              <input
+                placeholder="Ruolo (es. Regista, Attore)"
+                value={form.role}
+                onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
+                className="rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
+              />
+              <input
+                placeholder="Sezione del festival"
+                value={form.section}
+                onChange={(e) => setForm((f) => ({ ...f, section: e.target.value }))}
+                className="rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
+              />
+              <input
+                placeholder="URL foto"
+                value={form.photo_url}
+                onChange={(e) => setForm((f) => ({ ...f, photo_url: e.target.value }))}
+                className="rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
+              />
+              <textarea
+                placeholder="Bio"
+                value={form.bio}
+                onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))}
+                rows={3}
+                className="col-span-full rounded-md border border-neutral-300 px-3 py-2 text-sm outline-none focus:border-neutral-900"
+              />
+
+              {error && <p className="col-span-full text-sm text-red-600">{error}</p>}
+
+              <div className="col-span-full mt-2 flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="rounded-lg border border-neutral-300 px-4 py-2 text-sm hover:bg-neutral-100"
+                >
+                  Annulla
+                </button>
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="rounded-lg bg-neutral-950 px-4 py-2 text-sm font-semibold text-white hover:bg-neutral-800 disabled:opacity-50"
+                >
+                  {saving ? "Salvataggio…" : editingId ? "Salva modifiche" : "Aggiungi ospite"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

@@ -649,13 +649,6 @@ main, header, footer, section{position:relative; z-index:1;}
   border:2px solid var(--ink);
 }
 .dial-hub svg{width:34%;}
-.dial-stop{
-  position:absolute;
-  width:9%;
-  left:92.3%; top:50%;
-  color:var(--ink);
-  transform:translate(-50%,-50%) rotate(90deg);
-}
 .dial-hole{
   position:absolute;
   width:15.5%;

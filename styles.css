@@ -818,6 +818,7 @@ body:not(.is-locked) .site-lock{ display:none; }
   bottom:0;
   width:1px;
   background:var(--ink);
+  z-index:1;
 }
 .manifesto-section{position:relative; grid-column:2;}
 .manifesto-section:nth-of-type(even){grid-column:1; padding-left:var(--hero-inset);}

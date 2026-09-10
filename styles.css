@@ -17,6 +17,7 @@
   --hero-col: clamp(260px, 34vw, 600px);
   --hero-grid-h: clamp(280px, 38vw, 720px);
   --hero-inset: clamp(40px, 14vw, 300px);
+  --footer-contact-shift-x: clamp(60px, 25vw, 350px);
   --watermark-h: clamp(72px, 8vw, 104px);
   --h1-vw: 6.25vw;
 
@@ -117,14 +118,13 @@ main, header, footer, section{position:relative; z-index:1;}
   pointer-events:none;
 }
 @media (max-width:720px){
-  .nav-overlay{
-    right:var(--edge); left:auto;
-    flex-direction:column;
-    width:min(70vw, 320px);
-    max-width:70vw;
-  }
-  .nav-col{height:auto !important; padding:14px 18px;}
-  .nav-col a{font-size:clamp(28px, 9vw, 40px);}
+  .nav-overlay{ right:var(--edge); left:auto; max-width:94vw; }
+  .nav-col{padding:10px 12px;}
+  .nav-col:nth-child(1){height:clamp(90px, 28vw, 220px);}
+  .nav-col:nth-child(2){height:clamp(70px, 22vw, 170px);}
+  .nav-col:nth-child(3){height:clamp(54px, 16vw, 130px);}
+  .nav-badge{width:18px; height:18px; top:8px; left:8px; font-size:9px;}
+  .nav-col a{font-size:clamp(16px, 6vw, 46px);}
 }
 .nav-overlay.is-open{pointer-events:auto;}
 .nav-col{
@@ -595,20 +595,19 @@ main, header, footer, section{position:relative; z-index:1;}
 @media (pointer:coarse), (prefers-reduced-motion: reduce){ .hero-reveal{display:none;} }
 
 @media (max-width:760px){
-  :root{ --h1-vw: 11.45vw; }
-  .hero-grid{
-    grid-template-columns:1fr;
-    row-gap:28px;
+  :root{
+    --h1-vw: 11.45vw;
+    --hero-col: clamp(72px, 30vw, 140px);
+    --hero-grid-h: clamp(90px, 30vw, 200px);
+    --hero-inset: clamp(10px, 5vw, 32px);
+    --footer-contact-shift-x: clamp(40px, 20vw, 200px);
   }
-  .hero-divider{display:none;}
-  .hero-left{margin-left:0;}
-  .hero-mark{width:64px;}
-  .hero-role{margin:0;}
-  .hero-right{gap:16px;}
-  .hero-meta-row{transform:none;}
-  .hero-name{font-size:clamp(48px, 16vw, 110px);}
-  .hero-group{margin-left:0; font-size:clamp(18px, 5.5vw, 28px);}
-  .footer-statement{transform:none; margin-left:0;}
+  .hero-grid{column-gap:18px;}
+  .hero-mark{width:clamp(36px, 13vw, 64px);}
+  .hero-name{font-size:clamp(28px, 13vw, 60px);}
+  .hero-group{font-size:clamp(12px, 4.6vw, 22px);}
+  .footer-statement{transform:translateX(clamp(8px, 8vw, 90px));}
+  .footer-contact{max-width:min(240px, 62vw);}
 }
 
 /* ---------- ospiti: guest cards loaded from Supabase ---------- */

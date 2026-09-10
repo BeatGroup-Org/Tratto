@@ -793,14 +793,16 @@ body:not(.is-locked) .site-lock{ display:none; }
 .manifesto-page{
   position:relative;
   z-index:1;
-  padding:clamp(120px, 18vh, 220px) var(--edge) clamp(160px, 22vh, 280px);
+  --manifesto-pad-top:clamp(120px, 18vh, 220px);
+  padding:var(--manifesto-pad-top) var(--edge) clamp(160px, 22vh, 280px);
 }
 .manifesto-mark{
   width:56px;
-  margin:0 0 40px;
+  margin:0 0 28px;
   color:var(--ink);
 }
 .manifesto-mark svg{width:100%; height:auto; display:block;}
+.manifesto-page .ospiti-header{margin-bottom:16px;}
 .manifesto-timeline{
   position:relative;
   width:100vw;
@@ -814,7 +816,7 @@ body:not(.is-locked) .site-lock{ display:none; }
 .manifesto-line{
   position:absolute;
   left:calc(var(--hero-col) + 46px);
-  top:0;
+  top:calc(var(--manifesto-pad-top) - 16px);
   bottom:0;
   width:1px;
   background:var(--ink);

@@ -220,7 +220,7 @@ main, header, footer, section{position:relative; z-index:1;}
   transform:translateY(-12px);
 }
 .hero-name{
-  font-size:clamp(72px, 16vw, 260px);
+  font-size:clamp(60px, 13.5vw, 220px);
   font-weight:700;
   line-height:.88;
   letter-spacing:-.02em;

@@ -180,7 +180,7 @@ main, header, footer, section{position:relative; z-index:1;}
 [data-underline]:hover{background-size:0% 1px;}
 
 /* ---------- hero ---------- */
-.hero{padding:28px 0 60px;}
+.hero{padding:28px 0 clamp(20px, 4.3vw, 60px);}
 
 .hero-grid{
   display:grid;
@@ -375,13 +375,13 @@ main, header, footer, section{position:relative; z-index:1;}
 
 /* ---------- footer ---------- */
 .footer{
-  padding:80px var(--edge) 0;
+  padding:clamp(24px, 5.7vw, 80px) var(--edge) 0;
   max-width:var(--maxw);
   margin:0 auto;
 }
 .footer-statement{
   width:fit-content;
-  margin:140px auto 0;
+  margin:clamp(40px, 10vw, 140px) auto 0;
   text-align:left;
   transform:translateX(clamp(20px, 6.43vw, 90px));
 }

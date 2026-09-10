@@ -793,7 +793,7 @@ body:not(.is-locked) .site-lock{ display:none; }
 .manifesto-page{
   position:relative;
   z-index:1;
-  --manifesto-pad-top:calc(clamp(120px, 18vh, 220px) + 24px);
+  --manifesto-pad-top:28px;
   padding:var(--manifesto-pad-top) 0 clamp(160px, 22vh, 280px);
 }
 .manifesto-head{
@@ -810,7 +810,7 @@ body:not(.is-locked) .site-lock{ display:none; }
 .manifesto-mark{
   grid-column:1;
   width:clamp(90px, 11vw, 190px);
-  margin:0;
+  margin:0 0 0 var(--hero-inset);
   color:var(--ink);
 }
 .manifesto-mark svg{width:100%; height:auto; display:block;}

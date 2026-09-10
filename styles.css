@@ -809,12 +809,21 @@ body:not(.is-locked) .site-lock{ display:none; }
 }
 .manifesto-mark{
   grid-column:1;
-  width:56px;
+  width:clamp(90px, 11vw, 190px);
   margin:0;
   color:var(--ink);
 }
 .manifesto-mark svg{width:100%; height:auto; display:block;}
 .manifesto-head .ospiti-header{grid-column:2; margin-bottom:0;}
+.manifesto-head .ospiti-header .line{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:16px;
+  line-height:1.05;
+  letter-spacing:-.01em;
+  text-transform:none;
+  color:var(--ink);
+}
 .manifesto-timeline{
   position:relative;
   width:100vw;

@@ -16,7 +16,7 @@
 
   --hero-col: clamp(260px, 34vw, 520px);
   --hero-grid-h: clamp(280px, 38vw, 640px);
-  --hero-inset: clamp(24px, 8vw, 140px);
+  --hero-inset: clamp(40px, 14vw, 260px);
   --watermark-h: clamp(72px, 8vw, 104px);
   --h1-vw: 6.25vw;
 

@@ -2,51 +2,24 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(pointer:fine)').matches;
 
-  /* ---------------- align "i"->line, "Designer & Developer"->"Design", logo->"Designer & Developer" ---------------- */
+  /* ---------------- align logo -> "Based in Kyiv", divider -> "Designer & Developer" ---------------- */
   (function () {
-    var group = document.querySelector('.hero-group:not(.offset)');
     var role = document.querySelector('.hero-role');
     var mark = document.querySelector('.hero-mark');
-    var designI = document.getElementById('designI');
     var divider = document.querySelector('.hero-divider');
-    var divider2 = document.querySelector('.hero-divider-2');
-    var offsetGroup = document.querySelector('.hero-group.offset');
-    var heroEl = document.querySelector('.hero');
     var basedInKyiv = document.querySelector('.hero-meta-row .line-mask');
-    if (!group || !role || !mark || !designI || !divider) return;
+    if (!role || !mark || !divider) return;
 
     function align() {
-      group.style.transform = 'none';
-      var iRect = designI.getBoundingClientRect();
-      var dRect = divider.getBoundingClientRect();
-      var iCenter = iRect.left + iRect.width / 2;
-      var dCenter = dRect.left + dRect.width / 2;
-      group.style.transform = 'translateX(' + (dCenter - iCenter) + 'px)';
-
-      role.style.transform = 'none';
-      var groupLeft = group.getBoundingClientRect().left;
-      var roleLeft = role.getBoundingClientRect().left;
-      role.style.transform = 'translateX(' + (groupLeft - roleLeft) + 'px)';
-
       mark.style.transform = 'none';
       var markTop0 = mark.getBoundingClientRect().top;
       var markDy = basedInKyiv ? (basedInKyiv.getBoundingClientRect().top - markTop0) : 0;
-      var roleLeft2 = role.getBoundingClientRect().left;
-      var markLeft = mark.getBoundingClientRect().left;
-      mark.style.transform = 'translateY(' + markDy + 'px) translateX(' + (roleLeft2 - markLeft) + 'px)';
+      mark.style.transform = 'translateY(' + markDy + 'px)';
 
-      // first segment stops at the bottom of "Designer & Developer"
-      var heroRect = heroEl.getBoundingClientRect();
+      // divider stops at the bottom of "Designer & Developer"
       var topRect = divider.getBoundingClientRect();
       var roleRect = role.getBoundingClientRect();
       divider.style.height = (roleRect.bottom - topRect.top) + 'px';
-
-      // second segment resumes at the top of "UX/UI & Web-flow dev.", same x
-      if (divider2 && offsetGroup) {
-        var offRect = offsetGroup.getBoundingClientRect();
-        divider2.style.top = (offRect.top - heroRect.top) + 'px';
-        divider2.style.height = (offRect.bottom - offRect.top) + 'px';
-      }
     }
 
     align();

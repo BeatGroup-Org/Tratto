@@ -218,24 +218,20 @@ main, header, footer, section{position:relative; z-index:1;}
   transform:translateY(-12px);
 }
 .hero-name{
-  font-size:clamp(40px, var(--h1-vw), 160px);
+  font-size:clamp(72px, 16vw, 260px);
   font-weight:700;
   line-height:.88;
   letter-spacing:-.02em;
   margin:0;
 }
 .hero-group{
-  margin-top:.15em;
-  font-size:clamp(40px, var(--h1-vw), 160px);
+  display:block;
+  margin-top:.3em;
+  font-size:clamp(22px, 4.2vw, 58px);
   font-weight:700;
-  line-height:.88;
-  letter-spacing:-.02em;
+  line-height:1.1;
+  letter-spacing:-.01em;
 }
-.hero-group:not(.offset){
-  display:inline-block;
-}
-.hero-group.offset{margin-left:calc(var(--hero-col) + 57px);}
-.dev-indent{margin-left:1.05em;}
 
 
 /* ---------- ring / canvas section ---------- */

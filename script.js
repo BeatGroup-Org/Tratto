@@ -2,23 +2,17 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(pointer:fine)').matches;
 
-  /* ---------------- align statement -> logo column, divider -> "Designer & Developer", logo -> "Based in Kyiv" ---------------- */
+  /* ---------------- divider -> "Designer & Developer", logo -> "Based in Kyiv" ---------------- */
   (function () {
-    var group = document.querySelector('.hero-group');
     var role = document.querySelector('.hero-role');
     var mark = document.querySelector('.hero-mark');
     var divider = document.querySelector('.hero-divider');
     var basedInKyiv = document.querySelector('.hero-meta-row .line-mask');
-    if (!group || !role || !mark || !divider) return;
+    if (!role || !mark || !divider) return;
 
     function align() {
-      // logo and role sit at their natural left edge (flush with hero-left);
-      // the statement line below is pulled to start at that same edge.
-      group.style.transform = 'none';
-      var markLeft = mark.getBoundingClientRect().left;
-      var groupLeft = group.getBoundingClientRect().left;
-      group.style.transform = 'translateX(' + (markLeft - groupLeft) + 'px)';
-
+      // logo, role and the statement all share the same left inset (set in
+      // CSS via --hero-inset), so no horizontal JS positioning is needed here.
       mark.style.transform = 'none';
       var markTop0 = mark.getBoundingClientRect().top;
       var markDy = basedInKyiv ? (basedInKyiv.getBoundingClientRect().top - markTop0) : 0;

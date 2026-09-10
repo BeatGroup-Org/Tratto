@@ -12,6 +12,7 @@
     var divider2 = document.querySelector('.hero-divider-2');
     var offsetGroup = document.querySelector('.hero-group.offset');
     var heroEl = document.querySelector('.hero');
+    var basedInKyiv = document.querySelector('.hero-meta-row .line-mask');
     if (!group || !role || !mark || !designI || !divider) return;
 
     function align() {
@@ -27,10 +28,13 @@
       var roleLeft = role.getBoundingClientRect().left;
       role.style.transform = 'translateX(' + (groupLeft - roleLeft) + 'px)';
 
-      mark.style.transform = 'translateY(-16px)';
+      mark.style.transform = 'none';
+      var markTop0 = mark.getBoundingClientRect().top;
+      var markDy = basedInKyiv ? (basedInKyiv.getBoundingClientRect().top - markTop0) : -16;
+      mark.style.transform = 'translateY(' + markDy + 'px)';
       var roleLeft2 = role.getBoundingClientRect().left;
       var markLeft = mark.getBoundingClientRect().left;
-      mark.style.transform = 'translateY(-16px) translateX(' + (roleLeft2 - markLeft) + 'px)';
+      mark.style.transform = 'translateY(' + markDy + 'px) translateX(' + (roleLeft2 - markLeft) + 'px)';
 
       // first segment stops at the bottom of "Designer & Developer"
       var heroRect = heroEl.getBoundingClientRect();

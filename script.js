@@ -11,6 +11,13 @@
     if (!role || !mark || !divider) return;
 
     function align() {
+      // below 761px the hero grid stacks into a single column (see CSS),
+      // so the cross-column alignment below no longer applies.
+      if (!window.matchMedia('(min-width:761px)').matches) {
+        mark.style.transform = 'none';
+        return;
+      }
+
       // logo, role and the statement all share the same left inset (set in
       // CSS via --hero-inset), so no horizontal JS positioning is needed here.
       mark.style.transform = 'none';
@@ -102,6 +109,7 @@
 
     function align() {
       contact.style.transform = 'none';
+      if (!window.matchMedia('(min-width:761px)').matches) return;
       var cRect = contact.getBoundingClientRect();
       var tRect = target.getBoundingClientRect();
       var dy = tRect.top - cRect.top - 52;

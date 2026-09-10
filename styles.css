@@ -116,7 +116,16 @@ main, header, footer, section{position:relative; z-index:1;}
   align-items:flex-start;
   pointer-events:none;
 }
-@media (max-width:720px){ .nav-overlay{ right:var(--edge); left:auto; } }
+@media (max-width:720px){
+  .nav-overlay{
+    right:var(--edge); left:auto;
+    flex-direction:column;
+    width:min(70vw, 320px);
+    max-width:70vw;
+  }
+  .nav-col{height:auto !important; padding:14px 18px;}
+  .nav-col a{font-size:clamp(28px, 9vw, 40px);}
+}
 .nav-overlay.is-open{pointer-events:auto;}
 .nav-col{
   flex:0 0 auto;
@@ -587,6 +596,19 @@ main, header, footer, section{position:relative; z-index:1;}
 
 @media (max-width:760px){
   :root{ --h1-vw: 11.45vw; }
+  .hero-grid{
+    grid-template-columns:1fr;
+    row-gap:28px;
+  }
+  .hero-divider{display:none;}
+  .hero-left{margin-left:0;}
+  .hero-mark{width:64px;}
+  .hero-role{margin:0;}
+  .hero-right{gap:16px;}
+  .hero-meta-row{transform:none;}
+  .hero-name{font-size:clamp(48px, 16vw, 110px);}
+  .hero-group{margin-left:0; font-size:clamp(18px, 5.5vw, 28px);}
+  .footer-statement{transform:none; margin-left:0;}
 }
 
 /* ---------- ospiti: guest cards loaded from Supabase ---------- */

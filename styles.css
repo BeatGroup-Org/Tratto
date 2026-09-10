@@ -120,13 +120,42 @@ main, header, footer, section{position:relative; z-index:1;}
   pointer-events:none;
 }
 @media (max-width:720px){
-  .nav-overlay{ right:var(--edge); left:auto; max-width:94vw; }
-  .nav-col{padding:10px 12px;}
-  .nav-col:nth-child(1){height:clamp(90px, 28vw, 220px);}
-  .nav-col:nth-child(2){height:clamp(70px, 22vw, 170px);}
-  .nav-col:nth-child(3){height:clamp(54px, 16vw, 130px);}
-  .nav-badge{width:18px; height:18px; top:8px; left:8px; font-size:9px;}
-  .nav-col a{font-size:clamp(16px, 6vw, 46px);}
+  .nav-overlay{
+    inset:0; right:0; left:0; top:0; bottom:0;
+    width:100%; max-width:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:stretch;
+    padding:0 28px;
+    background:transparent;
+    transition:background var(--dur-m) var(--ease-in-out);
+  }
+  .nav-overlay.is-open{ background:var(--paper); }
+  .nav-col{
+    flex-direction:row;
+    align-items:center;
+    justify-content:flex-start;
+    gap:16px;
+    height:auto !important;
+    background:none;
+    padding:18px 0;
+    border-bottom:1px solid var(--ink-12);
+    transform:none;
+    opacity:0;
+    transition:opacity var(--dur-m) var(--ease-in-out);
+  }
+  .nav-overlay.is-open .nav-col{ opacity:1; }
+  .nav-col:last-child{ border-bottom:none; }
+  .nav-col:nth-child(1),
+  .nav-col:nth-child(2),
+  .nav-col:nth-child(3){ height:auto !important; background:none !important; }
+  .nav-badge{
+    position:static;
+    width:auto; height:auto;
+    background:none; border:none;
+    font-size:13px; color:var(--ink-60);
+  }
+  .nav-col a{font-size:clamp(32px, 11vw, 56px);}
 }
 .nav-overlay.is-open{pointer-events:auto;}
 .nav-col{
@@ -607,7 +636,7 @@ main, header, footer, section{position:relative; z-index:1;}
   .hero-left{gap:20px;}
   .hero-role{margin:0 0 auto;}
   .hero-name{font-size:clamp(32px, 10.5vw, 300px);}
-  .hero-group{font-size:clamp(14px, 4vw, 70px); margin-top:16px;}
+  .hero-group{font-size:clamp(18px, 5.5vw, 70px); margin-top:16px;}
   .hero-grid{margin-bottom:28px;}
   .hero-meta-row{gap:6px;}
   .footer-statement h2{margin-top:6px;}

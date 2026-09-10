@@ -180,7 +180,7 @@ main, header, footer, section{position:relative; z-index:1;}
 [data-underline]:hover{background-size:0% 1px;}
 
 /* ---------- hero ---------- */
-.hero{padding:28px 0 clamp(20px, 4.3vw, 60px);}
+.hero{padding:28px 0 clamp(32px, 4.3vw, 60px);}
 
 .hero-grid{
   display:grid;
@@ -375,13 +375,13 @@ main, header, footer, section{position:relative; z-index:1;}
 
 /* ---------- footer ---------- */
 .footer{
-  padding:clamp(24px, 5.7vw, 80px) var(--edge) 0;
+  padding:clamp(56px, 5.7vw, 80px) var(--edge) 0;
   max-width:var(--maxw);
   margin:0 auto;
 }
 .footer-statement{
   width:fit-content;
-  margin:clamp(40px, 10vw, 140px) auto 0;
+  margin:clamp(90px, 10vw, 140px) auto 0;
   text-align:left;
   transform:translateX(clamp(20px, 6.43vw, 90px));
 }
@@ -597,8 +597,21 @@ main, header, footer, section{position:relative; z-index:1;}
 @media (pointer:coarse), (prefers-reduced-motion: reduce){ .hero-reveal{display:none;} }
 
 @media (max-width:760px){
-  :root{ --footer-contact-shift-x: clamp(20px, 15vw, 200px); }
-  .footer-contact{max-width:min(320px, 23vw);}
+  :root{
+    --footer-contact-shift-x: clamp(20px, 15vw, 200px);
+    --hero-grid-h: clamp(170px, 38vw, 720px);
+    --hero-gap: clamp(28px, 8vw, 57px);
+  }
+  .footer-contact{max-width:min(320px, 23vw); margin-top:clamp(56px, 12vw, 96px);}
+  .hero-mark{width:clamp(70px, 20vw, 190px);}
+  .hero-left{gap:20px;}
+  .hero-role{margin:0 0 auto;}
+  .hero-name{font-size:clamp(32px, 10.5vw, 300px);}
+  .hero-group{font-size:clamp(14px, 4vw, 70px); margin-top:16px;}
+  .hero-grid{margin-bottom:28px;}
+  .hero-meta-row{gap:6px;}
+  .footer-statement h2{margin-top:6px;}
+  .footer-statement h2:first-child{margin-top:0;}
 }
 
 /* ---------- ospiti: guest cards loaded from Supabase ---------- */

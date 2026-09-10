@@ -181,7 +181,7 @@ main, header, footer, section{position:relative; z-index:1;}
   padding-bottom:6px;
 }
 .hero-mark{
-  width:clamp(56px, 6vw, 108px);
+  width:clamp(90px, 11vw, 190px);
   color:var(--ink);
 }
 .hero-mark svg{width:100%; height:auto; display:block;}

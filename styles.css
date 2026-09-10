@@ -181,7 +181,7 @@ main, header, footer, section{position:relative; z-index:1;}
   padding-bottom:6px;
 }
 .hero-mark{
-  width:clamp(64px, 8vw, 128px);
+  width:clamp(84px, 10vw, 168px);
   color:var(--ink);
 }
 .hero-mark svg{width:100%; height:auto; display:block;}
@@ -648,7 +648,7 @@ main, header, footer, section{position:relative; z-index:1;}
   border-radius:50%;
   border:2px solid var(--ink);
 }
-.dial-hub svg{width:34%;}
+.dial-hub svg{width:48%;}
 .dial-hole{
   position:absolute;
   width:15.5%;

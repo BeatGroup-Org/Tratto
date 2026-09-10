@@ -30,8 +30,7 @@
 
       mark.style.transform = 'none';
       var markTop0 = mark.getBoundingClientRect().top;
-      var markDy = basedInKyiv ? (basedInKyiv.getBoundingClientRect().top - markTop0) : -16;
-      mark.style.transform = 'translateY(' + markDy + 'px)';
+      var markDy = basedInKyiv ? (basedInKyiv.getBoundingClientRect().top - markTop0) : 0;
       var roleLeft2 = role.getBoundingClientRect().left;
       var markLeft = mark.getBoundingClientRect().left;
       mark.style.transform = 'translateY(' + markDy + 'px) translateX(' + (roleLeft2 - markLeft) + 'px)';
@@ -52,9 +51,11 @@
 
     align();
     window.addEventListener('resize', align);
+    window.addEventListener('load', align);
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(align);
     }
+    setTimeout(align, 400);
   })();
 
   /* ---------------- align "more" ("m") to the "t" of "nothing" ---------------- */

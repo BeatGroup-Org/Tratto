@@ -805,7 +805,7 @@ body:not(.is-locked) .site-lock{ display:none; }
   grid-template-columns:var(--hero-col) 1fr;
   column-gap:57px;
   align-items:start;
-  margin-bottom:80px;
+  margin-bottom:110px;
 }
 .manifesto-mark{
   grid-column:1;

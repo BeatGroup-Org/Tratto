@@ -11,7 +11,7 @@
   --ink-12: rgba(13,13,12,.12);
   --paper: #ffffff;
 
-  --font-display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --font-display: "aktiv-grotesk", "Arial Narrow", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
   --hero-col: clamp(260px, 34vw, 520px);

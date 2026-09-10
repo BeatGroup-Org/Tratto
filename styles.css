@@ -788,3 +788,53 @@ body:not(.is-locked) .site-lock{ display:none; }
   text-align:center;
   margin:0;
 }
+
+/* ---------- manifesto ---------- */
+.manifesto-page{
+  position:relative;
+  z-index:1;
+  max-width:760px;
+  margin:0 auto;
+  padding:clamp(120px, 18vh, 220px) var(--edge) clamp(160px, 22vh, 280px);
+}
+.manifesto-mark{
+  width:56px;
+  margin:0 0 40px;
+  color:var(--ink);
+}
+.manifesto-mark svg{width:100%; height:auto; display:block;}
+.manifesto-section{margin-top:40px;}
+.manifesto-section:first-of-type{margin-top:0;}
+.manifesto-kicker{
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--ink-60);
+  margin:0 0 24px;
+}
+.manifesto-lead{
+  font-size:clamp(20px, 3vw, 32px);
+  font-weight:500;
+  margin:0 0 28px;
+}
+.manifesto-body p{
+  margin:0 0 20px;
+  font-size:18px;
+  line-height:1.6;
+  color:var(--ink);
+  max-width:640px;
+}
+.manifesto-body p:last-child{margin-bottom:0;}
+.manifesto-body em{font-style:italic;}
+.manifesto-question{
+  font-size:clamp(20px, 2.6vw, 28px) !important;
+  font-weight:600;
+  font-style:italic;
+}
+.manifesto-divider{
+  display:block;
+  height:1px;
+  background:var(--ink-12);
+  margin:56px 0;
+}

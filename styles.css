@@ -798,11 +798,11 @@ body:not(.is-locked) .site-lock{ display:none; }
 }
 .manifesto-mark{
   width:56px;
-  margin:0 0 28px;
+  margin:0 0 40px;
   color:var(--ink);
 }
 .manifesto-mark svg{width:100%; height:auto; display:block;}
-.manifesto-page .ospiti-header{margin-bottom:16px;}
+.manifesto-page .ospiti-header{margin-bottom:32px;}
 .manifesto-timeline{
   position:relative;
   width:100vw;

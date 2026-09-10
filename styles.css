@@ -14,9 +14,9 @@
   --font-display: "aktiv-grotesk", "Arial Narrow", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
-  --hero-col: clamp(260px, 34vw, 520px);
-  --hero-grid-h: clamp(280px, 38vw, 640px);
-  --hero-inset: clamp(40px, 14vw, 260px);
+  --hero-col: clamp(260px, 34vw, 600px);
+  --hero-grid-h: clamp(280px, 38vw, 720px);
+  --hero-inset: clamp(40px, 14vw, 300px);
   --watermark-h: clamp(72px, 8vw, 104px);
   --h1-vw: 6.25vw;
 
@@ -221,7 +221,7 @@ main, header, footer, section{position:relative; z-index:1;}
   transform:translateY(-12px);
 }
 .hero-name{
-  font-size:clamp(66px, 15vw, 240px);
+  font-size:clamp(66px, 15vw, 300px);
   font-weight:700;
   line-height:.88;
   letter-spacing:-.02em;
@@ -231,7 +231,7 @@ main, header, footer, section{position:relative; z-index:1;}
   display:inline-block;
   margin-top:.3em;
   margin-left:var(--hero-inset);
-  font-size:clamp(22px, 4.2vw, 58px);
+  font-size:clamp(22px, 4.2vw, 70px);
   font-weight:700;
   line-height:1.1;
   letter-spacing:-.01em;

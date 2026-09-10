@@ -921,3 +921,7 @@ body:not(.is-locked) .site-lock{ display:none; }
 }
 .manifesto-body p:last-child{margin-bottom:0;}
 
+@media (max-width:640px){
+  .manifesto-section:nth-of-type(even){grid-column:2; padding-left:0;}
+}
+

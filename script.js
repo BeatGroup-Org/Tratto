@@ -124,6 +124,7 @@
 
   if (reduce || !window.gsap) {
     preloaderCount.style.display = 'none';
+    document.body.classList.remove('is-preloading');
     document.querySelectorAll('.line').forEach(function (l) { l.style.transform = 'none'; });
   } else {
     gsap.to(loadState, {
@@ -132,6 +133,7 @@
       ease: 'power1.inOut',
       onUpdate: function () { preloaderCount.textContent = Math.round(loadState.n) + '%'; },
       onComplete: function () {
+        document.body.classList.remove('is-preloading');
         gsap.to(preloaderCount, {
           opacity: 0,
           duration: .5,

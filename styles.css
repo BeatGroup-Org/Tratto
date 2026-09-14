@@ -602,7 +602,10 @@ main, header, footer, section{position:relative; z-index:1;}
   display:flex; align-items:center; justify-content:space-between;
   pointer-events:none;
   overflow:clip;
+  opacity:1;
+  transition:opacity .4s ease;
 }
+.is-preloading .watermark{opacity:0;}
 .watermark-half{
   font-weight:700;
   letter-spacing:-.02em;

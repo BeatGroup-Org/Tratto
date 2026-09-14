@@ -15,7 +15,7 @@
   --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
   --hero-col: clamp(90px, 34vw, 600px);
-  --hero-grid-h: clamp(100px, 38vw, 720px);
+  --hero-grid-h: clamp(80px, 24vw, 440px);
   --hero-inset: clamp(36px, 14vw, 300px);
   --hero-gap: clamp(16px, 4vw, 57px);
   --hero-divider-gap: clamp(14px, 3.3vw, 46px);
@@ -295,7 +295,7 @@ main, header, footer, section{position:relative; z-index:1;}
 }
 .hero-statement{
   margin-top:.3em;
-  margin-left:var(--hero-inset);
+  margin-left:calc(var(--hero-inset) + clamp(40px, 6vw, 140px));
   font-family:var(--font-display);
   font-weight:700;
   font-size:clamp(20px, var(--h1-vw), 160px);
@@ -652,7 +652,6 @@ main, header, footer, section{position:relative; z-index:1;}
 @media (max-width:760px){
   :root{
     --footer-contact-shift-x: clamp(20px, 15vw, 200px);
-    --hero-grid-h: clamp(170px, 38vw, 720px);
     --hero-gap: clamp(28px, 8vw, 57px);
   }
   .footer-contact{max-width:min(320px, 23vw); margin-top:clamp(56px, 12vw, 96px);}

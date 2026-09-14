@@ -90,26 +90,10 @@ main, header, footer, section{position:relative; z-index:1;}
 .nav{
   position:fixed; top:0; left:0; right:0;
   z-index:50;
-  display:flex; align-items:center; justify-content:space-between;
+  display:flex; align-items:center; justify-content:flex-end;
   padding:20px var(--edge);
   max-width:var(--maxw);
   margin:0 auto; right:0;
-}
-.nav-brand{
-  display:flex; align-items:center; gap:8px;
-  color:var(--ink);
-}
-.nav-brand-mark{
-  display:block;
-  width:16px;
-  color:var(--ink);
-}
-.nav-brand-mark svg{width:100%; height:auto; display:block;}
-.nav-brand-name{
-  font-family:var(--font-display);
-  font-weight:800;
-  font-size:15px;
-  letter-spacing:-.01em;
 }
 .nav-right{
   display:flex; align-items:center; gap:clamp(20px, 3vw, 40px);
@@ -256,7 +240,7 @@ main, header, footer, section{position:relative; z-index:1;}
 [data-underline]:hover{background-size:0% 1px;}
 
 /* ---------- hero ---------- */
-.hero{padding:120px 0 clamp(32px, 4.3vw, 60px);}
+.hero{padding:44px 0 clamp(32px, 4.3vw, 60px);}
 
 .hero-grid{
   display:grid;

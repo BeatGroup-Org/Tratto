@@ -49,22 +49,6 @@
 
 <div class="preloader-count" id="preloaderCount">0%</div>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <filter id="goo" x="-80%" y="-80%" width="260%" height="260%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="26" result="blur"/>
-      <feColorMatrix in="blur" mode="matrix"
-        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 14 -5" result="thresholded"/>
-      <feTurbulence type="fractalNoise" baseFrequency="0.01 0.017" numOctaves="2" seed="7" result="noise"/>
-      <feDisplacementMap in="thresholded" in2="noise" scale="70" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </defs>
-</svg>
-
-<svg class="page-blob-svg" id="pageBlobSvg" aria-hidden="true">
-  <g id="pageBlobDots" filter="url(#goo)"></g>
-</svg>
-
 <div class="watermark" aria-hidden="true">
   <span class="watermark-half left">Design</span>
   <span class="watermark-half right">Days</span>

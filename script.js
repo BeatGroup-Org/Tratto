@@ -148,20 +148,15 @@
   var navOverlay = document.getElementById('navOverlay');
   var navOpen = false;
 
+  var navToggleLabel = navToggle.querySelector('.nav-toggle-label');
+
   function setNav(open) {
     navOpen = open;
     navToggle.setAttribute('aria-expanded', open);
-    navToggle.textContent = open ? 'Close' : 'Menu';
+    navToggle.classList.toggle('is-open', open);
+    if (navToggleLabel) navToggleLabel.textContent = open ? 'Chiudi' : 'Menu';
     navOverlay.setAttribute('aria-hidden', !open);
     navOverlay.classList.toggle('is-open', open);
-    if (window.gsap && !reduce) {
-      gsap.to(navOverlay.querySelectorAll('.nav-col'), {
-        scaleY: open ? 1 : 0,
-        duration: .55,
-        ease: open ? 'power4.out' : 'power3.in',
-        stagger: open ? .07 : .04
-      });
-    }
   }
   navToggle.addEventListener('click', function () { setNav(!navOpen); });
   navOverlay.querySelectorAll('[data-nav-link]').forEach(function (a) {

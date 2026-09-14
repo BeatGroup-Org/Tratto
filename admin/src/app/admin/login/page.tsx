@@ -4,17 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-const DEV_ACCOUNTS =
-  process.env.NODE_ENV !== "production"
-    ? [
-        {
-          email: "admin@tratto.it",
-          password: "R4KdJk6NWKhvquXR6gy8",
-          label: "Admin Tratto",
-        },
-      ]
-    : [];
-
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -48,12 +37,6 @@ export default function LoginPage() {
     signIn(email, password);
   }
 
-  function handleDevLogin(account: (typeof DEV_ACCOUNTS)[number]) {
-    setEmail(account.email);
-    setPassword(account.password);
-    signIn(account.email, account.password);
-  }
-
   return (
     <div className="min-h-screen bg-neutral-950 px-4 py-8 sm:px-8">
       <header className="mx-auto mb-8 flex max-w-5xl items-center gap-4">
@@ -66,7 +49,7 @@ export default function LoginPage() {
         </span>
       </header>
 
-      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 lg:grid-cols-2">
+      <div className="mx-auto max-w-md">
         <form
           onSubmit={handleSubmit}
           className="rounded-2xl bg-neutral-50 p-8 sm:p-10"
@@ -131,41 +114,6 @@ export default function LoginPage() {
             ← Torna al sito pubblico
           </a>
         </form>
-
-        {DEV_ACCOUNTS.length > 0 && (
-          <div className="rounded-2xl bg-neutral-900 p-8 sm:p-10">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="rounded bg-red-600 px-2 py-1 text-[10px] font-bold tracking-[0.1em] text-white">
-                DEV
-              </span>
-              <span className="text-xs font-semibold tracking-[0.15em] text-neutral-200">
-                ACCESSO RAPIDO
-              </span>
-            </div>
-            <p className="mb-6 text-sm leading-relaxed text-neutral-400">
-              Click su un account per compilare e accedere automaticamente.
-              Visibile solo in ambiente di sviluppo.
-            </p>
-
-            <div className="space-y-3">
-              {DEV_ACCOUNTS.map((account) => (
-                <button
-                  key={account.email}
-                  type="button"
-                  onClick={() => handleDevLogin(account)}
-                  disabled={loading}
-                  className="w-full rounded-xl border border-neutral-700 bg-neutral-800/60 p-4 text-left transition hover:border-neutral-500 hover:bg-neutral-800 disabled:opacity-50"
-                >
-                  <p className="font-bold text-white">{account.email}</p>
-                  <p className="mb-3 text-sm text-neutral-400">{account.label}</p>
-                  <code className="inline-block rounded bg-neutral-950 px-2 py-1 text-xs text-neutral-300">
-                    {account.password}
-                  </code>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

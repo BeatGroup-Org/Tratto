@@ -247,7 +247,7 @@ main, header, footer, section{position:relative; z-index:1;}
 .hero-left{
   display:flex; flex-direction:column;
   padding-bottom:6px;
-  margin-left:var(--hero-inset);
+  margin-left:calc(var(--hero-inset) + clamp(20px, 4vw, 90px));
 }
 .hero-mark{
   width:clamp(32px, 8vw, 130px);

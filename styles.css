@@ -384,8 +384,11 @@ main, header, footer, section{position:relative; z-index:1;}
 .partners-marquee:hover .partners-track{animation-play-state:paused;}
 .partners-item{
   flex:0 0 auto;
-  height:clamp(26px, 3.2vw, 42px);
+  height:clamp(44px, 5.6vw, 78px);
   display:flex; align-items:center;
+}
+.partners-item.is-compact{
+  height:clamp(64px, 8vw, 112px);
 }
 .partners-item img{
   height:100%;

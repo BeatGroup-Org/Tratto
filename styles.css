@@ -19,6 +19,7 @@
   --hero-inset: clamp(36px, 14vw, 300px);
   --hero-gap: clamp(16px, 4vw, 57px);
   --hero-divider-gap: clamp(14px, 3.3vw, 46px);
+  --hero-align-shift: clamp(40px, 6vw, 140px);
   --footer-contact-shift-x: clamp(50px, 25vw, 350px);
   --watermark-h: clamp(72px, 8vw, 104px);
   --h1-vw: 6.25vw;
@@ -247,10 +248,10 @@ main, header, footer, section{position:relative; z-index:1;}
 .hero-left{
   display:flex; flex-direction:column;
   padding-bottom:6px;
-  margin-left:calc(var(--hero-inset) + clamp(20px, 4vw, 90px));
+  margin-left:calc(var(--hero-inset) + var(--hero-align-shift));
 }
 .hero-mark{
-  width:clamp(32px, 8vw, 130px);
+  width:clamp(26px, 6.5vw, 105px);
   color:var(--ink);
 }
 .hero-mark svg{width:100%; height:auto; display:block;}
@@ -266,9 +267,9 @@ main, header, footer, section{position:relative; z-index:1;}
 .hero-divider{
   position:absolute;
   left:calc(var(--hero-col) + var(--hero-divider-gap));
-  top:clamp(4px, .86vw, 12px);
+  top:32px;
   width:1px;
-  height:calc(clamp(6px, 1.1vw, 16px) + var(--hero-grid-h));
+  height:calc(clamp(6px, 1.1vw, 16px) + var(--hero-grid-h) - (32px - clamp(4px, .86vw, 12px)));
   background:var(--ink);
 }
 .hero-right{
@@ -295,7 +296,7 @@ main, header, footer, section{position:relative; z-index:1;}
 }
 .hero-statement{
   margin-top:.3em;
-  margin-left:calc(var(--hero-inset) + clamp(40px, 6vw, 140px));
+  margin-left:calc(var(--hero-inset) + var(--hero-align-shift));
   font-family:var(--font-display);
   font-weight:700;
   font-size:clamp(20px, var(--h1-vw), 160px);
@@ -658,8 +659,8 @@ main, header, footer, section{position:relative; z-index:1;}
     --hero-gap: clamp(28px, 8vw, 57px);
   }
   .footer-contact{max-width:min(320px, 23vw); margin-top:clamp(56px, 12vw, 96px);}
-  .hero-mark{width:clamp(48px, 14vw, 130px);}
-  .hero-left{gap:20px;}
+  .hero-mark{width:clamp(38px, 11vw, 105px);}
+  .hero-left{gap:20px; margin-left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px));}
   .hero-role{margin:0 0 auto;}
   .hero-statement{margin-top:16px;}
   .hero-statement-offset{margin-left:clamp(16px, 6vw, 220px);}

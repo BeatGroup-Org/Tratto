@@ -902,7 +902,7 @@ body:not(.is-locked) .site-lock{ display:none; }
 
 /* ---------- manifesto ---------- */
 .manifesto-qa{
-  padding:58px 0 clamp(120px, 14vw, 220px);
+  padding:32px 0 clamp(120px, 14vw, 220px);
   min-height:60vh;
 }
 .manifesto-qa-list{
@@ -1075,6 +1075,6 @@ body:not(.is-locked) .site-lock{ display:none; }
 }
 
 @media (max-width:760px){
-  .manifesto-qa{padding-top:126px;}
+  .manifesto-qa{padding-top:88px;}
 }
 

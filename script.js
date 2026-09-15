@@ -48,16 +48,16 @@
       items.forEach(function (item) {
         var img = item.querySelector('.manifesto-qa-mark');
         var line = item.querySelector('.manifesto-qa-item-line');
-        var question = item.querySelector('.manifesto-qa-question');
-        if (!img || !line || !question) return;
+        var answer = item.querySelector('.manifesto-qa-answer');
+        if (!img || !line || !answer) return;
         var itemRect = item.getBoundingClientRect();
         var lineRect = line.getBoundingClientRect();
-        var qRect = question.getBoundingClientRect();
+        var aRect = answer.getBoundingClientRect();
         var imgRect = img.getBoundingClientRect();
         var gap = 24;
-        var edge = Math.min(lineRect.left, qRect.left);
+        var edge = Math.min(lineRect.left, aRect.left);
         var left = edge - imgRect.width - gap - itemRect.left;
-        var top = qRect.top + qRect.height / 2 - imgRect.height / 2 - itemRect.top;
+        var top = aRect.top + aRect.height / 2 - imgRect.height / 2 - itemRect.top;
         img.style.left = left + 'px';
         img.style.top = top + 'px';
       });

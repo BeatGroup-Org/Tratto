@@ -926,8 +926,10 @@ body:not(.is-locked) .site-lock{ display:none; }
 .manifesto-intro .page-kicker{
   display:flex; align-items:center; gap:8px;
   font-family:var(--font-mono);
-  font-size:12px;
-  color:var(--ink-60);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.02em;
+  color:var(--ink);
 }
 .manifesto-intro .page-kicker a{color:var(--ink);}
 .manifesto-intro .page-kicker a:hover{text-decoration:underline; text-underline-offset:3px;}
@@ -961,7 +963,7 @@ body:not(.is-locked) .site-lock{ display:none; }
   margin-left:var(--hero-inset);
   margin-right:clamp(20px, 8vw, 140px);
   display:grid;
-  grid-template-columns:var(--hero-col) 1fr;
+  grid-template-columns:clamp(140px, 16vw, 200px) 1fr;
   column-gap:var(--hero-gap);
   border-top:1px solid var(--ink-12);
   padding-top:clamp(40px, 6vw, 64px);

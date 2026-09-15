@@ -358,11 +358,8 @@ main, header, footer, section{position:relative; z-index:1;}
 .partners-marquee:hover .partners-track{animation-play-state:paused;}
 .partners-item{
   flex:0 0 auto;
-  height:clamp(28px, 3.4vw, 46px);
+  height:clamp(34px, 4vw, 56px);
   display:flex; align-items:center;
-}
-.partners-item.is-compact{
-  height:clamp(40px, 4.8vw, 66px);
 }
 .partners-item img{
   height:100%;

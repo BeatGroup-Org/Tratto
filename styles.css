@@ -351,7 +351,7 @@ main, header, footer, section{position:relative; z-index:1;}
 
 /* ---------- partners marquee ---------- */
 .partners{
-  padding:0 0 clamp(420px, 30vw, 480px);
+  padding:0 0 clamp(340px, 24vw, 400px);
 }
 .partners-head{
   display:flex; align-items:center;

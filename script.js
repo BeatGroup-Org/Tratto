@@ -232,7 +232,7 @@
 
       function getStart() {
         var wmH = watermarkEl.getBoundingClientRect().height;
-        var buffer = Math.max(wmH + 24, 400);
+        var buffer = Math.max(wmH + 24, 320);
         return 'bottom bottom-=' + buffer;
       }
 

@@ -211,7 +211,7 @@
       var wmLeft = document.querySelector('.watermark-half.left');
       var wmRight = document.querySelector('.watermark-half.right');
       var watermarkEl = document.querySelector('.watermark');
-      var socialsEl = document.querySelector('.partners-marquee') || document.querySelector('.footer-socials, [data-scroll-anchor]');
+      var socialsEl = document.querySelector('.footer-socials, [data-scroll-anchor]');
       if (!wmLeft || !wmRight || !watermarkEl || !socialsEl) return;
 
       function mergeIn() {

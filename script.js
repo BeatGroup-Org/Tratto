@@ -524,3 +524,27 @@
 
   chapters.forEach(function (section) { observer.observe(section); });
 })();
+
+/* ---------------- privacy policy modal ---------------- */
+(function () {
+  var modal = document.getElementById('privacyModal');
+  if (!modal) return;
+
+  var openers = document.querySelectorAll('[data-privacy-open]');
+  var closers = modal.querySelectorAll('[data-privacy-close]');
+
+  function open() {
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+  function close() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  openers.forEach(function (btn) { btn.addEventListener('click', open); });
+  closers.forEach(function (el) { el.addEventListener('click', close); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+  });
+})();

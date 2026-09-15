@@ -15,11 +15,12 @@
   --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
   --hero-col: clamp(90px, 34vw, 600px);
-  --hero-grid-h: clamp(80px, 30vw, 560px);
+  --hero-grid-h: clamp(80px, 34vw, 640px);
   --hero-inset: clamp(36px, 14vw, 300px);
   --hero-gap: clamp(16px, 4vw, 57px);
   --hero-divider-gap: clamp(14px, 3.3vw, 46px);
   --hero-align-shift: clamp(40px, 6vw, 140px);
+  --hero-mark-shift: clamp(28px, 3.8vw, 56px);
   --footer-contact-shift-x: calc(var(--hero-inset) + var(--hero-align-shift) - max(0px, (100vw - var(--maxw)) / 2) - var(--edge));
   --h1-vw: 6.25vw;
   --h1-min: 20px;
@@ -239,12 +240,13 @@ main, header, footer, section{position:relative; z-index:1;}
 }
 .hero-mark{
   width:clamp(26px, 6.5vw, 105px);
-  margin-left:clamp(28px, 3.8vw, 56px);
+  margin-left:var(--hero-mark-shift);
   color:var(--ink);
 }
 .hero-mark svg{width:100%; height:auto; display:block;}
 .hero-role{
   margin:auto 0 0;
+  margin-left:var(--hero-mark-shift);
   width:fit-content;
   font-family:var(--font-display);
   font-weight:600;
@@ -284,7 +286,7 @@ main, header, footer, section{position:relative; z-index:1;}
 }
 .hero-statement{
   margin-top:.3em;
-  margin-left:calc(var(--hero-inset) + var(--hero-align-shift));
+  margin-left:calc(var(--hero-inset) + var(--hero-align-shift) + var(--hero-mark-shift));
   font-family:var(--font-display);
   font-weight:700;
   font-size:clamp(var(--h1-min), var(--h1-vw), 160px);
@@ -687,7 +689,7 @@ main, header, footer, section{position:relative; z-index:1;}
   .hero-left{gap:20px; margin-left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px));}
   .partners-head{margin-left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px));}
   .hero-role{margin:0 0 auto;}
-  .hero-statement{margin-top:16px;}
+  .hero-statement{margin-top:16px; margin-left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px) + var(--hero-mark-shift));}
   .hero-statement-offset{margin-left:clamp(16px, 6vw, 220px);}
   .hero-grid{margin-bottom:28px;}
   .hero-meta-row{gap:6px;}

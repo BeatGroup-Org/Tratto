@@ -39,73 +39,10 @@
     setTimeout(align, 400);
   })();
 
-  /* ---------------- align "more" ("m") to the "t" of "nothing" ---------------- */
-  (function () {
-    var nothingT = document.getElementById('nothingT');
-    var moreLine = document.getElementById('moreLine');
-    if (!nothingT || !moreLine) return;
-
-    function align() {
-      moreLine.style.transform = 'none';
-      var tRect = nothingT.getBoundingClientRect();
-      var mRect = moreLine.getBoundingClientRect();
-      var shift = Math.min(tRect.left - mRect.left, window.innerWidth * 0.3);
-      moreLine.style.transform = 'translateX(' + shift + 'px)';
-    }
-
-    align();
-    window.addEventListener('resize', align);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(align);
-    }
-  })();
-
-  /* ---------------- align "than a" ("t") to the "e" of "more" ---------------- */
-  (function () {
-    var moreE = document.getElementById('moreE');
-    var thanT = document.getElementById('thanT');
-    var offsetEl = document.querySelector('.footer-statement-offset');
-    if (!moreE || !thanT || !offsetEl) return;
-
-    function align() {
-      offsetEl.style.transform = 'none';
-      var eRect = moreE.getBoundingClientRect();
-      var tRect = thanT.getBoundingClientRect();
-      var shift = Math.min(eRect.left - tRect.left, window.innerWidth * 0.3);
-      offsetEl.style.transform = 'translateX(' + shift + 'px)';
-    }
-
-    align();
-    window.addEventListener('resize', align);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(align);
-    }
-  })();
-
-  /* ---------------- align "sentence." to start under the "m" of "more" ---------------- */
-  (function () {
-    var moreM = document.getElementById('moreM');
-    var sentenceLine = document.getElementById('sentenceLine');
-    if (!moreM || !sentenceLine) return;
-
-    function align() {
-      sentenceLine.style.transform = 'none';
-      var mRect = moreM.getBoundingClientRect();
-      var sRect = sentenceLine.getBoundingClientRect();
-      sentenceLine.style.transform = 'translateX(' + (mRect.left - sRect.left) + 'px)';
-    }
-
-    align();
-    window.addEventListener('resize', align);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(align);
-    }
-  })();
-
-  /* ---------------- align footer-contact top to "than a" top, shifted right ---------------- */
+  /* ---------------- align footer-contact top to the footer-statement's last line, shifted right ---------------- */
   (function () {
     var contact = document.querySelector('.footer-contact');
-    var target = document.getElementById('thanT');
+    var target = document.querySelector('.footer-statement .line-mask:last-child');
     if (!contact || !target) return;
 
     function align() {
@@ -139,13 +76,16 @@
     var preRole = document.querySelector('.hero-role');
     var preRoleLine = preRole ? preRole.querySelector('.line') : null;
     var preCtaLine = document.querySelector('.hero-cta-line');
+    var preMetaLines = document.querySelectorAll('.hero-meta-row .line');
 
     // everything stays hidden except the divider (grows in) and the
     // copyright line, which starts where the logo sits and travels down
-    // to its own resting spot as the page loads
+    // to its own resting spot as the page loads; the date/location on the
+    // right is shown right away instead of waiting for the hero intro
     gsap.set('.hero-divider', { scaleY: 0, transformOrigin: 'top' });
     if (preMark) gsap.set(preMark, { opacity: 0 });
     if (preCtaLine) gsap.set(preCtaLine, { opacity: 0 });
+    if (preMetaLines.length) gsap.set(preMetaLines, { y: '0%' });
 
     var startDy = 0;
     if (preMark && preRole) {
@@ -206,8 +146,8 @@
     tl.from('.nav', { y: -14, opacity: 0, duration: .5 })
       .fromTo('.hero-mark', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .5 }, '-=.2')
       .to('.hero-meta-row .line', { y: '0%', duration: .7, stagger: .06 }, '-=.2')
-      .to('.hero-name .line', { y: '0%', duration: .9, stagger: .07 }, '-=.45')
-      .to('.hero-statement .line', { y: '0%', duration: .8, stagger: .05 }, '-=.5')
+      .fromTo('.hero-name .line', { filter: 'blur(18px)' }, { filter: 'blur(0px)', y: '0%', duration: .9, stagger: .07 }, '-=.45')
+      .fromTo('.hero-statement .line', { filter: 'blur(18px)' }, { filter: 'blur(0px)', y: '0%', duration: .8, stagger: .05 }, '-=.5')
       .to('.hero-cta-line', { opacity: 1, duration: .4 }, '-=.3')
       .to('.hero-cta .line', { y: '0%', duration: .7, stagger: .08 }, '-=.2')
       .to('.ospiti-header .line', { y: '0%', duration: .6 }, '-=.2');

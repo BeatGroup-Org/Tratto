@@ -315,7 +315,7 @@ main, header, footer, section{position:relative; z-index:1;}
   font-weight:700;
   font-size:clamp(var(--h1-min), var(--h1-vw), 160px);
   line-height:.88;
-  letter-spacing:-.02em;
+  letter-spacing:-.03em;
 }
 .hero-cta-question-right{
   top:0;
@@ -329,7 +329,7 @@ main, header, footer, section{position:relative; z-index:1;}
   font-weight:700;
   font-size:clamp(var(--h1-min), var(--h1-vw), 160px);
   line-height:.88;
-  letter-spacing:-.02em;
+  letter-spacing:-.03em;
   color:var(--ink);
 }
 .hero-second-question-line{

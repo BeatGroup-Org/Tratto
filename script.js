@@ -59,24 +59,6 @@
     setTimeout(align, 400);
   })();
 
-  /* ---------------- hero-cta line: grow to fit the question ---------------- */
-  (function () {
-    var ctaLine = document.querySelector('.hero-cta-line');
-    var q1 = document.querySelector('.hero-cta-question-right');
-    if (!ctaLine || !q1) return;
-
-    function align() {
-      ctaLine.style.minHeight = q1.getBoundingClientRect().height + 'px';
-    }
-
-    align();
-    window.addEventListener('resize', align);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(align);
-    }
-    setTimeout(align, 400);
-  })();
-
   /* ---------------- align "parte" ("p") to the "n" of "Ogni" ---------------- */
   (function () {
     var ogniN = document.getElementById('ogniN');
@@ -231,7 +213,7 @@
       .fromTo('.hero-statement .line', { filter: 'blur(18px)' }, { filter: 'blur(0px)', y: '0%', duration: .8, stagger: .05 }, '-=.5')
       .to('.hero-cta-line', { opacity: 1, duration: .4 }, '-=.3')
       .to('.hero-cta .line', { y: '0%', duration: .7, stagger: .08 }, '-=.2')
-      .to('.hero-second-question .line', { y: '0%', duration: .7 }, '-=.3')
+      .to('.hero-second-question .line', { y: '0%', duration: .7, stagger: .06 }, '-=.3')
       .to('.ospiti-header .line', { y: '0%', duration: .6 }, '-=.2');
   }
   if (reduce) { document.body.classList.add('loaded'); }

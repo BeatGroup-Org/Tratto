@@ -129,11 +129,28 @@
     document.body.classList.remove('is-preloading');
     document.querySelectorAll('.line').forEach(function (l) { l.style.transform = 'none'; });
   } else {
+    gsap.set('.hero-divider', { scaleY: 0, transformOrigin: 'top' });
+
+    var roleRevealed = false;
+    var metaRevealed = false;
+
     gsap.to(loadState, {
       n: 100,
-      duration: 1.1,
+      duration: 1.6,
       ease: 'power1.inOut',
-      onUpdate: function () { preloaderCount.textContent = Math.round(loadState.n) + '%'; },
+      onUpdate: function () {
+        preloaderCount.textContent = Math.round(loadState.n) + '%';
+        gsap.set('.hero-divider', { scaleY: loadState.n / 100 });
+
+        if (!roleRevealed && loadState.n > 8) {
+          roleRevealed = true;
+          gsap.to('.hero-role .line', { y: '0%', duration: .5, ease: 'power3.out' });
+        }
+        if (!metaRevealed && loadState.n > 55) {
+          metaRevealed = true;
+          gsap.to('.hero-meta-row .line', { y: '0%', duration: .6, stagger: .08, ease: 'power3.out' });
+        }
+      },
       onComplete: function () {
         document.body.classList.remove('is-preloading');
         gsap.to(preloaderCount, {
@@ -173,11 +190,8 @@
     var tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
     tl.from('.nav', { y: -14, opacity: 0, duration: .5 })
       .from('.hero-mark', { opacity: 0, scale: .6, duration: .5 }, '-=.2')
-      .to('.hero-role .line', { y: '0%', duration: .6 }, '-=.2')
-      .to('.hero-meta-row .line', { y: '0%', duration: .7, stagger: .06 }, '-=.3')
-      .to('.hero-name .line', { y: '0%', duration: .9, stagger: .07 }, '-=.45')
-      .from('.hero-divider', { scaleY: 0, transformOrigin: 'top', duration: .8 }, '-=.9')
-      .to('.hero-statement .line', { y: '0%', duration: .8, stagger: .05 }, '-=.3')
+      .to('.hero-name .line', { y: '0%', duration: .9, stagger: .07 }, '-=.2')
+      .to('.hero-statement .line', { y: '0%', duration: .8, stagger: .05 }, '-=.5')
       .to('.hero-cta .line', { y: '0%', duration: .7, stagger: .08 }, '-=.3')
       .to('.ospiti-header .line', { y: '0%', duration: .6 }, '-=.2');
   }

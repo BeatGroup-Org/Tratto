@@ -399,15 +399,9 @@ main, header, footer, section{position:relative; z-index:1;}
   opacity:.7;
   transition:opacity var(--dur-s) var(--ease-in-out), filter var(--dur-s) var(--ease-in-out);
 }
-.partners-item.is-dark img{
-  filter:grayscale(1) invert(1);
-}
 .partners-item img:hover{
   opacity:1;
   filter:grayscale(0);
-}
-.partners-item.is-dark img:hover{
-  filter:grayscale(0) invert(1);
 }
 @keyframes partners-scroll{
   from{transform:translateX(0);}

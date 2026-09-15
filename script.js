@@ -71,6 +71,37 @@
     setTimeout(align, 400);
   })();
 
+  /* ---------------- manifesto: item lines extend past the answer, like the menu line ---------------- */
+  (function () {
+    var items = document.querySelectorAll('.manifesto-qa-item');
+    if (!items.length) return;
+
+    function align() {
+      items.forEach(function (item, i) {
+        var line = item.querySelector('.manifesto-qa-item-line');
+        if (!line) return;
+        var lineTop = line.getBoundingClientRect().top;
+        var itemBottom = item.getBoundingClientRect().bottom;
+        var extend = 280;
+        var desiredBottom = itemBottom + extend;
+        var nextItem = items[i + 1];
+        if (nextItem) {
+          var clearance = 24;
+          var maxBottom = nextItem.getBoundingClientRect().top - clearance;
+          desiredBottom = Math.min(desiredBottom, maxBottom);
+        }
+        line.style.height = (desiredBottom - lineTop) + 'px';
+      });
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 400);
+  })();
+
   /* ---------------- nav overlay line: stops at the bottom of the nav links, like the home hero divider ---------------- */
   (function () {
     var line = document.querySelector('.nav-overlay-line');

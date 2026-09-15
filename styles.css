@@ -920,7 +920,6 @@ body:not(.is-locked) .site-lock{ display:none; }
   position:absolute;
   left:-24px;
   top:0;
-  bottom:0;
   width:1px;
   background:var(--ink);
 }

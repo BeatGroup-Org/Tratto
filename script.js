@@ -211,7 +211,7 @@
       var wmLeft = document.querySelector('.watermark-half.left');
       var wmRight = document.querySelector('.watermark-half.right');
       var watermarkEl = document.querySelector('.watermark');
-      var socialsEl = document.querySelector('.footer-socials, [data-scroll-anchor]');
+      var socialsEl = document.querySelector('.partners-marquee') || document.querySelector('.footer-socials, [data-scroll-anchor]');
       if (!wmLeft || !wmRight || !watermarkEl || !socialsEl) return;
 
       function mergeIn() {
@@ -232,7 +232,8 @@
 
       function getStart() {
         var wmH = watermarkEl.getBoundingClientRect().height;
-        return 'bottom bottom-=' + (wmH + 24);
+        var buffer = Math.max(wmH + 24, 400);
+        return 'bottom bottom-=' + buffer;
       }
 
       ScrollTrigger.create({

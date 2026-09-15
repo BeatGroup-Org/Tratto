@@ -710,7 +710,8 @@ body.page-no-partners .footer{
     --footer-contact-shift-x: clamp(20px, 15vw, 200px);
     --hero-gap: clamp(28px, 8vw, 57px);
   }
-  .footer-contact{max-width:min(320px, 23vw); margin-top:clamp(56px, 12vw, 96px);}
+  .hero{padding-top:100px;}
+  .footer-contact{max-width:min(290px, 78vw); margin-top:clamp(56px, 12vw, 96px);}
   .hero-mark{width:clamp(38px, 11vw, 105px);}
   .hero-left{gap:20px; margin-left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px));}
   .hero-role{margin:0 0 auto;}
@@ -718,6 +719,7 @@ body.page-no-partners .footer{
   .hero-statement-offset{margin-left:clamp(16px, 6vw, 220px);}
   .hero-grid{margin-bottom:28px;}
   .hero-meta-row{gap:6px;}
+  .hero-cta-line{min-height:180px;}
   .footer-statement h2{margin-top:6px;}
   .footer-statement h2:first-child{margin-top:0;}
 }

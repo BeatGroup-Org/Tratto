@@ -905,7 +905,7 @@ body:not(.is-locked) .site-lock{ display:none; }
   margin-right:var(--edge);
   display:flex;
   flex-direction:column;
-  gap:clamp(120px, 14vw, 220px);
+  gap:clamp(56px, 7vw, 96px);
 }
 .manifesto-qa-question{
   margin:0;
@@ -916,6 +916,19 @@ body:not(.is-locked) .site-lock{ display:none; }
   letter-spacing:-.01em;
   color:var(--ink);
 }
+.manifesto-qa-answer{
+  margin-top:28px;
+  max-width:640px;
+}
+.manifesto-qa-answer p{
+  margin:0 0 20px;
+  font-family:var(--font-display);
+  font-size:clamp(17px, 1.3vw, 20px);
+  line-height:1.4;
+  color:var(--ink);
+}
+.manifesto-qa-answer p:last-child{margin-bottom:0;}
+.manifesto-qa-answer strong{font-weight:700;}
 
 /* ---------- footer meta (privacy link + credit) ---------- */
 .footer-meta{

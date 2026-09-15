@@ -500,29 +500,6 @@
   });
 })();
 
-/* ---------------- manifesto: highlight the chapter in view ---------------- */
-(function () {
-  var chapters = Array.prototype.slice.call(document.querySelectorAll('.manifesto-reading article > section'));
-  if (!chapters.length || !('IntersectionObserver' in window)) return;
-
-  var links = document.querySelectorAll('.manifesto-reading aside nav a');
-
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (!entry.isIntersecting) return;
-      links.forEach(function (link) {
-        if (link.hash === '#' + entry.target.id) {
-          link.setAttribute('aria-current', 'location');
-        } else {
-          link.removeAttribute('aria-current');
-        }
-      });
-    });
-  }, { rootMargin: '-15% 0px -55% 0px' });
-
-  chapters.forEach(function (section) { observer.observe(section); });
-})();
-
 /* ---------------- privacy policy modal ---------------- */
 (function () {
   var modal = document.getElementById('privacyModal');

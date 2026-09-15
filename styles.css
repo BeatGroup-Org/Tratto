@@ -335,7 +335,7 @@ main, header, footer, section{position:relative; z-index:1;}
 }
 .partners-head{
   display:flex; align-items:center;
-  margin-left:calc(var(--hero-inset) + var(--hero-align-shift) - var(--edge));
+  margin-left:calc(var(--hero-inset) + var(--hero-align-shift));
   margin-bottom:clamp(24px, 3vw, 40px);
 }
 .partners-label{
@@ -716,6 +716,7 @@ body.page-no-partners .footer{
   .footer-contact{max-width:min(290px, 78vw); margin-top:clamp(56px, 12vw, 96px);}
   .hero-mark{width:clamp(38px, 11vw, 105px);}
   .hero-left{gap:20px; margin-left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px));}
+  .partners-head{margin-left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px));}
   .hero-role{margin:0 0 auto;}
   .hero-statement{margin-top:16px;}
   .hero-statement-offset{margin-left:clamp(16px, 6vw, 220px);}

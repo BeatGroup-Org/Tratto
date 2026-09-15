@@ -239,7 +239,7 @@ main, header, footer, section{position:relative; z-index:1;}
 }
 .hero-mark{
   width:clamp(26px, 6.5vw, 105px);
-  margin-left:clamp(16px, 2.5vw, 36px);
+  margin-left:clamp(28px, 3.8vw, 56px);
   color:var(--ink);
 }
 .hero-mark svg{width:100%; height:auto; display:block;}

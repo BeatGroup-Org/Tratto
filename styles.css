@@ -145,6 +145,7 @@ main, header, footer, section{position:relative; z-index:1;}
 }
 
 .nav-overlay{
+  --nav-mark-w: clamp(56px, 8vw, 110px);
   position:fixed; inset:0;
   z-index:45;
   display:flex; align-items:flex-start;
@@ -170,8 +171,10 @@ main, header, footer, section{position:relative; z-index:1;}
   color:var(--ink);
 }
 .nav-overlay-mark{
-  flex:0 0 auto;
-  width:clamp(56px, 8vw, 110px);
+  position:absolute;
+  left:calc(var(--hero-col) + var(--hero-divider-gap) - var(--nav-mark-w) - clamp(20px, 3vw, 36px));
+  top:96px;
+  width:var(--nav-mark-w);
   color:var(--ink);
 }
 .nav-overlay-mark svg{width:100%; height:auto; display:block;}
@@ -186,7 +189,7 @@ main, header, footer, section{position:relative; z-index:1;}
 .nav-list{
   list-style:none; margin:0; padding:0;
   flex:1 1 auto;
-  margin-left:calc(var(--hero-col) + var(--hero-divider-gap) - var(--edge) + clamp(28px, 5vw, 70px));
+  margin-left:calc(var(--hero-col) + var(--hero-divider-gap) - var(--edge) + clamp(16px, 2.4vw, 32px));
   display:flex; flex-direction:column;
   gap:clamp(6px, 1.6vw, 18px);
 }
@@ -226,8 +229,9 @@ main, header, footer, section{position:relative; z-index:1;}
 }
 
 @media (max-width:640px){
+  .nav-overlay{--nav-mark-w: clamp(40px, 12vw, 70px);}
   .nav-overlay-badge{font-size:9px;}
-  .nav-overlay-mark{width:clamp(40px, 12vw, 70px);}
+  .nav-overlay-mark{top:80px;}
   .nav-overlay-line{top:128px; bottom:72px;}
   .nav-list{gap:6px;}
   .nav-list a{font-size:clamp(20px, 7vw, 34px);}

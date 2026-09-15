@@ -59,16 +59,14 @@
     setTimeout(align, 400);
   })();
 
-  /* ---------------- hero-cta line: grow to fit whichever question is taller ---------------- */
+  /* ---------------- hero-cta line: grow to fit the question ---------------- */
   (function () {
     var ctaLine = document.querySelector('.hero-cta-line');
     var q1 = document.querySelector('.hero-cta-question-right');
-    var q2 = document.querySelector('.hero-cta-question-left');
-    if (!ctaLine || !q1 || !q2) return;
+    if (!ctaLine || !q1) return;
 
     function align() {
-      var h = Math.max(q1.getBoundingClientRect().height, q2.getBoundingClientRect().height);
-      ctaLine.style.minHeight = h + 'px';
+      ctaLine.style.minHeight = q1.getBoundingClientRect().height + 'px';
     }
 
     align();
@@ -119,12 +117,11 @@
     }
   })();
 
-  /* ---------------- align the privacy-policy row to the footer-statement's last line, shifted right ---------------- */
+  /* ---------------- align the left footer column's top to the footer-statement's top, shifted right ---------------- */
   (function () {
     var contact = document.querySelector('.footer-contact');
-    var footerMeta = document.querySelector('.footer-meta');
-    var target = document.querySelector('.footer-statement .line-mask:last-child');
-    if (!contact || !footerMeta || !target) return;
+    var target = document.querySelector('.footer-statement .line-mask:first-child');
+    if (!contact || !target) return;
 
     function align() {
       contact.style.transform = 'none';
@@ -132,9 +129,9 @@
       var shiftXBase = rootStyle.getPropertyValue('--footer-contact-shift-x').trim();
       var markShift = rootStyle.getPropertyValue('--hero-mark-shift').trim();
       var shiftX = 'calc(' + shiftXBase + ' + ' + markShift + ')';
-      var metaRect = footerMeta.getBoundingClientRect();
+      var cRect = contact.getBoundingClientRect();
       var tRect = target.getBoundingClientRect();
-      var dy = tRect.top - metaRect.top;
+      var dy = tRect.top - cRect.top;
       contact.style.transform = 'translate(' + shiftX + ', ' + dy + 'px)';
     }
 
@@ -234,6 +231,7 @@
       .fromTo('.hero-statement .line', { filter: 'blur(18px)' }, { filter: 'blur(0px)', y: '0%', duration: .8, stagger: .05 }, '-=.5')
       .to('.hero-cta-line', { opacity: 1, duration: .4 }, '-=.3')
       .to('.hero-cta .line', { y: '0%', duration: .7, stagger: .08 }, '-=.2')
+      .to('.hero-second-question .line', { y: '0%', duration: .7 }, '-=.3')
       .to('.ospiti-header .line', { y: '0%', duration: .6 }, '-=.2');
   }
   if (reduce) { document.body.classList.add('loaded'); }

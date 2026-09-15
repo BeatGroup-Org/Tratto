@@ -178,6 +178,7 @@
       .to('.hero-name .line', { y: '0%', duration: .9, stagger: .07 }, '-=.45')
       .from('.hero-divider', { scaleY: 0, transformOrigin: 'top', duration: .8 }, '-=.9')
       .to('.hero-statement .line', { y: '0%', duration: .8, stagger: .05 }, '-=.3')
+      .to('.hero-cta .line', { y: '0%', duration: .7, stagger: .08 }, '-=.3')
       .to('.ospiti-header .line', { y: '0%', duration: .6 }, '-=.2');
   }
   if (reduce) { document.body.classList.add('loaded'); }

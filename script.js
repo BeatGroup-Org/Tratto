@@ -48,25 +48,7 @@
     function align() {
       var lineTop = line.getBoundingClientRect().top;
       var listBottom = navList.getBoundingClientRect().bottom;
-      line.style.height = (listBottom - lineTop) + 'px';
-    }
-
-    align();
-    window.addEventListener('resize', align);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(align);
-    }
-    setTimeout(align, 400);
-  })();
-
-  /* ---------------- nav overlay badge: stacks below the mark, like "Designer & Developer" under the logo ---------------- */
-  (function () {
-    var mark = document.querySelector('.nav-overlay-mark');
-    var badge = document.querySelector('.nav-overlay-badge');
-    if (!mark || !badge) return;
-
-    function align() {
-      badge.style.top = (mark.getBoundingClientRect().bottom + 12) + 'px';
+      line.style.height = (listBottom - lineTop + 60) + 'px';
     }
 
     align();
@@ -97,6 +79,28 @@
     }
   })();
 
+  /* ---------------- align "made with..." to "un tratto" ---------------- */
+  (function () {
+    var meta = document.querySelector('.footer-meta');
+    var credit = document.querySelector('.footer-meta-credit');
+    var target = document.getElementById('unTrattoLine');
+    if (!meta || !credit || !target) return;
+
+    function align() {
+      meta.style.transform = 'none';
+      if (window.innerWidth <= 760) return;
+      var dy = target.getBoundingClientRect().bottom - credit.getBoundingClientRect().bottom;
+      meta.style.transform = 'translateY(' + dy + 'px)';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 400);
+  })();
+
   /* ---------------- align "un" ("u") to the "d" of "da" ---------------- */
   (function () {
     var daD = document.getElementById('daD');
@@ -125,6 +129,7 @@
 
     function align() {
       contact.style.transform = 'none';
+      if (window.innerWidth <= 760) return;
       var rootStyle = getComputedStyle(document.documentElement);
       var shiftXBase = rootStyle.getPropertyValue('--footer-contact-shift-x').trim();
       var markShift = rootStyle.getPropertyValue('--hero-mark-shift').trim();

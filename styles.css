@@ -923,8 +923,8 @@ body:not(.is-locked) .site-lock{ display:none; }
 .manifesto-qa-answer p{
   margin:0 0 20px;
   font-family:var(--font-display);
-  font-size:clamp(17px, 1.3vw, 20px);
-  line-height:1.4;
+  font-size:16px;
+  line-height:1.05;
   color:var(--ink);
 }
 .manifesto-qa-answer p:last-child{margin-bottom:0;}

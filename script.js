@@ -39,16 +39,34 @@
     setTimeout(align, 400);
   })();
 
-  /* ---------------- nav overlay line: stops at the bottom of "Tratto / design days" ---------------- */
+  /* ---------------- nav overlay line: stops at the bottom of the nav links, like the home hero divider ---------------- */
   (function () {
     var line = document.querySelector('.nav-overlay-line');
-    var badge = document.querySelector('.nav-overlay-badge');
-    if (!line || !badge) return;
+    var navList = document.querySelector('.nav-list');
+    if (!line || !navList) return;
 
     function align() {
       var lineTop = line.getBoundingClientRect().top;
-      var badgeBottom = badge.getBoundingClientRect().bottom;
-      line.style.height = (badgeBottom - lineTop) + 'px';
+      var listBottom = navList.getBoundingClientRect().bottom;
+      line.style.height = (listBottom - lineTop) + 'px';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 400);
+  })();
+
+  /* ---------------- nav overlay badge: stacks below the mark, like "Designer & Developer" under the logo ---------------- */
+  (function () {
+    var mark = document.querySelector('.nav-overlay-mark');
+    var badge = document.querySelector('.nav-overlay-badge');
+    if (!mark || !badge) return;
+
+    function align() {
+      badge.style.top = (mark.getBoundingClientRect().bottom + 12) + 'px';
     }
 
     align();

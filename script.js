@@ -207,44 +207,6 @@
       opacity: 0, y: 16, duration: .6, stagger: .1,
       scrollTrigger: { trigger: '.footer-statement', start: 'top 75%', toggleActions: 'play none none reverse' }
     });
-
-    /* ---------------- watermark merges into "bleibtgleich" once it passes the social circles ---------------- */
-    (function () {
-      var wmLeft = document.querySelector('.watermark-half.left');
-      var wmRight = document.querySelector('.watermark-half.right');
-      var watermarkEl = document.querySelector('.watermark');
-      var socialsEl = document.querySelector('.footer-socials, [data-scroll-anchor]');
-      if (!wmLeft || !wmRight || !watermarkEl || !socialsEl) return;
-
-      function mergeIn() {
-        gsap.set([wmLeft, wmRight], { clearProps: 'transform' });
-        var wRect = watermarkEl.getBoundingClientRect();
-        var lRect = wmLeft.getBoundingClientRect();
-        var rRect = wmRight.getBoundingClientRect();
-        var centerX = wRect.left + wRect.width / 2;
-        var totalW = lRect.width + rRect.width;
-        var targetLeftX = centerX - totalW / 2;
-        var targetRightX = targetLeftX + lRect.width;
-        gsap.to(wmLeft, { x: targetLeftX - lRect.left, opacity: 1, duration: .6, ease: 'power3.out' });
-        gsap.to(wmRight, { x: targetRightX - rRect.left, opacity: 1, duration: .6, ease: 'power3.out' });
-      }
-      function mergeOut() {
-        gsap.to([wmLeft, wmRight], { x: 0, opacity: .1, duration: .5, ease: 'power3.out' });
-      }
-
-      function getStart() {
-        var wmH = watermarkEl.getBoundingClientRect().height;
-        var buffer = Math.max(wmH + 24, 320);
-        return 'bottom bottom-=' + buffer;
-      }
-
-      ScrollTrigger.create({
-        trigger: socialsEl,
-        start: getStart,
-        onEnter: mergeIn,
-        onLeaveBack: mergeOut
-      });
-    })();
   } else {
     document.querySelectorAll('.line').forEach(function (l) { l.style.transform = 'none'; });
   }

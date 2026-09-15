@@ -39,18 +39,82 @@
     setTimeout(align, 400);
   })();
 
-  /* ---------------- align footer-contact top to the footer-statement's last line, shifted right ---------------- */
+  /* ---------------- hero-cta line: grow to fit whichever question is taller ---------------- */
+  (function () {
+    var ctaLine = document.querySelector('.hero-cta-line');
+    var q1 = document.querySelector('.hero-cta-question-right');
+    var q2 = document.querySelector('.hero-cta-question-left');
+    if (!ctaLine || !q1 || !q2) return;
+
+    function align() {
+      var h = Math.max(q1.getBoundingClientRect().height, q2.getBoundingClientRect().height);
+      ctaLine.style.minHeight = h + 'px';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 400);
+  })();
+
+  /* ---------------- align "parte" ("p") to the "n" of "Ogni" ---------------- */
+  (function () {
+    var ogniN = document.getElementById('ogniN');
+    var parteP = document.getElementById('parteP');
+    var parteDaLine = document.getElementById('parteDaLine');
+    if (!ogniN || !parteP || !parteDaLine) return;
+
+    function align() {
+      parteDaLine.style.transform = 'none';
+      var shift = ogniN.getBoundingClientRect().left - parteP.getBoundingClientRect().left;
+      parteDaLine.style.transform = 'translateX(' + shift + 'px)';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+  })();
+
+  /* ---------------- align "un" ("u") to the "d" of "da" ---------------- */
+  (function () {
+    var daD = document.getElementById('daD');
+    var unU = document.getElementById('unU');
+    var unTrattoLine = document.getElementById('unTrattoLine');
+    if (!daD || !unU || !unTrattoLine) return;
+
+    function align() {
+      unTrattoLine.style.transform = 'none';
+      var shift = daD.getBoundingClientRect().left - unU.getBoundingClientRect().left;
+      unTrattoLine.style.transform = 'translateX(' + shift + 'px)';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+  })();
+
+  /* ---------------- align the privacy-policy row to the footer-statement's last line, shifted right ---------------- */
   (function () {
     var contact = document.querySelector('.footer-contact');
+    var footerMeta = document.querySelector('.footer-meta');
     var target = document.querySelector('.footer-statement .line-mask:last-child');
-    if (!contact || !target) return;
+    if (!contact || !footerMeta || !target) return;
 
     function align() {
       contact.style.transform = 'none';
-      var shiftX = getComputedStyle(document.documentElement).getPropertyValue('--footer-contact-shift-x').trim();
-      var cRect = contact.getBoundingClientRect();
+      var rootStyle = getComputedStyle(document.documentElement);
+      var shiftXBase = rootStyle.getPropertyValue('--footer-contact-shift-x').trim();
+      var markShift = rootStyle.getPropertyValue('--hero-mark-shift').trim();
+      var shiftX = 'calc(' + shiftXBase + ' + ' + markShift + ')';
+      var metaRect = footerMeta.getBoundingClientRect();
       var tRect = target.getBoundingClientRect();
-      var dy = tRect.top - cRect.top - 52;
+      var dy = tRect.top - metaRect.top;
       contact.style.transform = 'translate(' + shiftX + ', ' + dy + 'px)';
     }
 

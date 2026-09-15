@@ -240,7 +240,7 @@ main, header, footer, section{position:relative; z-index:1;}
   width:clamp(26px, 6.5vw, 105px);
   color:var(--ink);
 }
-.hero-mark svg{width:100%; height:auto; display:block;}
+.hero-mark svg{width:100%; height:auto; display:block; transform:rotate(6deg);}
 .hero-role{
   margin:auto 0 0;
   width:fit-content;
@@ -515,6 +515,12 @@ main, header, footer, section{position:relative; z-index:1;}
   padding:clamp(56px, 5.7vw, 80px) var(--edge) 0;
   max-width:var(--maxw);
   margin:0 auto;
+}
+/* pages without the partners marquee need extra scroll room below the
+   footer, otherwise the watermark-merge trigger's buffer can exceed
+   the page's max scroll and the merge never fires */
+body.page-no-partners .footer{
+  padding-bottom:clamp(340px, 24vw, 400px);
 }
 .footer-statement{
   width:fit-content;

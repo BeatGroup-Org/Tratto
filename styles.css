@@ -948,7 +948,7 @@ body:not(.is-locked) .site-lock{ display:none; }
 .manifesto-statement span:nth-child(3){margin-left:36%; white-space:nowrap;}
 
 .manifesto-reading{
-  margin-left:var(--hero-inset);
+  margin-left:calc(var(--hero-inset) + clamp(140px, 16vw, 200px));
   margin-right:clamp(20px, 8vw, 140px);
   display:grid;
   grid-template-columns:clamp(140px, 16vw, 200px) 1fr;
@@ -1005,7 +1005,7 @@ body:not(.is-locked) .site-lock{ display:none; }
   .manifesto-statement{margin-left:0;}
   .manifesto-statement span:nth-child(2){margin-left:10%;}
   .manifesto-statement span:nth-child(3){margin-left:20%;}
-  .manifesto-reading{grid-template-columns:1fr; row-gap:32px;}
+  .manifesto-reading{margin-left:var(--hero-inset); grid-template-columns:1fr; row-gap:32px;}
   .manifesto-reading aside{position:static; display:flex; flex-direction:column; gap:16px;}
   .manifesto-reading aside nav{flex-direction:row; flex-wrap:wrap; gap:8px 16px; margin-top:0; max-width:100%;}
 }

@@ -1,6 +1,10 @@
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = window.matchMedia('(pointer:fine)').matches;
+  // true while the preload copyright-line travel animation is running, so
+  // align() below doesn't re-measure the role text mid-transit and corrupt
+  // the divider height
+  var preloadSettling = false;
 
   /* ---------------- divider -> "Designer & Developer", logo -> "Based in Kyiv" ---------------- */
   (function () {
@@ -11,6 +15,8 @@
     if (!role || !mark || !divider) return;
 
     function align() {
+      if (preloadSettling) return;
+
       // logo, role and the statement all share the same left inset (set in
       // CSS via --hero-inset), so no horizontal JS positioning is needed here.
       mark.style.transform = 'none';
@@ -129,10 +135,25 @@
     document.body.classList.remove('is-preloading');
     document.querySelectorAll('.line').forEach(function (l) { l.style.transform = 'none'; });
   } else {
-    gsap.set('.hero-divider', { scaleY: 0, transformOrigin: 'top' });
+    var preMark = document.querySelector('.hero-mark');
+    var preRole = document.querySelector('.hero-role');
+    var preRoleLine = preRole ? preRole.querySelector('.line') : null;
+    var preCtaLine = document.querySelector('.hero-cta-line');
 
-    var roleRevealed = false;
-    var metaRevealed = false;
+    // everything stays hidden except the divider (grows in) and the
+    // copyright line, which starts where the logo sits and travels down
+    // to its own resting spot as the page loads
+    gsap.set('.hero-divider', { scaleY: 0, transformOrigin: 'top' });
+    if (preMark) gsap.set(preMark, { opacity: 0 });
+    if (preCtaLine) gsap.set(preCtaLine, { opacity: 0 });
+
+    var startDy = 0;
+    if (preMark && preRole) {
+      startDy = preMark.getBoundingClientRect().top - preRole.getBoundingClientRect().top;
+    }
+    if (preRoleLine) gsap.set(preRoleLine, { y: '0%' });
+    if (preRole) gsap.set(preRole, { y: startDy });
+    preloadSettling = true;
 
     gsap.to(loadState, {
       n: 100,
@@ -140,18 +161,12 @@
       ease: 'power1.inOut',
       onUpdate: function () {
         preloaderCount.textContent = Math.round(loadState.n) + '%';
-        gsap.set('.hero-divider', { scaleY: loadState.n / 100 });
-
-        if (!roleRevealed && loadState.n > 8) {
-          roleRevealed = true;
-          gsap.to('.hero-role .line', { y: '0%', duration: .5, ease: 'power3.out' });
-        }
-        if (!metaRevealed && loadState.n > 55) {
-          metaRevealed = true;
-          gsap.to('.hero-meta-row .line', { y: '0%', duration: .6, stagger: .08, ease: 'power3.out' });
-        }
+        var p = loadState.n / 100;
+        gsap.set('.hero-divider', { scaleY: p });
+        if (preRole) gsap.set(preRole, { y: startDy * (1 - p) });
       },
       onComplete: function () {
+        preloadSettling = false;
         document.body.classList.remove('is-preloading');
         gsap.to(preloaderCount, {
           opacity: 0,
@@ -189,10 +204,12 @@
     if (!window.gsap) return;
     var tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
     tl.from('.nav', { y: -14, opacity: 0, duration: .5 })
-      .from('.hero-mark', { opacity: 0, scale: .6, duration: .5 }, '-=.2')
-      .to('.hero-name .line', { y: '0%', duration: .9, stagger: .07 }, '-=.2')
+      .fromTo('.hero-mark', { opacity: 0, scale: .6 }, { opacity: 1, scale: 1, duration: .5 }, '-=.2')
+      .to('.hero-meta-row .line', { y: '0%', duration: .7, stagger: .06 }, '-=.2')
+      .to('.hero-name .line', { y: '0%', duration: .9, stagger: .07 }, '-=.45')
       .to('.hero-statement .line', { y: '0%', duration: .8, stagger: .05 }, '-=.5')
-      .to('.hero-cta .line', { y: '0%', duration: .7, stagger: .08 }, '-=.3')
+      .to('.hero-cta-line', { opacity: 1, duration: .4 }, '-=.3')
+      .to('.hero-cta .line', { y: '0%', duration: .7, stagger: .08 }, '-=.2')
       .to('.ospiti-header .line', { y: '0%', duration: .6 }, '-=.2');
   }
   if (reduce) { document.body.classList.add('loaded'); }

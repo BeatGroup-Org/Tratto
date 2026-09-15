@@ -23,6 +23,7 @@
   --footer-contact-shift-x: calc(var(--hero-inset) + var(--hero-align-shift) - max(0px, (100vw - var(--maxw)) / 2) - var(--edge));
   --watermark-h: clamp(72px, 8vw, 104px);
   --h1-vw: 6.25vw;
+  --h1-min: 20px;
 
   --dur-s: .4s;
   --dur-m: .8s;
@@ -275,7 +276,7 @@ main, header, footer, section{position:relative; z-index:1;}
   transform:translateY(-12px);
 }
 .hero-name{
-  font-size:clamp(20px, var(--h1-vw), 160px);
+  font-size:clamp(var(--h1-min), var(--h1-vw), 160px);
   font-weight:700;
   line-height:.88;
   letter-spacing:-.02em;
@@ -286,7 +287,7 @@ main, header, footer, section{position:relative; z-index:1;}
   margin-left:calc(var(--hero-inset) + var(--hero-align-shift));
   font-family:var(--font-display);
   font-weight:700;
-  font-size:clamp(20px, var(--h1-vw), 160px);
+  font-size:clamp(var(--h1-min), var(--h1-vw), 160px);
   line-height:.94;
   letter-spacing:-.02em;
 }
@@ -296,7 +297,7 @@ main, header, footer, section{position:relative; z-index:1;}
 .hero-cta{
   display:flex;
   gap:24px;
-  margin-top:calc(18px + 0.3 * clamp(20px, var(--h1-vw), 160px));
+  margin-top:calc(18px + 0.3 * clamp(var(--h1-min), var(--h1-vw), 160px));
   margin-left:calc(var(--hero-col) + var(--hero-divider-gap));
 }
 .hero-cta-line{
@@ -531,7 +532,7 @@ body.page-no-partners .footer{
 }
 .footer-statement h2{
   font-family:var(--font-display);
-  font-size:clamp(20px, var(--h1-vw), 160px);
+  font-size:clamp(var(--h1-min), var(--h1-vw), 160px);
   font-weight:700;
   letter-spacing:-.02em;
   line-height:.88;
@@ -662,7 +663,7 @@ body.page-no-partners .footer{
 .watermark-half{
   font-weight:700;
   letter-spacing:-.02em;
-  font-size:clamp(20px, var(--h1-vw), 160px);
+  font-size:clamp(var(--h1-min), var(--h1-vw), 160px);
   line-height:.88;
   color:var(--ink);
   opacity:.1;
@@ -709,6 +710,7 @@ body.page-no-partners .footer{
   :root{
     --footer-contact-shift-x: calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px) - var(--edge));
     --hero-gap: clamp(28px, 8vw, 57px);
+    --h1-min: 28px;
   }
   .hero{padding-top:100px;}
   .footer-contact{max-width:min(290px, 78vw); margin-top:clamp(56px, 12vw, 96px);}
@@ -722,6 +724,7 @@ body.page-no-partners .footer{
   .hero-cta-line{min-height:180px;}
   .footer-statement h2{margin-top:6px;}
   .footer-statement h2:first-child{margin-top:0;}
+  body.page-no-partners .footer{padding-bottom:280px;}
 }
 
 /* ---------- ospiti: guest cards loaded from Supabase ---------- */

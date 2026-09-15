@@ -43,7 +43,8 @@
       moreLine.style.transform = 'none';
       var tRect = nothingT.getBoundingClientRect();
       var mRect = moreLine.getBoundingClientRect();
-      moreLine.style.transform = 'translateX(' + (tRect.left - mRect.left) + 'px)';
+      var shift = Math.min(tRect.left - mRect.left, window.innerWidth * 0.3);
+      moreLine.style.transform = 'translateX(' + shift + 'px)';
     }
 
     align();
@@ -64,7 +65,8 @@
       offsetEl.style.transform = 'none';
       var eRect = moreE.getBoundingClientRect();
       var tRect = thanT.getBoundingClientRect();
-      offsetEl.style.transform = 'translateX(' + (eRect.left - tRect.left) + 'px)';
+      var shift = Math.min(eRect.left - tRect.left, window.innerWidth * 0.3);
+      offsetEl.style.transform = 'translateX(' + shift + 'px)';
     }
 
     align();

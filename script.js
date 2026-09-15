@@ -80,7 +80,7 @@
     function align() {
       var lineTop = line.getBoundingClientRect().top;
       var listBottom = navList.getBoundingClientRect().bottom;
-      line.style.height = (listBottom - lineTop + 140) + 'px';
+      line.style.height = ((listBottom - lineTop + 140) * 2) + 'px';
     }
 
     align();
@@ -165,7 +165,7 @@
 
     function align() {
       socials.style.marginTop = '0px';
-      var gap = 24;
+      var gap = 100;
       var dy = meta.getBoundingClientRect().bottom + gap - socials.getBoundingClientRect().top;
       socials.style.marginTop = dy + 'px';
     }

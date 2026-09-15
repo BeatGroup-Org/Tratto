@@ -39,31 +39,28 @@
     setTimeout(align, 400);
   })();
 
-  /* ---------------- decorative marks: sit left of the line, next to each question ---------------- */
+  /* ---------------- manifesto: decorative marks sit left of each item's line ---------------- */
   (function () {
-    var line = document.querySelector('.hero-cta-line');
-    var img1 = document.getElementById('heroMarkQ1');
-    var q1 = document.querySelector('.hero-cta-question-right');
-    var img2 = document.getElementById('heroMarkQ2');
-    var q2 = document.querySelector('.hero-second-question');
-    if (!line) return;
-
-    function placeNext(img, question) {
-      if (!img || !question) return;
-      var lineRect = line.getBoundingClientRect();
-      var qRect = question.getBoundingClientRect();
-      var imgRect = img.getBoundingClientRect();
-      var gap = 24;
-      var edge = Math.min(lineRect.left, qRect.left);
-      var left = edge - imgRect.width - gap;
-      var top = qRect.top + qRect.height / 2 - imgRect.height / 2;
-      img.style.left = (left + window.scrollX) + 'px';
-      img.style.top = (top + window.scrollY) + 'px';
-    }
+    var items = document.querySelectorAll('.manifesto-qa-item');
+    if (!items.length) return;
 
     function align() {
-      placeNext(img1, q1);
-      placeNext(img2, q2);
+      items.forEach(function (item) {
+        var img = item.querySelector('.manifesto-qa-mark');
+        var line = item.querySelector('.manifesto-qa-item-line');
+        var question = item.querySelector('.manifesto-qa-question');
+        if (!img || !line || !question) return;
+        var itemRect = item.getBoundingClientRect();
+        var lineRect = line.getBoundingClientRect();
+        var qRect = question.getBoundingClientRect();
+        var imgRect = img.getBoundingClientRect();
+        var gap = 24;
+        var edge = Math.min(lineRect.left, qRect.left);
+        var left = edge - imgRect.width - gap - itemRect.left;
+        var top = qRect.top + qRect.height / 2 - imgRect.height / 2 - itemRect.top;
+        img.style.left = left + 'px';
+        img.style.top = top + 'px';
+      });
     }
 
     align();

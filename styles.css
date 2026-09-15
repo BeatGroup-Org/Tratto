@@ -268,8 +268,8 @@ main, header, footer, section{position:relative; z-index:1;}
   width:fit-content;
   font-family:var(--font-display);
   font-weight:600;
-  font-size:13px;
-  line-height:1.3;
+  font-size:16px;
+  line-height:1.05;
   letter-spacing:-.01em;
 }
 .hero-divider{
@@ -289,8 +289,8 @@ main, header, footer, section{position:relative; z-index:1;}
   margin:0 0 auto;
   font-family:var(--font-display);
   font-weight:600;
-  font-size:13px;
-  line-height:1.3;
+  font-size:16px;
+  line-height:1.05;
   letter-spacing:-.01em;
   color:var(--ink);
   transform:translateY(-12px);
@@ -363,8 +363,8 @@ main, header, footer, section{position:relative; z-index:1;}
   width:fit-content;
   font-family:var(--font-display);
   font-weight:600;
-  font-size:13px;
-  line-height:1.3;
+  font-size:16px;
+  line-height:1.05;
   letter-spacing:-.01em;
 }
 .partners-marquee{

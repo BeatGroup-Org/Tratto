@@ -164,7 +164,6 @@ main, header, footer, section{position:relative; z-index:1;}
   position:absolute;
   left:calc(var(--hero-col) + var(--hero-divider-gap));
   top:24px;
-  height:200px;
   width:1px;
   background:var(--ink);
 }
@@ -210,7 +209,7 @@ main, header, footer, section{position:relative; z-index:1;}
   .nav-overlay{--nav-mark-w: clamp(38px, 11vw, 105px);}
   .nav-overlay-badge{font-size:9px; max-width:66px; line-height:1.4;}
   .nav-overlay-mark{top:24px;}
-  .nav-overlay-line{top:24px; height:160px;}
+  .nav-overlay-line{top:24px;}
   .nav-list{gap:6px; margin-top:44px;}
   .nav-list a{font-size:clamp(20px, 7vw, 34px);}
 }
@@ -889,19 +888,19 @@ body:not(.is-locked) .site-lock{ display:none; }
 
 /* ---------- manifesto ---------- */
 .manifesto-qa{
-  position:relative;
   padding:140px 0 clamp(120px, 14vw, 220px);
   min-height:60vh;
 }
 .manifesto-qa-line{
   position:absolute;
-  left:calc(var(--hero-col) + var(--hero-divider-gap));
+  left:-24px;
   top:0;
   bottom:0;
   width:1px;
   background:var(--ink);
 }
 .manifesto-qa-list{
+  position:relative;
   margin-left:calc(var(--hero-col) + var(--hero-divider-gap) + 24px);
   margin-right:var(--edge);
   display:flex;

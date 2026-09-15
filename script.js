@@ -39,6 +39,26 @@
     setTimeout(align, 400);
   })();
 
+  /* ---------------- nav overlay line: stops at the bottom of "Tratto / design days" ---------------- */
+  (function () {
+    var line = document.querySelector('.nav-overlay-line');
+    var badge = document.querySelector('.nav-overlay-badge');
+    if (!line || !badge) return;
+
+    function align() {
+      var lineTop = line.getBoundingClientRect().top;
+      var badgeBottom = badge.getBoundingClientRect().bottom;
+      line.style.height = (badgeBottom - lineTop) + 'px';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 400);
+  })();
+
   /* ---------------- hero-cta line: grow to fit whichever question is taller ---------------- */
   (function () {
     var ctaLine = document.querySelector('.hero-cta-line');

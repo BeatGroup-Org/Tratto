@@ -323,7 +323,7 @@ main, header, footer, section{position:relative; z-index:1;}
   max-width:min(850px, calc(100% - 48px));
 }
 .hero-second-question{
-  margin:clamp(16px, 2vw, 32px) var(--edge) clamp(32px, 4vw, 56px) calc(var(--hero-inset) + var(--hero-align-shift) + var(--hero-mark-shift));
+  margin:0 var(--edge) clamp(32px, 4vw, 56px) calc(var(--hero-inset) + var(--hero-align-shift) + var(--hero-mark-shift));
   max-width:min(850px, calc(100vw - var(--hero-inset) - var(--hero-align-shift) - var(--hero-mark-shift) - var(--edge)));
   font-family:var(--font-display);
   font-weight:700;

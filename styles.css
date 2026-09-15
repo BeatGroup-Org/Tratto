@@ -199,6 +199,7 @@ main, header, footer, section{position:relative; z-index:1;}
   font-weight:800;
   font-size:clamp(26px, 4.4vw, 60px);
   letter-spacing:-.02em;
+  line-height:.88;
   color:var(--ink);
   transition:color var(--dur-s) var(--ease-in-out);
 }
@@ -920,7 +921,7 @@ body:not(.is-locked) .site-lock{ display:none; }
   font-weight:700;
   font-size:clamp(40px, 8.5vw, 140px);
   letter-spacing:-.02em;
-  line-height:.94;
+  line-height:.88;
   margin:clamp(36px, 6vw, 72px) 0 clamp(36px, 6vw, 64px);
 }
 .manifesto-statement span{display:block;}
@@ -963,7 +964,7 @@ body:not(.is-locked) .site-lock{ display:none; }
   font-weight:700;
   font-size:clamp(24px, 3.2vw, 40px);
   letter-spacing:-.01em;
-  line-height:.95;
+  line-height:.88;
   color:var(--ink);
   margin:0 0 20px;
 }
@@ -1056,6 +1057,7 @@ body:not(.is-locked) .site-lock{ display:none; }
   font-weight:800;
   font-size:clamp(28px, 4vw, 36px);
   letter-spacing:-.02em;
+  line-height:.88;
   margin:0 24px 8px 0;
 }
 .privacy-modal-subtitle{

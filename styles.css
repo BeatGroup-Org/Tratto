@@ -20,7 +20,7 @@
   --hero-gap: clamp(16px, 4vw, 57px);
   --hero-divider-gap: clamp(14px, 3.3vw, 46px);
   --hero-align-shift: clamp(40px, 6vw, 140px);
-  --footer-contact-shift-x: clamp(50px, 25vw, 350px);
+  --footer-contact-shift-x: calc(var(--hero-inset) + var(--hero-align-shift) - max(0px, (100vw - var(--maxw)) / 2) - var(--edge));
   --watermark-h: clamp(72px, 8vw, 104px);
   --h1-vw: 6.25vw;
 
@@ -707,7 +707,7 @@ body.page-no-partners .footer{
 
 @media (max-width:760px){
   :root{
-    --footer-contact-shift-x: clamp(20px, 15vw, 200px);
+    --footer-contact-shift-x: calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px) - var(--edge));
     --hero-gap: clamp(28px, 8vw, 57px);
   }
   .hero{padding-top:100px;}

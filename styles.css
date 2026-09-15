@@ -940,24 +940,11 @@ body:not(.is-locked) .site-lock{ display:none; }
   letter-spacing:-.02em;
   line-height:.94;
   margin:clamp(36px, 6vw, 72px) 0 clamp(36px, 6vw, 64px);
+  margin-left:calc(clamp(140px, 16vw, 200px) + var(--hero-gap));
 }
 .manifesto-statement span{display:block;}
 .manifesto-statement span:nth-child(2){margin-left:18%;}
 .manifesto-statement span:nth-child(3){margin-left:36%; white-space:nowrap;}
-.manifesto-deck{
-  display:grid;
-  grid-template-columns:1fr 2.2fr;
-  gap:24px;
-  padding-top:clamp(24px, 4vw, 48px);
-  border-top:1px solid var(--ink-12);
-}
-.manifesto-deck p{
-  font-family:var(--font-display);
-  font-size:clamp(16px, 1.4vw, 20px);
-  line-height:1.4;
-  letter-spacing:-.01em;
-  margin:0;
-}
 
 .manifesto-reading{
   margin-left:var(--hero-inset);
@@ -1046,9 +1033,9 @@ body:not(.is-locked) .site-lock{ display:none; }
 
 @media (max-width:760px){
   .manifesto-intro, .manifesto-reading, .manifesto-cta{margin-right:20px;}
+  .manifesto-statement{margin-left:0;}
   .manifesto-statement span:nth-child(2){margin-left:10%;}
   .manifesto-statement span:nth-child(3){margin-left:20%;}
-  .manifesto-deck{grid-template-columns:1fr; gap:16px;}
   .manifesto-reading{grid-template-columns:1fr; row-gap:32px;}
   .manifesto-reading aside{position:static; display:flex; flex-direction:column; gap:16px;}
   .manifesto-reading aside nav{flex-direction:row; flex-wrap:wrap; gap:8px 16px; margin-top:0; max-width:100%;}

@@ -83,7 +83,7 @@
     function align() {
       var lineTop = line.getBoundingClientRect().top;
       var listBottom = navList.getBoundingClientRect().bottom;
-      line.style.height = (listBottom - lineTop + 60) + 'px';
+      line.style.height = (listBottom - lineTop + 140) + 'px';
     }
 
     align();
@@ -114,28 +114,6 @@
     }
   })();
 
-  /* ---------------- align "made with..." to "un tratto" ---------------- */
-  (function () {
-    var meta = document.querySelector('.footer-meta');
-    var credit = document.querySelector('.footer-meta-credit');
-    var target = document.getElementById('unTrattoLine');
-    if (!meta || !credit || !target) return;
-
-    function align() {
-      meta.style.transform = 'none';
-      if (window.innerWidth <= 760) return;
-      var dy = target.getBoundingClientRect().bottom - credit.getBoundingClientRect().bottom;
-      meta.style.transform = 'translateY(' + dy + 'px)';
-    }
-
-    align();
-    window.addEventListener('resize', align);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(align);
-    }
-    setTimeout(align, 400);
-  })();
-
   /* ---------------- align "un" ("u") to the "d" of "da" ---------------- */
   (function () {
     var daD = document.getElementById('daD');
@@ -156,11 +134,12 @@
     }
   })();
 
-  /* ---------------- align the left footer column's top to the footer-statement's top, shifted right ---------------- */
+  /* ---------------- align the left footer column so "made with..." sits on "un tratto"'s bottom ---------------- */
   (function () {
     var contact = document.querySelector('.footer-contact');
-    var target = document.querySelector('.footer-statement .line-mask:first-child');
-    if (!contact || !target) return;
+    var credit = document.querySelector('.footer-meta-credit');
+    var target = document.getElementById('unTrattoLine');
+    if (!contact || !credit || !target) return;
 
     function align() {
       contact.style.transform = 'none';
@@ -169,9 +148,7 @@
       var shiftXBase = rootStyle.getPropertyValue('--footer-contact-shift-x').trim();
       var markShift = rootStyle.getPropertyValue('--hero-mark-shift').trim();
       var shiftX = 'calc(' + shiftXBase + ' + ' + markShift + ')';
-      var cRect = contact.getBoundingClientRect();
-      var tRect = target.getBoundingClientRect();
-      var dy = tRect.top - cRect.top;
+      var dy = target.getBoundingClientRect().bottom - credit.getBoundingClientRect().bottom;
       contact.style.transform = 'translate(' + shiftX + ', ' + dy + 'px)';
     }
 
@@ -180,6 +157,28 @@
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(align);
     }
+    setTimeout(align, 400);
+  })();
+
+  /* ---------------- footer socials: sit a fixed gap below "made with..." ---------------- */
+  (function () {
+    var socials = document.querySelector('.footer-socials');
+    var meta = document.querySelector('.footer-meta');
+    if (!socials || !meta) return;
+
+    function align() {
+      socials.style.marginTop = '0px';
+      var gap = 24;
+      var dy = meta.getBoundingClientRect().bottom + gap - socials.getBoundingClientRect().top;
+      socials.style.marginTop = dy + 'px';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 400);
   })();
 
   /* ---------------- preloader: big bottom-left counter, fades out ---------------- */

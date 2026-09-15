@@ -399,7 +399,6 @@ main, header, footer, section{position:relative; z-index:1;}
   max-width:none;
   display:block;
   filter:grayscale(1);
-  mix-blend-mode:multiply;
   opacity:.7;
   transition:opacity var(--dur-s) var(--ease-in-out), filter var(--dur-s) var(--ease-in-out);
 }

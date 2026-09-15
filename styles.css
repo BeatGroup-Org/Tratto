@@ -298,7 +298,9 @@ main, header, footer, section{position:relative; z-index:1;}
   margin-left:0;
 }
 .hero-cta{
+  position:relative;
   display:flex;
+  align-items:flex-end;
   gap:24px;
   margin-top:calc(18px + 0.3 * clamp(var(--h1-min), var(--h1-vw), 160px));
   margin-left:calc(var(--hero-col) + var(--hero-divider-gap));
@@ -313,12 +315,19 @@ main, header, footer, section{position:relative; z-index:1;}
   display:flex; flex-direction:column;
   gap:20px;
 }
-.hero-cta-text{
+.hero-cta-question{
   margin:0;
   font-family:var(--font-display);
-  font-weight:600;
-  font-size:15px;
-  line-height:1.4;
+  font-weight:700;
+  font-size:clamp(16px, 1.8vw, 22px);
+  line-height:1.3;
+  letter-spacing:-.01em;
+}
+.hero-cta-question-left{
+  position:absolute;
+  left:calc(var(--hero-inset) + var(--hero-align-shift) + var(--hero-mark-shift) - var(--hero-col) - var(--hero-divider-gap));
+  top:0;
+  max-width:min(380px, 60vw);
 }
 .hero-cta-link{
   display:inline-flex; align-items:center;

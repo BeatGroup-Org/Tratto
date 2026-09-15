@@ -294,7 +294,7 @@ main, header, footer, section{position:relative; z-index:1;}
   letter-spacing:-.02em;
 }
 .hero-statement-offset{
-  margin-left:clamp(40px, 12vw, 220px);
+  margin-left:0;
 }
 .hero-cta{
   display:flex;
@@ -690,7 +690,7 @@ main, header, footer, section{position:relative; z-index:1;}
   .partners-head{margin-left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px));}
   .hero-role{margin:0 0 auto;}
   .hero-statement{margin-top:16px; margin-left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px) + var(--hero-mark-shift));}
-  .hero-statement-offset{margin-left:clamp(16px, 6vw, 220px);}
+  .hero-statement-offset{margin-left:0;}
   .hero-grid{margin-bottom:28px;}
   .hero-meta-row{gap:6px;}
   .hero-cta-line{min-height:180px;}

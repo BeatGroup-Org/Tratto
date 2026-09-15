@@ -339,6 +339,14 @@ main, header, footer, section{position:relative; z-index:1;}
   background:var(--ink);
 }
 
+.hero-mark-decor{
+  position:absolute;
+  z-index:2;
+  width:clamp(70px, 8vw, 130px);
+  height:auto;
+  pointer-events:none;
+}
+
 .section-rule{
   border:none;
   height:1px;

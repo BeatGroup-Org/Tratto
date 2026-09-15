@@ -39,6 +39,41 @@
     setTimeout(align, 400);
   })();
 
+  /* ---------------- decorative marks: sit left of the line, next to each question ---------------- */
+  (function () {
+    var line = document.querySelector('.hero-cta-line');
+    var img1 = document.getElementById('heroMarkQ1');
+    var q1 = document.querySelector('.hero-cta-question-right');
+    var img2 = document.getElementById('heroMarkQ2');
+    var q2 = document.querySelector('.hero-second-question');
+    if (!line) return;
+
+    function placeNext(img, question) {
+      if (!img || !question) return;
+      var lineRect = line.getBoundingClientRect();
+      var qRect = question.getBoundingClientRect();
+      var imgRect = img.getBoundingClientRect();
+      var gap = 24;
+      var edge = Math.min(lineRect.left, qRect.left);
+      var left = edge - imgRect.width - gap;
+      var top = qRect.top + qRect.height / 2 - imgRect.height / 2;
+      img.style.left = (left + window.scrollX) + 'px';
+      img.style.top = (top + window.scrollY) + 'px';
+    }
+
+    function align() {
+      placeNext(img1, q1);
+      placeNext(img2, q2);
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 400);
+  })();
+
   /* ---------------- nav overlay line: stops at the bottom of the nav links, like the home hero divider ---------------- */
   (function () {
     var line = document.querySelector('.nav-overlay-line');

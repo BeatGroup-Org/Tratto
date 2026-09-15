@@ -314,18 +314,18 @@ main, header, footer, section{position:relative; z-index:1;}
   font-family:var(--font-display);
   font-weight:700;
   font-size:clamp(var(--h1-min), var(--h1-vw), 160px);
-  line-height:1.3;
+  line-height:.88;
   letter-spacing:-.01em;
 }
 .hero-cta-question-right{
   top:0;
   left:24px;
-  max-width:min(700px, calc(100% - 48px));
+  max-width:min(850px, calc(100% - 48px));
 }
 .hero-cta-question-left{
   bottom:0;
   left:calc(var(--hero-inset) + var(--hero-align-shift) + var(--hero-mark-shift) - var(--hero-col) - var(--hero-divider-gap));
-  max-width:calc(var(--hero-col) + var(--hero-divider-gap) - var(--hero-inset) - var(--hero-align-shift) - var(--hero-mark-shift) - 20px);
+  max-width:min(850px, calc(100vw - var(--hero-inset) - var(--hero-align-shift) - var(--hero-mark-shift) - var(--edge)));
 }
 
 .section-rule{
@@ -551,14 +551,14 @@ main, header, footer, section{position:relative; z-index:1;}
 }
 .footer-socials a{
   width:72px; height:72px;
-  background:var(--ink);
-  color:var(--paper);
+  background:var(--paper);
+  color:var(--ink);
   border:1px solid var(--ink);
   border-radius:50%;
   display:flex; align-items:center; justify-content:center;
   transition:background var(--dur-s) var(--ease-out), color var(--dur-s) var(--ease-out);
 }
-.footer-socials a:hover{background:var(--paper); color:var(--ink);}
+.footer-socials a:hover{background:var(--ink); color:var(--paper);}
 .footer-socials svg{width:26px; height:26px;}
 
 .mail-link{
@@ -684,7 +684,7 @@ main, header, footer, section{position:relative; z-index:1;}
   .hero-cta-line{min-height:180px;}
   .hero-cta-question-left{
     left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px) - var(--hero-col) - var(--hero-divider-gap));
-    max-width:calc(var(--hero-col) + var(--hero-divider-gap) - var(--hero-inset) - clamp(16px, 5.5vw, 90px) - 16px);
+    max-width:min(850px, calc(100vw - var(--hero-inset) - clamp(16px, 5.5vw, 90px) - var(--edge)));
   }
 }
 

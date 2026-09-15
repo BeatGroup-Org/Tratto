@@ -253,7 +253,7 @@ main, header, footer, section{position:relative; z-index:1;}
   font-weight:600;
   font-size:16px;
   line-height:1.05;
-  letter-spacing:-.01em;
+  letter-spacing:-.02em;
 }
 .hero-divider{
   position:absolute;
@@ -274,7 +274,7 @@ main, header, footer, section{position:relative; z-index:1;}
   font-weight:600;
   font-size:16px;
   line-height:1.05;
-  letter-spacing:-.01em;
+  letter-spacing:-.02em;
   color:var(--ink);
   transform:translateY(-12px);
 }
@@ -282,7 +282,7 @@ main, header, footer, section{position:relative; z-index:1;}
   font-size:clamp(var(--h1-min), var(--h1-vw), 160px);
   font-weight:700;
   line-height:.88;
-  letter-spacing:-.02em;
+  letter-spacing:-.03em;
   margin:0;
 }
 .hero-statement{
@@ -292,7 +292,7 @@ main, header, footer, section{position:relative; z-index:1;}
   font-weight:700;
   font-size:clamp(var(--h1-min), var(--h1-vw), 160px);
   line-height:.88;
-  letter-spacing:-.02em;
+  letter-spacing:-.03em;
 }
 .hero-statement-offset{
   margin-left:0;
@@ -315,7 +315,7 @@ main, header, footer, section{position:relative; z-index:1;}
   font-weight:700;
   font-size:clamp(var(--h1-min), var(--h1-vw), 160px);
   line-height:.88;
-  letter-spacing:-.01em;
+  letter-spacing:-.02em;
 }
 .hero-cta-question-right{
   top:0;
@@ -329,7 +329,7 @@ main, header, footer, section{position:relative; z-index:1;}
   font-weight:700;
   font-size:clamp(var(--h1-min), var(--h1-vw), 160px);
   line-height:.88;
-  letter-spacing:-.01em;
+  letter-spacing:-.02em;
   color:var(--ink);
 }
 .hero-second-question-line{

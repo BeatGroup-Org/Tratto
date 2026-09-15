@@ -15,7 +15,7 @@
   --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
   --hero-col: clamp(90px, 34vw, 600px);
-  --hero-grid-h: clamp(80px, 24vw, 440px);
+  --hero-grid-h: clamp(80px, 30vw, 560px);
   --hero-inset: clamp(36px, 14vw, 300px);
   --hero-gap: clamp(16px, 4vw, 57px);
   --hero-divider-gap: clamp(14px, 3.3vw, 46px);
@@ -239,7 +239,7 @@ main, header, footer, section{position:relative; z-index:1;}
 }
 .hero-mark{
   width:clamp(26px, 6.5vw, 105px);
-  margin-left:clamp(8px, 1.5vw, 20px);
+  margin-left:clamp(16px, 2.5vw, 36px);
   color:var(--ink);
 }
 .hero-mark svg{width:100%; height:auto; display:block;}

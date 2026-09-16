@@ -201,7 +201,7 @@ main, header, footer, section{position:relative; z-index:1;}
   font-weight:800;
   font-size:53px;
   letter-spacing:-.02em;
-  line-height:.88;
+  line-height:.65;
   color:var(--ink);
   transition:color var(--dur-s) var(--ease-in-out);
 }
@@ -351,7 +351,8 @@ main, header, footer, section{position:relative; z-index:1;}
 
 /* ---------- partners marquee ---------- */
 .partners{
-  padding:clamp(72px, 8vw, 120px) 0 clamp(40px, 4.5vw, 64px);
+  margin-top:clamp(48px, 6vw, 96px);
+  padding:clamp(40px, 4.5vw, 64px) 0;
 }
 .partners-marquee{
   position:relative;

@@ -432,6 +432,38 @@
     setTimeout(align, 500);
   })();
 
+  /* ---------------- Q1/Q2 marks: reveal only while the cursor trail sits right on them ---------------- */
+  if (fine) {
+    (function () {
+      var marks = Array.prototype.slice.call(
+        document.querySelectorAll('.hero-cta-mark, .hero-second-mark')
+      );
+      if (!marks.length) return;
+
+      // hysteresis: a smaller radius to fade in, a larger one to fade out,
+      // so sitting near the edge doesn't flicker the mark on and off
+      var SHOW_RADIUS = 90;
+      var HIDE_RADIUS = 140;
+      var visible = marks.map(function () { return false; });
+
+      window.addEventListener('mousemove', function (e) {
+        marks.forEach(function (mark, i) {
+          var r = mark.getBoundingClientRect();
+          var cx = r.left + r.width / 2;
+          var cy = r.top + r.height / 2;
+          var dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+          if (!visible[i] && dist <= SHOW_RADIUS) {
+            visible[i] = true;
+            mark.classList.add('is-visible');
+          } else if (visible[i] && dist > HIDE_RADIUS) {
+            visible[i] = false;
+            mark.classList.remove('is-visible');
+          }
+        });
+      });
+    })();
+  }
+
   /* ---------------- center the footer-contact + footer-statement group on the page ---------------- */
   (function () {
     var footerTop = document.querySelector('.footer-top');

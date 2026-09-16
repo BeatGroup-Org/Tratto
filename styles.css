@@ -947,7 +947,7 @@ body:not(.is-locked) .site-lock{ display:none; }
   margin-right:var(--edge);
   display:flex;
   flex-direction:column;
-  gap:clamp(56px, 7vw, 96px);
+  gap:1cm;
 }
 .manifesto-qa-item{
   position:relative;

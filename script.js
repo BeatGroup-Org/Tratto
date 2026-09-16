@@ -170,17 +170,21 @@
     var footerTop = document.querySelector('.footer-top');
     var footer = document.querySelector('.footer');
     var contact = document.querySelector('.footer-contact');
-    var statement = document.querySelector('.footer-statement');
-    if (!footerTop || !footer || !contact || !statement) return;
+    var unTrattoLine = document.getElementById('unTrattoLine');
+    if (!footerTop || !footer || !contact || !unTrattoLine) return;
 
     function align() {
       footerTop.style.transform = 'none';
       if (window.innerWidth <= 760) return;
       var footerRect = footer.getBoundingClientRect();
       var cRect = contact.getBoundingClientRect();
-      var sRect = statement.getBoundingClientRect();
-      var unionLeft = Math.min(cRect.left, sRect.left);
-      var unionRight = Math.max(cRect.right, sRect.right);
+      // footer-statement's own box is sized from its children's natural
+      // (untransformed) widths, so it doesn't grow to include "parte da"
+      // / "un tratto" sliding right via transform — measure the actual
+      // rightmost visible line ("un tratto") instead of the container
+      var unRect = unTrattoLine.querySelector('.line').getBoundingClientRect();
+      var unionLeft = cRect.left;
+      var unionRight = unRect.right;
       var unionCenter = (unionLeft + unionRight) / 2;
       var footerCenter = (footerRect.left + footerRect.right) / 2;
       var shift = footerCenter - unionCenter;

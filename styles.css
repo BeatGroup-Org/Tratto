@@ -330,7 +330,18 @@ main, header, footer, section{position:relative; z-index:1;}
   left:24px;
   max-width:min(850px, calc(100% - 48px));
 }
+.hero-cta-mark{
+  position:absolute;
+  z-index:2;
+  width:clamp(70px, 8vw, 130px);
+  height:auto;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity var(--dur-m) var(--ease-in-out);
+}
+.hero-cta:hover .hero-cta-mark{opacity:1;}
 .hero-second-question{
+  position:relative;
   margin:0 var(--edge) calc(16px + 0.15 * clamp(var(--h1-min), var(--h1-vw), 160px)) calc(var(--hero-inset) + var(--hero-align-shift) + var(--hero-mark-shift));
   max-width:min(850px, calc(100vw - var(--hero-inset) - var(--hero-align-shift) - var(--hero-mark-shift) - var(--edge)));
   font-family:var(--font-display);
@@ -340,6 +351,16 @@ main, header, footer, section{position:relative; z-index:1;}
   letter-spacing:-.05em;
   color:var(--ink);
 }
+.hero-second-mark{
+  position:absolute;
+  z-index:2;
+  width:clamp(70px, 8vw, 130px);
+  height:auto;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity var(--dur-m) var(--ease-in-out);
+}
+.hero-second-question:hover .hero-second-mark{opacity:1;}
 .section-rule{
   border:none;
   height:1px;
@@ -981,7 +1002,7 @@ body:not(.is-locked) .site-lock{ display:none; }
 .manifesto-qa-draft .manifesto-qa-answer .draft-line{
   display:block;
   font-weight:600;
-  font-size:clamp(20px, 3.2vw, 35px);
+  font-size:clamp(20px, 3.2vw, 32px);
   line-height:.46;
   letter-spacing:-.02em;
   margin-bottom:.4em;

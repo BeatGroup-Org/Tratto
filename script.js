@@ -309,6 +309,67 @@
     setTimeout(align, 450);
   })();
 
+  /* ---------------- Q1/Q2 hover marks: mark-q1 left of Q1, mark-q2 right of Q2 ---------------- */
+  (function () {
+    var heroCta = document.querySelector('.hero-cta');
+    var heroCtaLine = document.querySelector('.hero-cta-line');
+    var q1Container = document.querySelector('.hero-cta-question-right');
+    var q1Mark = document.querySelector('.hero-cta-mark');
+    var q2Container = document.querySelector('.hero-second-question');
+    var q2Mark = document.querySelector('.hero-second-mark');
+
+    function alignQ1() {
+      if (!heroCta || !heroCtaLine || !q1Container || !q1Mark) return;
+      var heroCtaRect = heroCta.getBoundingClientRect();
+      var lineRect = heroCtaLine.getBoundingClientRect();
+      var q1Rect = q1Container.getBoundingClientRect();
+      var markRect = q1Mark.getBoundingClientRect();
+      var edgeMargin = 12;
+      var gap = 24;
+      var left = lineRect.left - heroCtaRect.left - markRect.width - gap;
+      // keep the mark on-screen (only visible on hover, but it still
+      // occupies layout space, so it must not push the page wider) even
+      // where there isn't much room to the left of the line
+      var minLeft = edgeMargin - heroCtaRect.left;
+      if (left < minLeft) left = minLeft;
+      var top = q1Rect.top + q1Rect.height / 2 - markRect.height / 2 - heroCtaRect.top;
+      q1Mark.style.left = left + 'px';
+      q1Mark.style.top = top + 'px';
+    }
+
+    function alignQ2() {
+      if (!q2Container || !q2Mark) return;
+      var q2Rect = q2Container.getBoundingClientRect();
+      var lines = q2Container.querySelectorAll(':scope > .line-mask');
+      var markRect = q2Mark.getBoundingClientRect();
+      var textRight = q2Rect.left;
+      lines.forEach(function (line) {
+        textRight = Math.max(textRight, line.getBoundingClientRect().right);
+      });
+      var edgeMargin = 12;
+      var gap = 32;
+      var left = textRight - q2Rect.left + gap;
+      // same on-screen safeguard as Q1, on the right edge this time
+      var maxLeft = window.innerWidth - edgeMargin - markRect.width - q2Rect.left;
+      if (left > maxLeft) left = maxLeft;
+      var top = q2Rect.height / 2 - markRect.height / 2;
+      q2Mark.style.left = left + 'px';
+      q2Mark.style.top = top + 'px';
+    }
+
+    function align() {
+      alignQ1();
+      alignQ2();
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 500);
+  })();
+
   /* ---------------- center the footer-contact + footer-statement group on the page ---------------- */
   (function () {
     var footerTop = document.querySelector('.footer-top');

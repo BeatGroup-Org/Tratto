@@ -317,7 +317,7 @@ main, header, footer, section{position:relative; z-index:1;}
   letter-spacing:-.05em;
 }
 .hero-cta-question-right{
-  top:0;
+  top:33%;
   left:24px;
   max-width:min(850px, calc(100% - 48px));
 }

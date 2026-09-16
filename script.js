@@ -424,9 +424,12 @@
     setTimeout(align, 500);
   })();
 
-  /* ---------------- Q1/Q2 marks: reveal in full, fixed, while the cursor sits near them ---------------- */
-  // plain opacity toggle, no partial/blurred reveal: the mark is either
-  // fully hidden or fully shown, clean, based on cursor proximity
+  /* ---------------- Q1/Q2 marks: uncovered by a growing circle centered on the cursor ---------------- */
+  // no blur, no partial opacity: clip-path is a hard edge, so whatever's
+  // inside the circle shows at full, native quality. The circle grows
+  // from wherever the cursor enters (like pulling a cover back) instead
+  // of the whole image just switching on, and shrinks back to wherever
+  // the cursor leaves.
   if (fine) {
     (function () {
       var marks = Array.prototype.slice.call(
@@ -434,11 +437,17 @@
       );
       if (!marks.length) return;
 
-      // hysteresis: a smaller radius to fade in, a larger one to fade out,
-      // so sitting near the edge doesn't flicker the mark on and off
+      // hysteresis: a smaller radius to reveal, a larger one to cover back
+      // up, so sitting near the edge doesn't flicker on and off
       var SHOW_RADIUS = 90;
       var HIDE_RADIUS = 140;
       var visible = marks.map(function () { return false; });
+
+      function setClip(mark, radius, x, y) {
+        var val = 'circle(' + radius.toFixed(0) + 'px at ' + x.toFixed(0) + 'px ' + y.toFixed(0) + 'px)';
+        mark.style.clipPath = val;
+        mark.style.webkitClipPath = val;
+      }
 
       window.addEventListener('mousemove', function (e) {
         marks.forEach(function (mark, i) {
@@ -446,12 +455,15 @@
           var cx = r.left + r.width / 2;
           var cy = r.top + r.height / 2;
           var dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+          var localX = e.clientX - r.left;
+          var localY = e.clientY - r.top;
           if (!visible[i] && dist <= SHOW_RADIUS) {
             visible[i] = true;
-            mark.classList.add('is-visible');
+            // big enough to cover the mark from any entry point
+            setClip(mark, Math.hypot(r.width, r.height), localX, localY);
           } else if (visible[i] && dist > HIDE_RADIUS) {
             visible[i] = false;
-            mark.classList.remove('is-visible');
+            setClip(mark, 0, localX, localY);
           }
         });
       });

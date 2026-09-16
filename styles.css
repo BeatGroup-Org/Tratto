@@ -942,7 +942,8 @@ body:not(.is-locked) .site-lock{ display:none; }
 }
 .manifesto-qa-list{
   position:relative;
-  margin-left:calc(var(--hero-col) + var(--hero-divider-gap) + 24px);
+  /* same left position as "Home" in the menu (hero-col + hero-gap) */
+  margin-left:calc(var(--hero-col) + var(--hero-gap));
   margin-right:var(--edge);
   display:flex;
   flex-direction:column;
@@ -953,7 +954,9 @@ body:not(.is-locked) .site-lock{ display:none; }
 }
 .manifesto-qa-item-line{
   position:absolute;
-  left:-24px;
+  /* pulls back to hero-col + hero-divider-gap, the same position as the
+     menu's own vertical line */
+  left:calc(var(--hero-divider-gap) - var(--hero-gap));
   top:0;
   width:1px;
   background:var(--ink);

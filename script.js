@@ -165,15 +165,13 @@
     setTimeout(align, 400);
   })();
 
-  /* ---------------- stagger Q1/Q2 words with the same step as "Ogni" -> "parte" ---------------- */
+  /* ---------------- stagger Q1's words with the same step as "Ogni" -> "parte" ---------------- */
   (function () {
     var parteDaLine = document.getElementById('parteDaLine');
     var heroCta = document.querySelector('.hero-cta');
     var q1Container = document.querySelector('.hero-cta-question-right');
-    var q2Container = document.querySelector('.hero-second-question');
     var q1Lines = q1Container ? q1Container.querySelectorAll(':scope > .line-mask') : [];
-    var q2Lines = q2Container ? q2Container.querySelectorAll(':scope > .line-mask') : [];
-    if (!parteDaLine || (!q1Lines.length && !q2Lines.length)) return;
+    if (!parteDaLine || !q1Lines.length) return;
 
     // each line inherits its container's own max-width by default; shrink
     // it by the applied shift so a shifted line's right edge never
@@ -185,10 +183,6 @@
     function q1BaseMaxWidth() {
       if (!heroCta) return Infinity;
       return Math.min(850, heroCta.getBoundingClientRect().width - 48);
-    }
-    function q2BaseMaxWidth() {
-      var parsed = parseFloat(getComputedStyle(q2Container).maxWidth);
-      return isFinite(parsed) ? parsed : Infinity;
     }
 
     function stagger(lines, step, baseMaxWidth) {
@@ -206,7 +200,33 @@
       var match = /translateX\(([-\d.]+)px\)/.exec(parteDaLine.style.transform);
       var step = match ? parseFloat(match[1]) : 0;
       stagger(q1Lines, step, q1BaseMaxWidth());
-      stagger(q2Lines, step, q2BaseMaxWidth());
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 400);
+  })();
+
+  /* ---------------- Q2: "Come" stays left, "si dà forma" indents to the vertical line, rest returns left ---------------- */
+  (function () {
+    var q2Container = document.querySelector('.hero-second-question');
+    var refLine = document.querySelector('.hero-second-question-line') || document.querySelector('.hero-cta-line');
+    if (!q2Container || !refLine) return;
+    var q2Lines = q2Container.querySelectorAll(':scope > .line-mask');
+    if (q2Lines.length < 2) return;
+    var secondLine = q2Lines[1];
+
+    function align() {
+      q2Lines.forEach(function (line) { line.style.transform = 'none'; line.style.maxWidth = ''; });
+      var containerRight = q2Container.getBoundingClientRect().right;
+      var secondRect = secondLine.getBoundingClientRect();
+      var shift = refLine.getBoundingClientRect().left - secondRect.left;
+      var maxWidth = Math.max(0, containerRight - (secondRect.left + shift));
+      secondLine.style.maxWidth = maxWidth + 'px';
+      secondLine.style.transform = 'translateX(' + shift + 'px)';
     }
 
     align();
@@ -255,7 +275,8 @@
     function align() {
       q2Container.style.transform = 'none';
       if (q2Line) q2Line.style.transform = 'none';
-      var dy = secondLine.getBoundingClientRect().top - firstLine.getBoundingClientRect().top;
+      var step = secondLine.getBoundingClientRect().top - firstLine.getBoundingClientRect().top;
+      var dy = step * 2;
       q2Container.style.transform = 'translateY(' + dy + 'px)';
       // the trailing vertical line's position comes from normal document
       // flow (margin), which doesn't know about this transform-only

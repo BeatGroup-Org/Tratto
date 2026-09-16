@@ -217,6 +217,31 @@
     setTimeout(align, 400);
   })();
 
+  /* ---------------- Q1: align "possibilità?" (last line) to the bottom of the vertical line ---------------- */
+  (function () {
+    var heroCtaLine = document.querySelector('.hero-cta-line');
+    var q1Container = document.querySelector('.hero-cta-question-right');
+    if (!heroCtaLine || !q1Container) return;
+    var q1Lines = q1Container.querySelectorAll(':scope > .line-mask');
+    var lastLine = q1Lines.length ? q1Lines[q1Lines.length - 1] : null;
+    if (!lastLine) return;
+
+    function align() {
+      q1Container.style.transform = 'none';
+      var lineBottom = heroCtaLine.getBoundingClientRect().bottom;
+      var lastLineBottom = lastLine.getBoundingClientRect().bottom;
+      var dy = lineBottom - lastLineBottom;
+      q1Container.style.transform = 'translateY(' + dy + 'px)';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 450);
+  })();
+
   /* ---------------- center the footer-contact + footer-statement group on the page ---------------- */
   (function () {
     var footerTop = document.querySelector('.footer-top');

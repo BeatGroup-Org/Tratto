@@ -525,6 +525,7 @@ main, header, footer, section{position:relative; z-index:1;}
   margin-top:clamp(48px, 6vw, 88px);
 }
 .footer-statement{
+  display:flow-root;
   width:fit-content;
   margin:0 auto;
   text-align:left;
@@ -967,7 +968,7 @@ body:not(.is-locked) .site-lock{ display:none; }
 
 /* ---------- footer meta (privacy link + credit) ---------- */
 .footer-meta{
-  display:flex; flex-wrap:wrap; align-items:center; gap:12px;
+  display:flex; flex-wrap:wrap; align-items:flex-end; gap:12px;
   margin-top:24px;
   font-family:var(--font-display);
   font-size:16px;

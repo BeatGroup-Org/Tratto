@@ -50,6 +50,15 @@
         var img = item.querySelector('.manifesto-qa-mark');
         var answer = item.querySelector('.manifesto-qa-answer');
         if (!img || !answer) return;
+        // some items push their text down (so it reads lower on the page,
+        // closer to where the shared line ends) before the mark below
+        // anchors itself to the text's first line, so the two move
+        // together; reset first, or a previous run's push would compound
+        answer.style.transform = '';
+        if (item.hasAttribute('data-push-down')) {
+          var pushBy = answer.getBoundingClientRect().height * parseFloat(item.getAttribute('data-push-down'));
+          answer.style.transform = 'translateY(' + pushBy + 'px)';
+        }
         var itemRect = item.getBoundingClientRect();
         var lineRect = line.getBoundingClientRect();
         var aRect = answer.getBoundingClientRect();
@@ -59,24 +68,13 @@
         if (isReversed) {
           // mirrored layout: no line runs beside this item (see the line-a/
           // line-b split below), so the text isn't pinned to a line column
-          // like the others; it's centered in the row instead, with the
+          // like the others; it's centered in the row instead (full size,
+          // like the other items' marks - the mark's transparent background
+          // means it can share bounding-box space near the text without the
+          // two visibly colliding, same as in the reference PDF), with the
           // mark following to its right
           var gapR = 24;
-          // at this item's natural text width, the mark's full CSS size can
-          // be wider than the room left beside it, which would print the
-          // mark's ink over the text; shrink it just enough to coexist (it
-          // stays at its normal size whenever the row is wide enough).
-          // reset to the CSS size first, or a shrink from a previous
-          // (narrower) run would stick even once there's room to grow back
-          img.style.width = '';
-          imgRect = img.getBoundingClientRect();
-          var maxImgWidth = itemRect.width - aRect.width - gapR - 8;
-          if (maxImgWidth > 40 && imgRect.width > maxImgWidth) {
-            img.style.width = maxImgWidth + 'px';
-            imgRect = img.getBoundingClientRect();
-          }
-          var availW = itemRect.width - imgRect.width - gapR;
-          var centerLeft = Math.max(0, (availW - aRect.width) / 2);
+          var centerLeft = Math.max(0, (itemRect.width - aRect.width) / 2);
           answer.style.marginLeft = centerLeft + 'px';
           aRect = answer.getBoundingClientRect();
           var desiredLeft = aRect.right + gapR - itemRect.left;

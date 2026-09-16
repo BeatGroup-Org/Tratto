@@ -278,10 +278,15 @@
       var step = secondLine.getBoundingClientRect().top - firstLine.getBoundingClientRect().top;
       var dy = step * 2;
       q2Container.style.transform = 'translateY(' + dy + 'px)';
+      // extra breathing room before the section-rule/partners strip below;
+      // kept in JS (not as that rule's own margin-top) because it would
+      // otherwise collapse against this element's own margin-bottom and
+      // get silently swallowed by the larger of the two
+      var extraGap = Math.min(48, Math.max(24, window.innerWidth * 0.03));
       // the transform doesn't reserve layout space, so the next sibling
       // (the section-rule before the partners strip) needs the shift added
       // back as margin, or it renders over the visually-dropped text
-      q2Container.style.marginBottom = (baseMarginBottom + dy) + 'px';
+      q2Container.style.marginBottom = (baseMarginBottom + dy + extraGap) + 'px';
     }
 
     align();

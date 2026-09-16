@@ -348,10 +348,12 @@ main, header, footer, section{position:relative; z-index:1;}
   max-width:calc(var(--maxw) - 2 * var(--edge));
   margin:0 auto;
 }
+.partners + .section-rule{
+  margin-bottom:clamp(24px, 3vw, 48px);
+}
 
 /* ---------- partners marquee ---------- */
 .partners{
-  margin-top:clamp(48px, 6vw, 96px);
   padding:clamp(20px, 2.2vw, 32px) 0;
 }
 .partners-marquee{

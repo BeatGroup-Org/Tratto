@@ -57,11 +57,28 @@
         var isReversed = item.classList.contains('manifesto-qa-item-reverse');
         var left;
         if (isReversed) {
-          // mirrored layout: the mark sits to the right of the text instead
-          // of left of the line; clamp the final position (not just the
-          // gap) so it can never push past the viewport's edge even when
-          // the text itself runs close to it
+          // mirrored layout: no line runs beside this item (see the line-a/
+          // line-b split below), so the text isn't pinned to a line column
+          // like the others; it's centered in the row instead, with the
+          // mark following to its right
           var gapR = 24;
+          // at this item's natural text width, the mark's full CSS size can
+          // be wider than the room left beside it, which would print the
+          // mark's ink over the text; shrink it just enough to coexist (it
+          // stays at its normal size whenever the row is wide enough).
+          // reset to the CSS size first, or a shrink from a previous
+          // (narrower) run would stick even once there's room to grow back
+          img.style.width = '';
+          imgRect = img.getBoundingClientRect();
+          var maxImgWidth = itemRect.width - aRect.width - gapR - 8;
+          if (maxImgWidth > 40 && imgRect.width > maxImgWidth) {
+            img.style.width = maxImgWidth + 'px';
+            imgRect = img.getBoundingClientRect();
+          }
+          var availW = itemRect.width - imgRect.width - gapR;
+          var centerLeft = Math.max(0, (availW - aRect.width) / 2);
+          answer.style.marginLeft = centerLeft + 'px';
+          aRect = answer.getBoundingClientRect();
           var desiredLeft = aRect.right + gapR - itemRect.left;
           var maxLeft = window.innerWidth - 16 - imgRect.width - itemRect.left;
           left = Math.min(desiredLeft, maxLeft);
@@ -113,6 +130,43 @@
       var img = item.querySelector('.manifesto-qa-mark');
       if (img && !img.complete) img.addEventListener('load', align);
     });
+  })();
+
+  /* ---------------- manifesto: the shared line stops beside the reversed item, then resumes ---------------- */
+  // the reference PDF's line isn't one unbroken run: it covers the first
+  // item + decor, leaves a gap beside the reversed item (whose text sits
+  // centered instead, with no line to align to), then resumes partway
+  // through the gap before the last item
+  (function () {
+    var list = document.querySelector('.manifesto-qa-list');
+    var lineA = document.querySelector('.manifesto-qa-line-a');
+    var lineB = document.querySelector('.manifesto-qa-line-b');
+    var decor = document.querySelector('.manifesto-qa-decor');
+    var reversedItem = document.querySelector('.manifesto-qa-item-reverse');
+    if (!list || !lineA || !lineB || !decor || !reversedItem) return;
+    var nextItem = reversedItem.nextElementSibling;
+
+    function align() {
+      var listTop = list.getBoundingClientRect().top;
+      var decorBottom = decor.getBoundingClientRect().bottom;
+      var revBottom = reversedItem.getBoundingClientRect().bottom;
+      var resumeAt = nextItem ? (revBottom + nextItem.getBoundingClientRect().top) / 2 : revBottom;
+      lineA.style.top = '0px';
+      lineA.style.height = Math.max(0, decorBottom - listTop) + 'px';
+      lineB.style.top = Math.max(0, resumeAt - listTop) + 'px';
+      lineB.style.bottom = '0px';
+      lineB.style.height = 'auto';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 400);
+    setTimeout(align, 700);
+    var revMark = reversedItem.querySelector('.manifesto-qa-mark');
+    if (revMark && !revMark.complete) revMark.addEventListener('load', align);
   })();
 
   /* ---------------- nav overlay line: stops at the bottom of the nav links, like the home hero divider ---------------- */

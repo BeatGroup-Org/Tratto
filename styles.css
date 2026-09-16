@@ -957,9 +957,11 @@ body:not(.is-locked) .site-lock{ display:none; }
 .manifesto-qa-line{
   position:absolute;
   /* pulls back to hero-col + hero-divider-gap, the same position as the
-     menu's own vertical line; spans the full list top-to-bottom in one
-     unbroken run, like the reference PDF, instead of a separate segment
-     per item */
+     menu's own vertical line. Split into two elements (-a/-b) because the
+     reference PDF's line isn't one unbroken run: it stops after the first
+     item + decor, leaving the reversed item's text without a line beside
+     it (see .manifesto-qa-item-reverse .manifesto-qa-answer), then resumes
+     before the last item; JS positions each segment's top/height */
   left:calc(var(--hero-divider-gap) - var(--hero-gap));
   top:0;
   bottom:0;
@@ -991,7 +993,14 @@ body:not(.is-locked) .site-lock{ display:none; }
 /* ---------- manifesto draft: bigger marks, question-less semibold answers ---------- */
 .manifesto-qa-draft .manifesto-qa-mark{width:clamp(90px, 34vw, 540px);}
 .manifesto-qa-draft .manifesto-qa-answer{max-width:900px;}
-.manifesto-qa-draft .manifesto-qa-item-reverse .manifesto-qa-answer{max-width:560px;}
+.manifesto-qa-draft .manifesto-qa-item-reverse .manifesto-qa-answer{
+  /* no line runs beside this item in the reference PDF, so its text isn't
+     pinned to the line's column like the others: it's centered in the row
+     instead (margin-left set in JS, once its true content width is known).
+     width:max-content so the box shrinks to the longest line - otherwise it
+     fills its max-width and the JS would center an empty box, not the text */
+  width:max-content;
+}
 .manifesto-qa-draft .manifesto-qa-answer p{
   margin:0 0 clamp(28px, 3.4vw, 48px);
 }
@@ -1138,5 +1147,10 @@ body:not(.is-locked) .site-lock{ display:none; }
 
 @media (max-width:760px){
   .manifesto-qa{padding-top:88px;}
+  /* width:max-content (set for desktop centering, see above) ignores the
+     container and sizes to the text's unwrapped width, which overflows
+     the much narrower mobile column; fall back to filling the column like
+     the other items instead */
+  .manifesto-qa-draft .manifesto-qa-item-reverse .manifesto-qa-answer{width:auto;}
 }
 

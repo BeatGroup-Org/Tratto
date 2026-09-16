@@ -162,6 +162,46 @@
     }
   })();
 
+  /* ---------------- fine-tune: "made with..." flush with "un tratto"'s visible glyphs ---------------- */
+  (function () {
+    var contact = document.querySelector('.footer-contact');
+    var credit = document.querySelector('.footer-meta-credit');
+    var target = document.getElementById('unTrattoLine');
+    var targetLine = target ? target.querySelector('.line') : null;
+    if (!contact || !credit || !targetLine) return;
+
+    // CSS box-bottoms already match (see .footer-top/.footer-contact), but
+    // at this font size a font's own glyph metrics can still leave "un
+    // tratto" a few pixels off from "made with..."'s visible bottom, and
+    // that gap varies by rendering engine. Measure the real glyph ink
+    // (not the box) in whatever browser is actually rendering this, and
+    // nudge the already-aligned column by just the residual difference.
+    function textBottom(el) {
+      var range = document.createRange();
+      range.selectNodeContents(el);
+      var rects = range.getClientRects();
+      return rects.length ? rects[rects.length - 1].bottom : el.getBoundingClientRect().bottom;
+    }
+
+    function align() {
+      contact.style.transform = 'none';
+      if (window.innerWidth <= 760) return;
+      var targetLineTransform = targetLine.style.transform;
+      targetLine.style.transform = 'none';
+      var delta = textBottom(targetLine) - textBottom(credit);
+      targetLine.style.transform = targetLineTransform;
+      contact.style.transform = 'translateY(' + delta + 'px)';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 400);
+    setTimeout(align, 1200);
+  })();
+
   /* ---------------- footer socials: sit a fixed gap below "made with..." ---------------- */
   (function () {
     var socials = document.querySelector('.footer-socials');

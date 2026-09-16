@@ -281,11 +281,10 @@
     setTimeout(align, 400);
   })();
 
-  /* ---------------- Q2: "Come" stays left, "si dà forma" indents to the vertical line, rest returns left ---------------- */
+  /* ---------------- Q2: "Come" stays left, "si dà forma" shifts 156px right, rest returns left ---------------- */
   (function () {
     var q2Container = document.querySelector('.hero-second-question');
-    var refLine = document.querySelector('.hero-cta-line');
-    if (!q2Container || !refLine) return;
+    if (!q2Container) return;
     var q2Lines = q2Container.querySelectorAll(':scope > .line-mask');
     if (q2Lines.length < 2) return;
     var secondLine = q2Lines[1];
@@ -294,7 +293,7 @@
       q2Lines.forEach(function (line) { line.style.transform = 'none'; line.style.maxWidth = ''; });
       var containerRight = q2Container.getBoundingClientRect().right;
       var secondRect = secondLine.getBoundingClientRect();
-      var shift = refLine.getBoundingClientRect().left - secondRect.left;
+      var shift = 156;
       var maxWidth = Math.max(0, containerRight - (secondRect.left + shift));
       secondLine.style.maxWidth = maxWidth + 'px';
       secondLine.style.transform = 'translateX(' + shift + 'px)';

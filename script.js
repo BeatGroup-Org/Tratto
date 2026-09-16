@@ -444,7 +444,6 @@
       var PAD = 40;
       var trail = [];
       var lastSpawn = 0;
-      var rect = markEl.getBoundingClientRect();
       var pool = [];
 
       for (var i = 0; i < POOL_SIZE; i++) {
@@ -456,8 +455,6 @@
         pool.push(c);
       }
 
-      window.addEventListener('resize', function () { rect = markEl.getBoundingClientRect(); });
-
       function addPoint(x, y, born, rf, life) {
         trail.push({ x: x, y: y, born: born, rf: rf, life: life });
         if (trail.length > POOL_SIZE) trail.shift();
@@ -465,6 +462,12 @@
       function randomLife() { return LIFETIME * (0.5 + Math.random() * 1.1); }
 
       window.addEventListener('mousemove', function (e) {
+        // read the mark's box fresh every time instead of caching it: the
+        // mark keeps getting repositioned after this runs (web font load,
+        // the 500ms settle timeout), and a stale rect here means every
+        // mousemove is checked against the wrong box and never spawns a
+        // point, so the reveal silently never fires
+        var rect = markEl.getBoundingClientRect();
         // coordinates local to the mark's own box, since the mask is
         // applied directly to it (mask-image content uses that element's
         // own user space)

@@ -999,8 +999,8 @@ body:not(.is-locked) .site-lock{ display:none; }
 .manifesto-qa-draft .manifesto-qa-answer .draft-line{
   display:block;
   font-weight:600;
-  font-size:clamp(24px, 3.8vw, 40px);
-  line-height:.52;
+  font-size:clamp(21px, 3.3vw, 35px);
+  line-height:.47;
   letter-spacing:-.02em;
   margin-bottom:.4em;
 }

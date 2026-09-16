@@ -6,68 +6,6 @@
   // the divider height
   var preloadSettling = false;
 
-  /* ---------------- manifesto draft: wrap each paragraph's text to a fixed width ---------------- */
-  (function () {
-    var paragraphs = document.querySelectorAll('.manifesto-qa-draft .manifesto-qa-answer p[data-text]');
-    if (!paragraphs.length) return;
-    // the wrap width for every line is defined by this exact phrase, so the
-    // first line always reads "Viviamo in un mondo che ci appare" and every
-    // other line breaks at roughly the same point on screen
-    var REFERENCE_TEXT = 'Viviamo in un mondo che ci appare';
-
-    function wrap() {
-      var probe = document.createElement('span');
-      probe.className = 'draft-line';
-      probe.style.position = 'absolute';
-      probe.style.visibility = 'hidden';
-      probe.style.whiteSpace = 'nowrap';
-      // appended to body, not one of the paragraphs: those get their
-      // innerHTML cleared below, which would destroy the probe mid-loop
-      document.body.appendChild(probe);
-
-      function measure(text) {
-        probe.textContent = text;
-        return probe.getBoundingClientRect().width;
-      }
-
-      var targetWidth = measure(REFERENCE_TEXT);
-
-      paragraphs.forEach(function (p) {
-        var text = p.getAttribute('data-text') || '';
-        var words = text.split(' ').filter(Boolean);
-        var lines = [];
-        var current = [];
-        words.forEach(function (w) {
-          var candidate = current.concat([w]).join(' ');
-          if (current.length === 0 || measure(candidate) <= targetWidth) {
-            current.push(w);
-          } else {
-            lines.push(current.join(' '));
-            current = [w];
-          }
-        });
-        if (current.length) lines.push(current.join(' '));
-
-        p.innerHTML = '';
-        lines.forEach(function (line) {
-          var span = document.createElement('span');
-          span.className = 'draft-line';
-          span.textContent = line;
-          p.appendChild(span);
-        });
-      });
-
-      probe.remove();
-    }
-
-    wrap();
-    window.addEventListener('resize', wrap);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(wrap);
-    }
-    setTimeout(wrap, 400);
-  })();
-
   /* ---------------- divider -> "Designer & Developer", logo -> "Based in Kyiv" ---------------- */
   (function () {
     var role = document.querySelector('.hero-role');
@@ -141,12 +79,17 @@
           }
           left = edge - imgRect.width - gap - itemRect.left;
         }
-        // fixed offset below the answer's own first line, not centered on
-        // the whole (multi-paragraph) answer block, so both marks sit the
-        // same distance under their question's first line
-        var firstLine = answer.querySelector('.draft-line') || answer.querySelector('p');
+        // offset from a reference line, not centered on the whole
+        // (multi-paragraph) answer block; the reference line and the offset
+        // both come from the reference PDF layout and differ per item
+        // (an item can flag a specific line as the anchor via
+        // [data-mark-anchor], e.g. the mark sits beside a later paragraph
+        // instead of the first one)
+        var firstLine = answer.querySelector('[data-mark-anchor]') || answer.querySelector('.draft-line') || answer.querySelector('p');
         var refTop = firstLine ? firstLine.getBoundingClientRect().top : aRect.top;
-        var top = refTop + 79 - itemRect.top;
+        var offset = parseFloat(img.getAttribute('data-mark-offset'));
+        if (isNaN(offset)) offset = 79;
+        var top = refTop + offset - itemRect.top;
         img.style.left = left + 'px';
         img.style.top = top + 'px';
         // the mark is absolutely positioned, so it doesn't naturally push
@@ -163,6 +106,13 @@
       document.fonts.ready.then(align);
     }
     setTimeout(align, 400);
+    // the marks are large PNGs that can still be loading when the timers
+    // above fire, and an unloaded img has no natural height yet, so its
+    // rect (and the minHeight computed from it) undershoots until this fires
+    items.forEach(function (item) {
+      var img = item.querySelector('.manifesto-qa-mark');
+      if (img && !img.complete) img.addEventListener('load', align);
+    });
   })();
 
   /* ---------------- nav overlay line: stops at the bottom of the nav links, like the home hero divider ---------------- */

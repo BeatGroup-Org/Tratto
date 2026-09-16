@@ -242,6 +242,35 @@
     setTimeout(align, 450);
   })();
 
+  /* ---------------- Q2: drop down so "Come" starts where "si dà forma" used to be ---------------- */
+  (function () {
+    var q2Container = document.querySelector('.hero-second-question');
+    var q2Line = document.querySelector('.hero-second-question-line');
+    if (!q2Container) return;
+    var q2Lines = q2Container.querySelectorAll(':scope > .line-mask');
+    if (q2Lines.length < 2) return;
+    var firstLine = q2Lines[0];
+    var secondLine = q2Lines[1];
+
+    function align() {
+      q2Container.style.transform = 'none';
+      if (q2Line) q2Line.style.transform = 'none';
+      var dy = secondLine.getBoundingClientRect().top - firstLine.getBoundingClientRect().top;
+      q2Container.style.transform = 'translateY(' + dy + 'px)';
+      // the trailing vertical line's position comes from normal document
+      // flow (margin), which doesn't know about this transform-only
+      // drop, so it needs the same shift to keep clear of the text
+      if (q2Line) q2Line.style.transform = 'translateY(' + dy + 'px)';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 450);
+  })();
+
   /* ---------------- center the footer-contact + footer-statement group on the page ---------------- */
   (function () {
     var footerTop = document.querySelector('.footer-top');

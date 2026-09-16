@@ -59,6 +59,19 @@
       <feTurbulence type="fractalNoise" baseFrequency="0.01 0.017" numOctaves="2" seed="7" result="noise"/>
       <feDisplacementMap in="thresholded" in2="noise" scale="70" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
+    <filter id="gooSmall" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 14 -5" result="thresholded"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.03 0.05" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="thresholded" in2="noise" scale="20" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <mask id="q1MarkMask" maskUnits="userSpaceOnUse" x="-2000" y="-2000" width="4000" height="4000" maskContentUnits="userSpaceOnUse">
+      <g id="q1MarkMaskDots" filter="url(#gooSmall)"></g>
+    </mask>
+    <mask id="q2MarkMask" maskUnits="userSpaceOnUse" x="-2000" y="-2000" width="4000" height="4000" maskContentUnits="userSpaceOnUse">
+      <g id="q2MarkMaskDots" filter="url(#gooSmall)"></g>
+    </mask>
   </defs>
 </svg>
 

@@ -336,8 +336,8 @@ main, header, footer, section{position:relative; z-index:1;}
   width:clamp(120px, 13vw, 220px);
   height:auto;
   pointer-events:none;
-  -webkit-mask-image:url(#q1MarkMask);
-  mask-image:url(#q1MarkMask);
+  -webkit-mask-image:radial-gradient(circle 0px at 0 0, #000 0%, transparent 0%);
+  mask-image:radial-gradient(circle 0px at 0 0, #000 0%, transparent 0%);
 }
 .hero-second-question{
   position:relative;
@@ -356,8 +356,8 @@ main, header, footer, section{position:relative; z-index:1;}
   width:clamp(120px, 13vw, 220px);
   height:auto;
   pointer-events:none;
-  -webkit-mask-image:url(#q2MarkMask);
-  mask-image:url(#q2MarkMask);
+  -webkit-mask-image:radial-gradient(circle 0px at 0 0, #000 0%, transparent 0%);
+  mask-image:radial-gradient(circle 0px at 0 0, #000 0%, transparent 0%);
 }
 .section-rule{
   border:none;

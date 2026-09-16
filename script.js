@@ -442,31 +442,22 @@
     setTimeout(align, 500);
   })();
 
-  /* ---------------- Q1/Q2 marks: goo-trail mask reveal (only the part the gray cursor blob touches) ---------------- */
+  /* ---------------- Q1/Q2 marks: trail reveal (only the part the cursor blob touches), via a CSS gradient mask ---------------- */
+  // built from stacked radial-gradient mask layers instead of an SVG
+  // <mask> referenced by url(#id): that approach rendered as a solid
+  // white patch painting over the artwork instead of a transparent
+  // window in some browsers, hiding the art rather than revealing it
   if (fine && !reduce) {
-    var SVG_NS_MARK = 'http://www.w3.org/2000/svg';
-
-    function setupMarkTrail(markEl, dotsGroupId) {
-      var dotsGroup = document.getElementById(dotsGroupId);
-      if (!markEl || !dotsGroup) return;
+    function setupMarkTrail(markEl) {
+      if (!markEl) return;
 
       var LIFETIME = 900;
       var BASE_R = 46;
       var MIN_GAP = 16;
-      var POOL_SIZE = 24;
+      var POOL_SIZE = 12;
       var PAD = 40;
       var trail = [];
       var lastSpawn = 0;
-      var pool = [];
-
-      for (var i = 0; i < POOL_SIZE; i++) {
-        var c = document.createElementNS(SVG_NS_MARK, 'circle');
-        c.setAttribute('fill', '#fff');
-        c.setAttribute('fill-opacity', '0');
-        c.setAttribute('r', '0');
-        dotsGroup.appendChild(c);
-        pool.push(c);
-      }
 
       function addPoint(x, y, born, rf, life) {
         trail.push({ x: x, y: y, born: born, rf: rf, life: life });
@@ -481,9 +472,6 @@
         // mousemove is checked against the wrong box and never spawns a
         // point, so the reveal silently never fires
         var rect = markEl.getBoundingClientRect();
-        // coordinates local to the mark's own box, since the mask is
-        // applied directly to it (mask-image content uses that element's
-        // own user space)
         var bx = e.clientX - rect.left, by = e.clientY - rect.top;
         if (bx < -PAD || by < -PAD || bx > rect.width + PAD || by > rect.height + PAD) return;
         var now = performance.now();
@@ -495,26 +483,30 @@
       function frame() {
         var now = performance.now();
         trail = trail.filter(function (p) { return now - p.born < p.life; });
-        for (var i = 0; i < POOL_SIZE; i++) {
-          var p = trail[i];
-          var circle = pool[i];
-          if (!p) { circle.setAttribute('fill-opacity', '0'); continue; }
-          var t = (now - p.born) / p.life;
-          var eased = 1 - Math.pow(1 - t, 2);
-          var r = BASE_R * p.rf * (0.9 + 0.35 * eased);
-          var a = Math.pow(1 - t, 0.6);
-          circle.setAttribute('cx', p.x.toFixed(1));
-          circle.setAttribute('cy', p.y.toFixed(1));
-          circle.setAttribute('r', r.toFixed(1));
-          circle.setAttribute('fill-opacity', a.toFixed(2));
+        var mask;
+        if (!trail.length) {
+          mask = 'radial-gradient(circle 0px at 0 0, #000 0%, transparent 0%)';
+        } else {
+          // each trail point is its own soft circle; CSS masks composite
+          // multiple layers additively by default, so overlapping circles
+          // union together into one continuous revealed patch
+          mask = trail.map(function (p) {
+            var t = (now - p.born) / p.life;
+            var eased = 1 - Math.pow(1 - t, 2);
+            var r = BASE_R * p.rf * (0.9 + 0.35 * eased);
+            var a = Math.pow(1 - t, 0.6);
+            return 'radial-gradient(circle ' + r.toFixed(1) + 'px at ' + p.x.toFixed(1) + 'px ' + p.y.toFixed(1) + 'px, rgba(0,0,0,' + a.toFixed(2) + ') 0%, rgba(0,0,0,0) 100%)';
+          }).join(',');
         }
+        markEl.style.webkitMaskImage = mask;
+        markEl.style.maskImage = mask;
         requestAnimationFrame(frame);
       }
       frame();
     }
 
-    setupMarkTrail(document.querySelector('.hero-cta-mark'), 'q1MarkMaskDots');
-    setupMarkTrail(document.querySelector('.hero-second-mark'), 'q2MarkMaskDots');
+    setupMarkTrail(document.querySelector('.hero-cta-mark'));
+    setupMarkTrail(document.querySelector('.hero-second-mark'));
   }
 
   /* ---------------- center the footer-contact + footer-statement group on the page ---------------- */

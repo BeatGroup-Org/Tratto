@@ -351,7 +351,7 @@
         textRight = Math.max(textRight, line.getBoundingClientRect().right);
       });
       var edgeMargin = 12;
-      var gap = 32;
+      var gap = 4;
       var left = textRight - q2Rect.left + gap;
       // same on-screen safeguard as Q1, on the right edge this time
       var maxLeft = window.innerWidth - edgeMargin - markRect.width - q2Rect.left;

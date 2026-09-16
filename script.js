@@ -149,6 +149,11 @@
         var top = refTop + 79 - itemRect.top;
         img.style.left = left + 'px';
         img.style.top = top + 'px';
+        // the mark is absolutely positioned, so it doesn't naturally push
+        // the item's own box taller; when it's big enough to hang below
+        // the text, stretch the item so the flex gap actually clears it
+        // instead of the next item overlapping it
+        item.style.minHeight = Math.max(itemRect.height, top + imgRect.height + 8) + 'px';
       });
     }
 

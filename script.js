@@ -101,17 +101,17 @@
     setTimeout(align, 400);
   })();
 
-  /* ---------------- manifesto: decorative marks sit left of each item's line ---------------- */
+  /* ---------------- manifesto: decorative marks sit left of the shared line ---------------- */
   (function () {
     var items = document.querySelectorAll('.manifesto-qa-item');
-    if (!items.length) return;
+    var line = document.querySelector('.manifesto-qa-line');
+    if (!items.length || !line) return;
 
     function align() {
       items.forEach(function (item) {
         var img = item.querySelector('.manifesto-qa-mark');
-        var line = item.querySelector('.manifesto-qa-item-line');
         var answer = item.querySelector('.manifesto-qa-answer');
-        if (!img || !line || !answer) return;
+        if (!img || !answer) return;
         var itemRect = item.getBoundingClientRect();
         var lineRect = line.getBoundingClientRect();
         var aRect = answer.getBoundingClientRect();
@@ -149,29 +149,6 @@
         var top = refTop + 79 - itemRect.top;
         img.style.left = left + 'px';
         img.style.top = top + 'px';
-      });
-    }
-
-    align();
-    window.addEventListener('resize', align);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(align);
-    }
-    setTimeout(align, 400);
-  })();
-
-  /* ---------------- manifesto: item lines stop exactly at the answer's own end ---------------- */
-  (function () {
-    var items = document.querySelectorAll('.manifesto-qa-item');
-    if (!items.length) return;
-
-    function align() {
-      items.forEach(function (item) {
-        var line = item.querySelector('.manifesto-qa-item-line');
-        if (!line) return;
-        var lineTop = line.getBoundingClientRect().top;
-        var itemBottom = item.getBoundingClientRect().bottom;
-        line.style.height = (itemBottom - lineTop) + 'px';
       });
     }
 

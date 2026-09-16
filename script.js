@@ -54,8 +54,17 @@
         var lineRect = line.getBoundingClientRect();
         var aRect = answer.getBoundingClientRect();
         var imgRect = img.getBoundingClientRect();
-        var gap = 24;
+        // the draft layout pushes the illustration further from the line/text
+        // (kept where they already were) for more breathing room, echoing
+        // the reference image's spacious illustration-left composition;
+        // capped so the image never gets pushed past the viewport's edge
+        // on narrow screens
         var edge = Math.min(lineRect.left, aRect.left);
+        var gap = 24;
+        if (item.closest('.manifesto-qa-draft')) {
+          var maxGap = edge - imgRect.width - 16;
+          gap = Math.max(8, Math.min(140, maxGap));
+        }
         var left = edge - imgRect.width - gap - itemRect.left;
         var top = aRect.top + aRect.height / 2 - imgRect.height / 2 - itemRect.top;
         img.style.left = left + 'px';

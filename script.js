@@ -439,7 +439,10 @@
 
   function startHero() { playHeroIntro(); }
 
-  if (reduce || !window.gsap) {
+  if (!preloaderCount) {
+    // pages without the hero (e.g. manifesto) don't ship the counter markup
+    document.body.classList.remove('is-preloading');
+  } else if (reduce || !window.gsap) {
     preloaderCount.style.display = 'none';
     document.body.classList.remove('is-preloading');
     document.querySelectorAll('.line').forEach(function (l) { l.style.transform = 'none'; });

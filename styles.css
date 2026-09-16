@@ -211,6 +211,13 @@ main, header, footer, section{position:relative; z-index:1;}
   .nav-overlay-badge{font-size:9px; max-width:66px; line-height:1.4;}
   .nav-list{gap:18px; margin-top:44px;}
   .nav-list a{font-size:clamp(20px, 7vw, 34px);}
+  .nav-toggle{
+    width:44px; height:44px;
+    padding:0;
+    justify-content:center;
+    border-radius:50%;
+  }
+  .nav-toggle-label{display:none;}
 }
 
 /* ---------- underline hover ---------- */

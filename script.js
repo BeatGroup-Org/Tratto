@@ -162,16 +162,24 @@
     }
   })();
 
-  /* ---------------- footer socials: sit a fixed gap below "made with..." ---------------- */
+  /* ---------------- footer socials: sit a fixed gap below the lower of "made with..." and the statement ---------------- */
   (function () {
     var socials = document.querySelector('.footer-socials');
     var meta = document.querySelector('.footer-meta');
+    var statement = document.querySelector('.footer-statement');
     if (!socials || !meta) return;
 
     function align() {
       socials.style.marginTop = '0px';
       var gap = 100;
-      var dy = meta.getBoundingClientRect().bottom + gap - socials.getBoundingClientRect().top;
+      // on mobile, footer-contact stacks above footer-statement instead of
+      // sitting beside it, so the statement can end lower than "made
+      // with..." — anchor to whichever one actually ends further down
+      var referenceBottom = meta.getBoundingClientRect().bottom;
+      if (statement) {
+        referenceBottom = Math.max(referenceBottom, statement.getBoundingClientRect().bottom);
+      }
+      var dy = referenceBottom + gap - socials.getBoundingClientRect().top;
       socials.style.marginTop = dy + 'px';
     }
 

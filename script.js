@@ -165,6 +165,36 @@
     setTimeout(align, 400);
   })();
 
+  /* ---------------- center the footer-contact + footer-statement group on the page ---------------- */
+  (function () {
+    var footerTop = document.querySelector('.footer-top');
+    var footer = document.querySelector('.footer');
+    var contact = document.querySelector('.footer-contact');
+    var statement = document.querySelector('.footer-statement');
+    if (!footerTop || !footer || !contact || !statement) return;
+
+    function align() {
+      footerTop.style.transform = 'none';
+      if (window.innerWidth <= 760) return;
+      var footerRect = footer.getBoundingClientRect();
+      var cRect = contact.getBoundingClientRect();
+      var sRect = statement.getBoundingClientRect();
+      var unionLeft = Math.min(cRect.left, sRect.left);
+      var unionRight = Math.max(cRect.right, sRect.right);
+      var unionCenter = (unionLeft + unionRight) / 2;
+      var footerCenter = (footerRect.left + footerRect.right) / 2;
+      var shift = footerCenter - unionCenter;
+      footerTop.style.transform = 'translateX(' + shift + 'px)';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 400);
+  })();
+
   /* ---------------- footer socials: sit a fixed gap below the lower of "made with..." and the statement ---------------- */
   (function () {
     var socials = document.querySelector('.footer-socials');

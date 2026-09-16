@@ -547,7 +547,7 @@ main, header, footer, section{position:relative; z-index:1;}
 .footer-contact{
   position:absolute;
   left:calc(var(--footer-contact-shift-x) + var(--hero-mark-shift));
-  bottom:0;
+  bottom:2mm;
   max-width:320px;
 }
 .footer-contact-label{

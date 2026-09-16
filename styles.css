@@ -340,14 +340,6 @@ main, header, footer, section{position:relative; z-index:1;}
   letter-spacing:-.05em;
   color:var(--ink);
 }
-.hero-second-question-line{
-  display:block;
-  width:1px;
-  height:clamp(160px, 20vw, 280px);
-  margin:0 0 clamp(24px, 3vw, 48px) calc(var(--hero-col) + var(--hero-divider-gap));
-  background:var(--ink);
-}
-
 .section-rule{
   border:none;
   height:1px;
@@ -359,7 +351,7 @@ main, header, footer, section{position:relative; z-index:1;}
 
 /* ---------- partners marquee ---------- */
 .partners{
-  padding:clamp(40px, 4.5vw, 64px) 0;
+  padding:clamp(72px, 8vw, 120px) 0 clamp(40px, 4.5vw, 64px);
 }
 .partners-marquee{
   position:relative;

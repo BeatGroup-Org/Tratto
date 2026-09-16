@@ -213,7 +213,7 @@
   /* ---------------- Q2: "Come" stays left, "si dà forma" indents to the vertical line, rest returns left ---------------- */
   (function () {
     var q2Container = document.querySelector('.hero-second-question');
-    var refLine = document.querySelector('.hero-second-question-line') || document.querySelector('.hero-cta-line');
+    var refLine = document.querySelector('.hero-cta-line');
     if (!q2Container || !refLine) return;
     var q2Lines = q2Container.querySelectorAll(':scope > .line-mask');
     if (q2Lines.length < 2) return;
@@ -265,7 +265,6 @@
   /* ---------------- Q2: drop down so "Come" starts where "si dà forma" used to be ---------------- */
   (function () {
     var q2Container = document.querySelector('.hero-second-question');
-    var q2Line = document.querySelector('.hero-second-question-line');
     if (!q2Container) return;
     var q2Lines = q2Container.querySelectorAll(':scope > .line-mask');
     if (q2Lines.length < 2) return;
@@ -274,14 +273,15 @@
 
     function align() {
       q2Container.style.transform = 'none';
-      if (q2Line) q2Line.style.transform = 'none';
+      q2Container.style.marginBottom = '';
+      var baseMarginBottom = parseFloat(getComputedStyle(q2Container).marginBottom) || 0;
       var step = secondLine.getBoundingClientRect().top - firstLine.getBoundingClientRect().top;
       var dy = step * 2;
       q2Container.style.transform = 'translateY(' + dy + 'px)';
-      // the trailing vertical line's position comes from normal document
-      // flow (margin), which doesn't know about this transform-only
-      // drop, so it needs the same shift to keep clear of the text
-      if (q2Line) q2Line.style.transform = 'translateY(' + dy + 'px)';
+      // the transform doesn't reserve layout space, so the next sibling
+      // (the section-rule before the partners strip) needs the shift added
+      // back as margin, or it renders over the visually-dropped text
+      q2Container.style.marginBottom = (baseMarginBottom + dy) + 'px';
     }
 
     align();

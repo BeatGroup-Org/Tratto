@@ -128,7 +128,12 @@
           gap = Math.max(8, Math.min(140, maxGap));
         }
         var left = edge - imgRect.width - gap - itemRect.left;
-        var top = aRect.top + aRect.height / 2 - imgRect.height / 2 - itemRect.top;
+        // fixed offset below the answer's own first line, not centered on
+        // the whole (multi-paragraph) answer block, so both marks sit the
+        // same distance under their question's first line
+        var firstLine = answer.querySelector('.draft-line') || answer.querySelector('p');
+        var refTop = firstLine ? firstLine.getBoundingClientRect().top : aRect.top;
+        var top = refTop + 79 - itemRect.top;
         img.style.left = left + 'px';
         img.style.top = top + 'px';
       });

@@ -687,7 +687,7 @@ main, header, footer, section{position:relative; z-index:1;}
   .nav-overlay-badge{top:88px;}
   .nav-overlay-line{top:88px;}
   .nav-list{margin-top:52px;}
-  .hero-role{margin:0 0 auto;}
+  .hero-role{margin-top:0; margin-bottom:auto;}
   .hero-statement{margin-top:16px; margin-left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px) + var(--hero-mark-shift));}
   .hero-statement-offset{margin-left:0;}
   .hero-grid{margin-bottom:28px;}

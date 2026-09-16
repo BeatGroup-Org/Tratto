@@ -969,7 +969,7 @@ body:not(.is-locked) .site-lock{ display:none; }
   pointer-events:none;
 }
 .manifesto-qa-answer{
-  margin-top:0;
+  margin-top:12px;
   max-width:640px;
 }
 .manifesto-qa-answer p{

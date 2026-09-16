@@ -994,7 +994,7 @@ body:not(.is-locked) .site-lock{ display:none; }
   display:block;
   font-weight:600;
   font-size:clamp(20px, 3.2vw, 32px);
-  line-height:.46;
+  line-height:.44;
   letter-spacing:-.02em;
   margin-bottom:.4em;
 }

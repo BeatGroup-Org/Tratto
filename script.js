@@ -116,18 +116,31 @@
         var lineRect = line.getBoundingClientRect();
         var aRect = answer.getBoundingClientRect();
         var imgRect = img.getBoundingClientRect();
-        // the draft layout pushes the illustration further from the line/text
-        // (kept where they already were) for more breathing room, echoing
-        // the reference image's spacious illustration-left composition;
-        // capped so the image never gets pushed past the viewport's edge
-        // on narrow screens
-        var edge = Math.min(lineRect.left, aRect.left);
-        var gap = 24;
-        if (item.closest('.manifesto-qa-draft')) {
-          var maxGap = edge - imgRect.width - 16;
-          gap = Math.max(8, Math.min(140, maxGap));
+        var isReversed = item.classList.contains('manifesto-qa-item-reverse');
+        var left;
+        if (isReversed) {
+          // mirrored layout: the mark sits to the right of the text instead
+          // of left of the line; clamp the final position (not just the
+          // gap) so it can never push past the viewport's edge even when
+          // the text itself runs close to it
+          var gapR = 24;
+          var desiredLeft = aRect.right + gapR - itemRect.left;
+          var maxLeft = window.innerWidth - 16 - imgRect.width - itemRect.left;
+          left = Math.min(desiredLeft, maxLeft);
+        } else {
+          // the draft layout pushes the illustration further from the line/text
+          // (kept where they already were) for more breathing room, echoing
+          // the reference image's spacious illustration-left composition;
+          // capped so the image never gets pushed past the viewport's edge
+          // on narrow screens
+          var edge = Math.min(lineRect.left, aRect.left);
+          var gap = 24;
+          if (item.closest('.manifesto-qa-draft')) {
+            var maxGap = edge - imgRect.width - 16;
+            gap = Math.max(8, Math.min(140, maxGap));
+          }
+          left = edge - imgRect.width - gap - itemRect.left;
         }
-        var left = edge - imgRect.width - gap - itemRect.left;
         // fixed offset below the answer's own first line, not centered on
         // the whole (multi-paragraph) answer block, so both marks sit the
         // same distance under their question's first line

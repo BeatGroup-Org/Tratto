@@ -988,6 +988,7 @@ body:not(.is-locked) .site-lock{ display:none; }
 /* ---------- manifesto draft: bigger marks, question-less semibold answers ---------- */
 .manifesto-qa-draft .manifesto-qa-mark{width:clamp(110px, 14vw, 220px);}
 .manifesto-qa-draft .manifesto-qa-answer{max-width:900px;}
+.manifesto-qa-draft .manifesto-qa-item-reverse .manifesto-qa-answer{max-width:560px;}
 .manifesto-qa-draft .manifesto-qa-answer p{
   margin:0 0 clamp(28px, 3.4vw, 48px);
 }
@@ -1001,6 +1002,16 @@ body:not(.is-locked) .site-lock{ display:none; }
   margin-bottom:.4em;
 }
 .manifesto-qa-draft .manifesto-qa-answer .draft-line:last-child{margin-bottom:0;}
+.manifesto-qa-decor{
+  /* same left position as the item lines/marks, purely decorative */
+  margin-left:calc(var(--hero-divider-gap) - var(--hero-gap));
+}
+.manifesto-qa-decor img{
+  display:block;
+  width:clamp(120px, 13vw, 200px);
+  height:auto;
+  pointer-events:none;
+}
 
 /* ---------- footer meta (privacy link + credit) ---------- */
 .footer-meta{

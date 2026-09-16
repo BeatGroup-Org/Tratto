@@ -142,17 +142,19 @@
     }
   })();
 
-  /* ---------------- align "un" ("u") to the "d" of "da" ---------------- */
+  /* ---------------- shift "un tratto" one more step past "parte" (same step size as "Ogni" -> "parte") ---------------- */
   (function () {
-    var daD = document.getElementById('daD');
-    var unU = document.getElementById('unU');
+    var parteDaLine = document.getElementById('parteDaLine');
     var unTrattoLine = document.getElementById('unTrattoLine');
-    if (!daD || !unU || !unTrattoLine) return;
+    if (!parteDaLine || !unTrattoLine) return;
 
     function align() {
-      unTrattoLine.style.transform = 'none';
-      var shift = daD.getBoundingClientRect().left - unU.getBoundingClientRect().left;
-      unTrattoLine.style.transform = 'translateX(' + shift + 'px)';
+      // read the step "align parte" already applied, rather than
+      // re-deriving it from the letters' current (already-aligned)
+      // positions, which would just measure a zero gap
+      var match = /translateX\(([-\d.]+)px\)/.exec(parteDaLine.style.transform);
+      var step = match ? parseFloat(match[1]) : 0;
+      unTrattoLine.style.transform = 'translateX(' + (step * 2) + 'px)';
     }
 
     align();
@@ -160,6 +162,7 @@
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(align);
     }
+    setTimeout(align, 400);
   })();
 
   /* ---------------- footer socials: sit a fixed gap below the lower of "made with..." and the statement ---------------- */

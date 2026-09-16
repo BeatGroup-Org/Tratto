@@ -280,22 +280,24 @@
     setTimeout(align, 400);
   })();
 
-  /* ---------------- Q2: "Come" stays left, "si dà forma" shifts 156px right, rest returns left ---------------- */
+  /* ---------------- Q2: "Come" stays left, "si dà forma" and "che ancora" shift 156px right, rest returns left ---------------- */
   (function () {
     var q2Container = document.querySelector('.hero-second-question');
     if (!q2Container) return;
     var q2Lines = q2Container.querySelectorAll(':scope > .line-mask');
-    if (q2Lines.length < 2) return;
-    var secondLine = q2Lines[1];
+    if (q2Lines.length < 4) return;
+    var shiftedLines = [q2Lines[1], q2Lines[3]];
 
     function align() {
       q2Lines.forEach(function (line) { line.style.transform = 'none'; line.style.maxWidth = ''; });
       var containerRight = q2Container.getBoundingClientRect().right;
-      var secondRect = secondLine.getBoundingClientRect();
       var shift = 156;
-      var maxWidth = Math.max(0, containerRight - (secondRect.left + shift));
-      secondLine.style.maxWidth = maxWidth + 'px';
-      secondLine.style.transform = 'translateX(' + shift + 'px)';
+      shiftedLines.forEach(function (line) {
+        var rect = line.getBoundingClientRect();
+        var maxWidth = Math.max(0, containerRight - (rect.left + shift));
+        line.style.maxWidth = maxWidth + 'px';
+        line.style.transform = 'translateX(' + shift + 'px)';
+      });
     }
 
     align();

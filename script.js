@@ -165,6 +165,58 @@
     setTimeout(align, 400);
   })();
 
+  /* ---------------- stagger Q1/Q2 words with the same step as "Ogni" -> "parte" ---------------- */
+  (function () {
+    var parteDaLine = document.getElementById('parteDaLine');
+    var heroCta = document.querySelector('.hero-cta');
+    var q1Container = document.querySelector('.hero-cta-question-right');
+    var q2Container = document.querySelector('.hero-second-question');
+    var q1Lines = q1Container ? q1Container.querySelectorAll(':scope > .line-mask') : [];
+    var q2Lines = q2Container ? q2Container.querySelectorAll(':scope > .line-mask') : [];
+    if (!parteDaLine || (!q1Lines.length && !q2Lines.length)) return;
+
+    // each line inherits its container's own max-width by default; shrink
+    // it by the applied shift so a shifted line's right edge never
+    // reaches further than an unshifted line's would, avoiding horizontal
+    // overflow on the last (most-shifted) word. getComputedStyle can't
+    // reliably serialize a max-width that mixes min()/calc() with a %
+    // term back into a pixel number, so each boundary is recomputed here
+    // from the same values the CSS itself uses.
+    function q1BaseMaxWidth() {
+      if (!heroCta) return Infinity;
+      return Math.min(850, heroCta.getBoundingClientRect().width - 48);
+    }
+    function q2BaseMaxWidth() {
+      var parsed = parseFloat(getComputedStyle(q2Container).maxWidth);
+      return isFinite(parsed) ? parsed : Infinity;
+    }
+
+    function stagger(lines, step, baseMaxWidth) {
+      if (!lines.length) return;
+      lines.forEach(function (line, i) {
+        var shift = step * i;
+        line.style.transform = 'translateX(' + shift + 'px)';
+        if (isFinite(baseMaxWidth)) {
+          line.style.maxWidth = Math.max(0, baseMaxWidth - shift) + 'px';
+        }
+      });
+    }
+
+    function align() {
+      var match = /translateX\(([-\d.]+)px\)/.exec(parteDaLine.style.transform);
+      var step = match ? parseFloat(match[1]) : 0;
+      stagger(q1Lines, step, q1BaseMaxWidth());
+      stagger(q2Lines, step, q2BaseMaxWidth());
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 400);
+  })();
+
   /* ---------------- center the footer-contact + footer-statement group on the page ---------------- */
   (function () {
     var footerTop = document.querySelector('.footer-top');

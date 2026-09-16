@@ -167,7 +167,8 @@
     var contact = document.querySelector('.footer-contact');
     var credit = document.querySelector('.footer-meta-credit');
     var target = document.getElementById('unTrattoLine');
-    if (!contact || !credit || !target) return;
+    var targetLine = target ? target.querySelector('.line') : null;
+    if (!contact || !credit || !target || !targetLine) return;
 
     function align() {
       contact.style.transform = 'none';
@@ -176,7 +177,11 @@
       var shiftXBase = rootStyle.getPropertyValue('--footer-contact-shift-x').trim();
       var markShift = rootStyle.getPropertyValue('--hero-mark-shift').trim();
       var shiftX = 'calc(' + shiftXBase + ' + ' + markShift + ')';
-      var dy = target.getBoundingClientRect().bottom - credit.getBoundingClientRect().bottom;
+      // measure the inner .line, not the line-mask wrapper: the wrapper
+      // carries an extra padding-bottom (descender clearance) that would
+      // otherwise get baked into the alignment, landing "made with..."
+      // visibly below "un tratto" instead of flush with it
+      var dy = targetLine.getBoundingClientRect().bottom - credit.getBoundingClientRect().bottom;
       contact.style.transform = 'translate(' + shiftX + ', ' + dy + 'px)';
     }
 

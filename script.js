@@ -177,11 +177,16 @@
       var shiftXBase = rootStyle.getPropertyValue('--footer-contact-shift-x').trim();
       var markShift = rootStyle.getPropertyValue('--hero-mark-shift').trim();
       var shiftX = 'calc(' + shiftXBase + ' + ' + markShift + ')';
-      // measure the inner .line, not the line-mask wrapper: the wrapper
-      // carries an extra padding-bottom (descender clearance) that would
-      // otherwise get baked into the alignment, landing "made with..."
-      // visibly below "un tratto" instead of flush with it
+      // "un tratto" sits behind a scroll-triggered reveal (translateY
+      // 135% -> 0%) that may not have fired yet when this runs, so its
+      // .line is still shifted down out of view; measure the inner .line
+      // (not the line-mask wrapper, which carries an extra padding-bottom
+      // for descender clearance) with that reveal transform neutralized,
+      // so the alignment always targets the text's resting position
+      var targetLineTransform = targetLine.style.transform;
+      targetLine.style.transform = 'none';
       var dy = targetLine.getBoundingClientRect().bottom - credit.getBoundingClientRect().bottom;
+      targetLine.style.transform = targetLineTransform;
       contact.style.transform = 'translate(' + shiftX + ', ' + dy + 'px)';
     }
 
@@ -191,6 +196,21 @@
       document.fonts.ready.then(align);
     }
     setTimeout(align, 400);
+    setTimeout(align, 1200);
+    // re-check right as the footer scrolls into view, so a late layout
+    // shift (webfont swap, image load) above the fold never leaves this
+    // stale by the time it's actually visible
+    if (window.IntersectionObserver) {
+      var footer = document.querySelector('.footer');
+      if (footer) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) align();
+          });
+        }, { rootMargin: '200px' });
+        io.observe(footer);
+      }
+    }
   })();
 
   /* ---------------- footer socials: sit a fixed gap below "made with..." ---------------- */

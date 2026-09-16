@@ -984,7 +984,6 @@ body:not(.is-locked) .site-lock{ display:none; }
 .manifesto-qa-answer strong{font-weight:700;}
 
 /* ---------- manifesto draft: bigger marks, question-less semibold answers ---------- */
-.manifesto-qa-draft{padding-top:0;}
 .manifesto-qa-draft .manifesto-qa-mark{width:clamp(110px, 14vw, 220px);}
 .manifesto-qa-draft .manifesto-qa-answer{max-width:900px;}
 .manifesto-qa-draft .manifesto-qa-answer p{

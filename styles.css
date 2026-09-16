@@ -336,9 +336,10 @@ main, header, footer, section{position:relative; z-index:1;}
   width:clamp(90px, 10vw, 160px);
   height:auto;
   pointer-events:none;
-  -webkit-mask-image:url(#q1MarkMask);
-  mask-image:url(#q1MarkMask);
+  opacity:0;
+  transition:opacity var(--dur-m) var(--ease-in-out);
 }
+.hero-cta-mark.is-visible{opacity:1;}
 .hero-second-question{
   position:relative;
   margin:0 var(--edge) calc(16px + 0.15 * clamp(var(--h1-min), var(--h1-vw), 160px)) calc(var(--hero-inset) + var(--hero-align-shift) + var(--hero-mark-shift));
@@ -356,9 +357,10 @@ main, header, footer, section{position:relative; z-index:1;}
   width:clamp(90px, 10vw, 160px);
   height:auto;
   pointer-events:none;
-  -webkit-mask-image:url(#q2MarkMask);
-  mask-image:url(#q2MarkMask);
+  opacity:0;
+  transition:opacity var(--dur-m) var(--ease-in-out);
 }
+.hero-second-mark.is-visible{opacity:1;}
 .section-rule{
   border:none;
   height:1px;

@@ -429,79 +429,36 @@
     setTimeout(align, 500);
   })();
 
-  /* ---------------- Q1/Q2 marks: goo-trail mask reveal (same idea as the old hero-reveal post-its) ---------------- */
-  if (fine && !reduce) {
-    var SVG_NS_MARK = 'http://www.w3.org/2000/svg';
+  /* ---------------- Q1/Q2 marks: reveal in full, fixed, while the cursor sits near them ---------------- */
+  if (fine) {
+    (function () {
+      var marks = Array.prototype.slice.call(
+        document.querySelectorAll('.hero-cta-mark, .hero-second-mark')
+      );
+      if (!marks.length) return;
 
-    function setupMarkTrail(markEl, dotsGroupId) {
-      var dotsGroup = document.getElementById(dotsGroupId);
-      if (!markEl || !dotsGroup) return;
-
-      var LIFETIME = 900;
-      var BASE_R = 34;
-      var MIN_GAP = 16;
-      var POOL_SIZE = 24;
-      var PAD = 40;
-      var trail = [];
-      var lastSpawn = 0;
-      var pool = [];
-
-      for (var i = 0; i < POOL_SIZE; i++) {
-        var c = document.createElementNS(SVG_NS_MARK, 'circle');
-        c.setAttribute('fill', '#fff');
-        c.setAttribute('fill-opacity', '0');
-        c.setAttribute('r', '0');
-        dotsGroup.appendChild(c);
-        pool.push(c);
-      }
-
-      function addPoint(x, y, born, rf, life) {
-        trail.push({ x: x, y: y, born: born, rf: rf, life: life });
-        if (trail.length > POOL_SIZE) trail.shift();
-      }
-      function randomLife() { return LIFETIME * (0.5 + Math.random() * 1.1); }
+      // hysteresis: a smaller radius to fade in, a larger one to fade out,
+      // so sitting near the edge doesn't flicker the mark on and off
+      var SHOW_RADIUS = 90;
+      var HIDE_RADIUS = 140;
+      var visible = marks.map(function () { return false; });
 
       window.addEventListener('mousemove', function (e) {
-        // read the mark's box fresh every time instead of caching it: the
-        // mark keeps getting repositioned after this runs (web font load,
-        // the 500ms settle timeout), and a stale rect here means every
-        // mousemove is checked against the wrong box and never spawns a
-        // point, so the reveal silently never fires
-        var rect = markEl.getBoundingClientRect();
-        // coordinates local to the mark's own box, since the mask is
-        // applied directly to it (mask-image content uses that element's
-        // own user space)
-        var bx = e.clientX - rect.left, by = e.clientY - rect.top;
-        if (bx < -PAD || by < -PAD || bx > rect.width + PAD || by > rect.height + PAD) return;
-        var now = performance.now();
-        if (now - lastSpawn < MIN_GAP) return;
-        lastSpawn = now;
-        addPoint(bx, by, now, 0.7 + Math.random() * 0.55, randomLife());
+        marks.forEach(function (mark, i) {
+          var r = mark.getBoundingClientRect();
+          var cx = r.left + r.width / 2;
+          var cy = r.top + r.height / 2;
+          var dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+          if (!visible[i] && dist <= SHOW_RADIUS) {
+            visible[i] = true;
+            mark.classList.add('is-visible');
+          } else if (visible[i] && dist > HIDE_RADIUS) {
+            visible[i] = false;
+            mark.classList.remove('is-visible');
+          }
+        });
       });
-
-      function frame() {
-        var now = performance.now();
-        trail = trail.filter(function (p) { return now - p.born < p.life; });
-        for (var i = 0; i < POOL_SIZE; i++) {
-          var p = trail[i];
-          var circle = pool[i];
-          if (!p) { circle.setAttribute('fill-opacity', '0'); continue; }
-          var t = (now - p.born) / p.life;
-          var eased = 1 - Math.pow(1 - t, 2);
-          var r = BASE_R * p.rf * (0.9 + 0.35 * eased);
-          var a = Math.pow(1 - t, 0.6);
-          circle.setAttribute('cx', p.x.toFixed(1));
-          circle.setAttribute('cy', p.y.toFixed(1));
-          circle.setAttribute('r', r.toFixed(1));
-          circle.setAttribute('fill-opacity', a.toFixed(2));
-        }
-        requestAnimationFrame(frame);
-      }
-      frame();
-    }
-
-    setupMarkTrail(document.querySelector('.hero-cta-mark'), 'q1MarkMaskDots');
-    setupMarkTrail(document.querySelector('.hero-second-mark'), 'q2MarkMaskDots');
+    })();
   }
 
   /* ---------------- center the footer-contact + footer-statement group on the page ---------------- */

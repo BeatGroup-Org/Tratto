@@ -188,7 +188,10 @@
     function stagger(lines, step, baseMaxWidth) {
       if (!lines.length) return;
       lines.forEach(function (line, i) {
-        var shift = step * i;
+        // only the second line ("significasse") indents; the rest align
+        // back to the first line's position, same as "Come"/"si dà
+        // forma"/rest in the second question
+        var shift = (i === 1) ? step : 0;
         line.style.transform = 'translateX(' + shift + 'px)';
         if (isFinite(baseMaxWidth)) {
           line.style.maxWidth = Math.max(0, baseMaxWidth - shift) + 'px';

@@ -419,71 +419,38 @@
     setTimeout(align, 500);
   })();
 
-  /* ---------------- Q1/Q2 marks: trail reveal (only the part the cursor blob touches), via a CSS gradient mask ---------------- */
-  // built from stacked radial-gradient mask layers instead of an SVG
-  // <mask> referenced by url(#id): that approach rendered as a solid
-  // white patch painting over the artwork instead of a transparent
-  // window in some browsers, hiding the art rather than revealing it
-  if (fine && !reduce) {
-    function setupMarkTrail(markEl) {
-      if (!markEl) return;
+  /* ---------------- Q1/Q2 marks: reveal in full, fixed, while the cursor sits near them ---------------- */
+  // plain opacity toggle, no partial/blurred reveal: the mark is either
+  // fully hidden or fully shown, clean, based on cursor proximity
+  if (fine) {
+    (function () {
+      var marks = Array.prototype.slice.call(
+        document.querySelectorAll('.hero-cta-mark, .hero-second-mark')
+      );
+      if (!marks.length) return;
 
-      var LIFETIME = 900;
-      var BASE_R = 46;
-      var MIN_GAP = 16;
-      var POOL_SIZE = 12;
-      var PAD = 40;
-      var trail = [];
-      var lastSpawn = 0;
-
-      function addPoint(x, y, born, rf, life) {
-        trail.push({ x: x, y: y, born: born, rf: rf, life: life });
-        if (trail.length > POOL_SIZE) trail.shift();
-      }
-      function randomLife() { return LIFETIME * (0.5 + Math.random() * 1.1); }
+      // hysteresis: a smaller radius to fade in, a larger one to fade out,
+      // so sitting near the edge doesn't flicker the mark on and off
+      var SHOW_RADIUS = 90;
+      var HIDE_RADIUS = 140;
+      var visible = marks.map(function () { return false; });
 
       window.addEventListener('mousemove', function (e) {
-        // read the mark's box fresh every time instead of caching it: the
-        // mark keeps getting repositioned after this runs (web font load,
-        // the 500ms settle timeout), and a stale rect here means every
-        // mousemove is checked against the wrong box and never spawns a
-        // point, so the reveal silently never fires
-        var rect = markEl.getBoundingClientRect();
-        var bx = e.clientX - rect.left, by = e.clientY - rect.top;
-        if (bx < -PAD || by < -PAD || bx > rect.width + PAD || by > rect.height + PAD) return;
-        var now = performance.now();
-        if (now - lastSpawn < MIN_GAP) return;
-        lastSpawn = now;
-        addPoint(bx, by, now, 0.7 + Math.random() * 0.55, randomLife());
+        marks.forEach(function (mark, i) {
+          var r = mark.getBoundingClientRect();
+          var cx = r.left + r.width / 2;
+          var cy = r.top + r.height / 2;
+          var dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+          if (!visible[i] && dist <= SHOW_RADIUS) {
+            visible[i] = true;
+            mark.classList.add('is-visible');
+          } else if (visible[i] && dist > HIDE_RADIUS) {
+            visible[i] = false;
+            mark.classList.remove('is-visible');
+          }
+        });
       });
-
-      function frame() {
-        var now = performance.now();
-        trail = trail.filter(function (p) { return now - p.born < p.life; });
-        var mask;
-        if (!trail.length) {
-          mask = 'radial-gradient(circle 0px at 0 0, #000 0%, transparent 0%)';
-        } else {
-          // each trail point is its own soft circle; CSS masks composite
-          // multiple layers additively by default, so overlapping circles
-          // union together into one continuous revealed patch
-          mask = trail.map(function (p) {
-            var t = (now - p.born) / p.life;
-            var eased = 1 - Math.pow(1 - t, 2);
-            var r = BASE_R * p.rf * (0.9 + 0.35 * eased);
-            var a = Math.pow(1 - t, 0.6);
-            return 'radial-gradient(circle ' + r.toFixed(1) + 'px at ' + p.x.toFixed(1) + 'px ' + p.y.toFixed(1) + 'px, rgba(0,0,0,' + a.toFixed(2) + ') 0%, rgba(0,0,0,0) 100%)';
-          }).join(',');
-        }
-        markEl.style.webkitMaskImage = mask;
-        markEl.style.maskImage = mask;
-        requestAnimationFrame(frame);
-      }
-      frame();
-    }
-
-    setupMarkTrail(document.querySelector('.hero-cta-mark'));
-    setupMarkTrail(document.querySelector('.hero-second-mark'));
+    })();
   }
 
   /* ---------------- center the footer-contact + footer-statement group on the page ---------------- */

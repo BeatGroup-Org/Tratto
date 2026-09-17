@@ -423,7 +423,10 @@ html.nav-transition-incoming .nav-overlay .nav-list li{
 
 /* ---------- partners marquee ---------- */
 .partners{
-  padding:clamp(48px, 5vw, 80px) 0;
+  /* less top padding than bottom - the second hero question right above
+     already carries its own bottom margin, so the two stacked together
+     were leaving a bigger gap here than after the marquee */
+  padding:clamp(24px, 2.5vw, 40px) 0 clamp(48px, 5vw, 80px);
 }
 .partners-marquee{
   position:relative;
@@ -825,7 +828,7 @@ html.nav-transition-incoming .nav-overlay .nav-list li{
 
 /* ---------- manifesto ---------- */
 .manifesto-qa{
-  padding:32px 0 clamp(120px, 14vw, 220px);
+  padding:32px 0 clamp(60px, 8vw, 140px);
   min-height:60vh;
 }
 .manifesto-qa-list{

@@ -410,7 +410,7 @@
       // kept in JS (not as that rule's own margin-top) because it would
       // otherwise collapse against this element's own margin-bottom and
       // get silently swallowed by the larger of the two
-      var extraGap = Math.min(352, Math.max(176, window.innerWidth * 0.22));
+      var extraGap = Math.min(200, Math.max(96, window.innerWidth * 0.12));
       // the transform doesn't reserve layout space, so the next sibling
       // (the section-rule before the partners strip) needs the shift added
       // back as margin, or it renders over the visually-dropped text

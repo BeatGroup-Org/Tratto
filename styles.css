@@ -37,6 +37,27 @@
   --maxw: 1520px;
 }
 
+/* ---------- page transitions (menu navigation between pages) ---------- */
+/* opts every same-origin navigation (e.g. clicking a nav-overlay link)
+   into the browser's native cross-document view transition instead of a
+   plain hard navigation, which otherwise keeps the outgoing page's live,
+   still-running frame on screen (mid-animation drawings included) for
+   the whole time the next page is loading. With this, the browser instead
+   holds a static snapshot of the outgoing page and swaps to the new one
+   the instant it's ready - no in-between frames, nothing left running.
+   Chromium/WebKit only for now; browsers without support just ignore
+   this and keep today's default navigation, so it's a pure improvement. */
+@view-transition {
+  navigation: auto;
+}
+/* an instant cut, not a cross-fade: the new page's first frame should
+   replace the old one directly, with nothing visible in between */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
 *{box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%; background:var(--paper);}
 em{font-style:normal;}

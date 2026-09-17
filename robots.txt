@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tratto-smoky.vercel.app/sitemap.xml

@@ -712,6 +712,13 @@ main, header, footer, section{position:relative; z-index:1;}
     --h1-min: 28px;
   }
   .hero{padding-top:100px;}
+  /* the two-column grid (narrow logo/copyright rail + name/date) only has
+     room to sit side by side once the right column's text is big enough
+     to make the left rail's short, gap-free ratio work; on mobile the two
+     columns are close enough in height that they collide, so stack them
+     instead - same content, same order, just vertical now */
+  .hero-grid{grid-template-columns:1fr; row-gap:20px; min-height:0;}
+  .hero-divider{display:none;}
   .footer-contact{
     position:static;
     max-width:calc(100vw - var(--hero-inset) - clamp(16px, 5.5vw, 90px) - var(--hero-mark-shift) - var(--edge));
@@ -720,6 +727,11 @@ main, header, footer, section{position:relative; z-index:1;}
   .footer-statement{margin-top:clamp(32px, 8vw, 56px);}
   .hero-mark{width:clamp(38px, 11vw, 105px);}
   .hero-left{gap:20px; margin-left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px));}
+  /* stacked below hero-left now (see .hero-grid above); match its left
+     indent so the two blocks share the same edge instead of hero-right
+     sitting flush against the viewport edge */
+  .hero-right{margin-left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px));}
+  .hero-meta-row{transform:none;}
   .nav-overlay-mark{left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px) + var(--hero-mark-shift)); top:88px;}
   .nav-overlay-badge{top:88px;}
   .nav-overlay-line{top:88px;}
@@ -1157,5 +1169,18 @@ body:not(.is-locked) .site-lock{ display:none; }
      the much narrower mobile column; fall back to filling the column like
      the other items instead */
   .manifesto-qa-draft .manifesto-qa-item-reverse .manifesto-qa-answer{width:auto;}
+  /* each .draft-line is a manually-set line break matching the reference
+     PDF's layout, sized for a wide desktop column at a very tight 0.47
+     line-height (one line per span, by design). On a narrow mobile column
+     that same phrase doesn't fit on one line, so the browser wraps it -
+     and at 0.47 line-height the wrapped half collides with the next
+     .draft-line entirely. Once wrapping is unavoidable there's no version
+     of this that preserves the exact desktop line breaks, so it falls
+     back to normal flowing paragraph text instead (same weight, same
+     scaled-down size, just a readable line-height) */
+  .manifesto-qa-draft .manifesto-qa-answer .draft-line{
+    display:inline;
+    line-height:1.3;
+  }
 }
 

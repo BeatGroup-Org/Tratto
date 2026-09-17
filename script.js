@@ -16,6 +16,14 @@
 
     function align() {
       if (preloadSettling) return;
+      // below 760px the hero grid stacks into one column (see CSS): the
+      // mark no longer shares a row with the meta-row text, so aligning
+      // its y-position to it would just push it down into the date/name
+      // text instead; the divider is hidden there too
+      if (window.matchMedia('(max-width:760px)').matches) {
+        mark.style.transform = 'none';
+        return;
+      }
 
       // logo, role and the statement all share the same left inset (set in
       // CSS via --hero-inset), so no horizontal JS positioning is needed here.
@@ -75,12 +83,33 @@
           // two visibly colliding, same as in the reference PDF), with the
           // mark following to its right
           var gapR = 24;
-          var centerLeft = Math.max(-314, (itemRect.width - aRect.width) / 2 - 470);
+          // the -314/-470 numbers below are fixed px tuned for the wide
+          // desktop column; on a narrow mobile column they'd push the
+          // text off the left edge of the viewport entirely, so fall back
+          // to a safe "just centered, never negative" position there
+          var centerLeft = window.innerWidth > 760
+            ? Math.max(-314, (itemRect.width - aRect.width) / 2 - 470)
+            : Math.max(0, (itemRect.width - aRect.width) / 2);
+          // safety net for widths in between (e.g. tablets around 768px):
+          // the -314 desktop cap above assumes a wide desktop column, and
+          // can still push the text left of the viewport on a narrower one
+          // that's just above the 760 cutoff; never let it go past the
+          // same 16px edge margin used elsewhere
+          var minCenterLeft = 16 - itemRect.left;
+          if (centerLeft < minCenterLeft) centerLeft = minCenterLeft;
           answer.style.marginLeft = centerLeft + 'px';
           aRect = answer.getBoundingClientRect();
-          var desiredLeft = aRect.right + gapR - itemRect.left;
-          var maxLeft = window.innerWidth - 16 - imgRect.width - itemRect.left;
-          left = Math.min(desiredLeft, maxLeft);
+          if (window.innerWidth > 760) {
+            var desiredLeft = aRect.right + gapR - itemRect.left;
+            var maxLeft = window.innerWidth - 16 - imgRect.width - itemRect.left;
+            left = Math.min(desiredLeft, maxLeft);
+          } else {
+            // in the single-column mobile layout the text fills the row,
+            // so there's no gap beside it to put the mark into without
+            // overlapping (it used to get squeezed into the text here);
+            // center it below the text instead
+            left = Math.max(16 - itemRect.left, (itemRect.width - imgRect.width) / 2);
+          }
         } else {
           // the draft layout pushes the illustration further from the line/text
           // (kept where they already were) for more breathing room, echoing
@@ -94,8 +123,12 @@
             gap = Math.max(8, Math.min(140, maxGap));
           }
           left = edge - imgRect.width - gap - itemRect.left;
-          // per-item nudge left/right from that default position
-          left += parseFloat(img.getAttribute('data-mark-left-adjust')) || 0;
+          // per-item nudge left/right from that default position - a fixed
+          // px value tuned for the wide desktop column, so it's skipped on
+          // narrow viewports where it would push the mark into the text
+          if (window.innerWidth > 760) {
+            left += parseFloat(img.getAttribute('data-mark-left-adjust')) || 0;
+          }
           // a large mark can otherwise be pushed off the left edge of the
           // viewport entirely when there isn't enough room before the line
           var minLeftEdge = 16 - itemRect.left;
@@ -107,11 +140,19 @@
         // (an item can flag a specific line as the anchor via
         // [data-mark-anchor], e.g. the mark sits beside a later paragraph
         // instead of the first one)
-        var firstLine = answer.querySelector('[data-mark-anchor]') || answer.querySelector('.draft-line') || answer.querySelector('p');
-        var refTop = firstLine ? firstLine.getBoundingClientRect().top : aRect.top;
-        var offset = parseFloat(img.getAttribute('data-mark-offset'));
-        if (isNaN(offset)) offset = 79;
-        var top = refTop + offset - itemRect.top;
+        var top;
+        if (isReversed && window.innerWidth <= 760) {
+          // follows the mark below the text (see the left calc above),
+          // instead of the firstLine+offset anchor used everywhere else,
+          // which was tuned for the mark sitting beside the first line
+          top = aRect.bottom + 24 - itemRect.top;
+        } else {
+          var firstLine = answer.querySelector('[data-mark-anchor]') || answer.querySelector('.draft-line') || answer.querySelector('p');
+          var refTop = firstLine ? firstLine.getBoundingClientRect().top : aRect.top;
+          var offset = parseFloat(img.getAttribute('data-mark-offset'));
+          if (isNaN(offset)) offset = 79;
+          top = refTop + offset - itemRect.top;
+        }
         img.style.left = left + 'px';
         img.style.top = top + 'px';
         // the mark is absolutely positioned, so it doesn't naturally push

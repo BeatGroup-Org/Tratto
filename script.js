@@ -146,13 +146,16 @@
     var decor = document.querySelector('.manifesto-qa-decor');
     var reversedItem = document.querySelector('.manifesto-qa-item-reverse');
     if (!list || !lineA || !lineB || !decor || !reversedItem) return;
-    var nextItem = reversedItem.nextElementSibling;
+    var revAnswer = reversedItem.querySelector('.manifesto-qa-answer');
 
     function align() {
       var listTop = list.getBoundingClientRect().top;
       var decorBottom = decor.getBoundingClientRect().bottom;
-      var revBottom = reversedItem.getBoundingClientRect().bottom;
-      var resumeAt = nextItem ? (revBottom + nextItem.getBoundingClientRect().top) / 2 : revBottom;
+      var answerRect = revAnswer.getBoundingClientRect();
+      // line-b starts below the reversed item's text, leaving the same gap
+      // there was above it (between line-a's end and the text's own top)
+      var gapAboveText = answerRect.top - decorBottom;
+      var resumeAt = answerRect.bottom + gapAboveText;
       lineA.style.top = '0px';
       lineA.style.height = Math.max(0, decorBottom - listTop) + 'px';
       lineB.style.top = Math.max(0, resumeAt - listTop) + 'px';

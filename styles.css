@@ -995,7 +995,7 @@ body:not(.is-locked) .site-lock{ display:none; }
 /* the bird-hat and horse marks are enlarged further (matching size) */
 .manifesto-qa-draft .manifesto-qa-mark-big{width:clamp(110px, 41vw, 650px);}
 /* the horse (item 3 slot) specifically, a bit smaller than the bird-hat */
-.manifesto-qa-draft [data-push-down] .manifesto-qa-mark-big{width:clamp(100px, 37vw, 585px);}
+.manifesto-qa-draft [data-push-down] .manifesto-qa-mark-big{width:clamp(90px, 34vw, 540px);}
 .manifesto-qa-draft .manifesto-qa-answer{max-width:900px;}
 .manifesto-qa-draft .manifesto-qa-item-reverse .manifesto-qa-answer{
   /* no line runs beside this item in the reference PDF, so its text isn't

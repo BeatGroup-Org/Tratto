@@ -880,7 +880,7 @@ html.nav-transition-incoming .nav-overlay .nav-list li{
 .manifesto-qa-answer strong{font-weight:700;}
 
 /* ---------- manifesto draft: bigger marks, question-less semibold answers ---------- */
-.manifesto-qa-draft .manifesto-qa-mark{width:clamp(90px, 32vw, 480px);}
+.manifesto-qa-draft .manifesto-qa-mark{width:clamp(100px, 35vw, 540px);}
 /* the bird-hat and horse marks are enlarged further (matching size) */
 .manifesto-qa-draft .manifesto-qa-mark-big{width:clamp(110px, 41vw, 650px);}
 /* the horse (item 3 slot) specifically, a bit smaller than the bird-hat */

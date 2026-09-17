@@ -425,6 +425,46 @@
     setTimeout(align, 450);
   })();
 
+  /* ---------------- Q1 line extension: bridge down to just above Q2 ---------------- */
+  // .hero-cta-line lives inside <section class="hero">, which clips its
+  // own overflow (needed elsewhere for the cursor-blob effect) - so it
+  // can't just be stretched past the section's own bottom edge to reach
+  // Q2, which sits entirely outside that section. Growing the line's own
+  // height in flow doesn't work either: it's the only normal-flow content
+  // inside .hero-cta, so its height IS what drives the whole hero
+  // section's height - taller line, section grows to match, and Q2 (a
+  // sibling right after </section>) gets pushed down by the exact same
+  // amount, leaving the visual gap unchanged. Instead this is a second,
+  // separate line segment - absolutely positioned against <main> (see
+  // "main, header, footer, section{position:relative}" - the same
+  // approach the manifesto page uses for its own two-segment line) -
+  // that bridges the two without touching either one's layout.
+  (function () {
+    var line = document.querySelector('.hero-cta-line');
+    var ext = document.querySelector('.hero-cta-line-ext');
+    var q2 = document.querySelector('.hero-second-question');
+    var main = document.querySelector('main');
+    if (!line || !ext || !q2 || !main) return;
+
+    function align() {
+      var mainRect = main.getBoundingClientRect();
+      var lineRect = line.getBoundingClientRect();
+      var q2Top = q2.getBoundingClientRect().top;
+      var gap = 40;
+      var height = q2Top - lineRect.bottom - gap;
+      ext.style.left = (lineRect.left - mainRect.left) + 'px';
+      ext.style.top = (lineRect.bottom - mainRect.top) + 'px';
+      ext.style.height = Math.max(0, height) + 'px';
+    }
+
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(align);
+    }
+    setTimeout(align, 500);
+  })();
+
   /* ---------------- Q1/Q2 hover marks: mark-q1 left of Q1, mark-q2 right of Q2 ---------------- */
   (function () {
     var heroCta = document.querySelector('.hero-cta');

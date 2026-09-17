@@ -364,6 +364,13 @@ html.nav-transition-incoming .nav-overlay .nav-list li{
   min-height:clamp(360px, 40vw, 580px);
   background:var(--ink);
 }
+/* continues the line above past the end of the (clipped) hero section,
+   down toward the second question - see the JS that sizes/positions it */
+.hero-cta-line-ext{
+  position:absolute;
+  width:1px;
+  background:var(--ink);
+}
 .hero-cta-question{
   position:absolute;
   margin:0;

@@ -381,7 +381,7 @@
       var q1Rect = q1Container.getBoundingClientRect();
       var markRect = q1Mark.getBoundingClientRect();
       var edgeMargin = 12;
-      var gap = 24;
+      var gap = -6;
       var left = lineRect.left - heroCtaRect.left - markRect.width - gap;
       // keep the mark on-screen (only visible on hover, but it still
       // occupies layout space, so it must not push the page wider) even

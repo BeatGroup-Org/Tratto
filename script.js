@@ -148,6 +148,10 @@
     var reversedItem = document.querySelector('.manifesto-qa-item-reverse');
     if (!list || !lineA || !lineB || !decor || !reversedItem) return;
     var revAnswer = reversedItem.querySelector('.manifesto-qa-answer');
+    var allItems = document.querySelectorAll('.manifesto-qa-item');
+    var lastItem = allItems[allItems.length - 1];
+    var lastLines = lastItem.querySelectorAll('.draft-line');
+    var lastLine = lastLines[lastLines.length - 1];
 
     function align() {
       var listTop = list.getBoundingClientRect().top;
@@ -159,9 +163,14 @@
       var resumeAt = answerRect.bottom + gapAboveText;
       lineA.style.top = '0px';
       lineA.style.height = Math.max(0, decorBottom - listTop) + 'px';
-      lineB.style.top = Math.max(0, resumeAt - listTop) + 'px';
-      lineB.style.bottom = '0px';
-      lineB.style.height = 'auto';
+      var lineBTop = Math.max(0, resumeAt - listTop);
+      lineB.style.top = lineBTop + 'px';
+      // ends at the last item's own last line of text ("progettuali che li
+      // attraversano."), not at the item's full box (which the mark, being
+      // taller than the text, otherwise stretches well past that line)
+      var lastLineBottom = lastLine ? lastLine.getBoundingClientRect().bottom : list.getBoundingClientRect().bottom;
+      lineB.style.bottom = 'auto';
+      lineB.style.height = Math.max(0, (lastLineBottom - listTop) - lineBTop) + 'px';
     }
 
     align();

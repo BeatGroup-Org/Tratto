@@ -77,7 +77,7 @@
           // keep it on-screen: at narrow viewports this leftward shift can
           // otherwise push the text almost entirely off the left edge
           var minCenterLeft = 8 - itemRect.left;
-          var centerLeft = Math.max(minCenterLeft, (itemRect.width - aRect.width) / 2 - 240);
+          var centerLeft = Math.max(minCenterLeft, (itemRect.width - aRect.width) / 2 - 410);
           answer.style.marginLeft = centerLeft + 'px';
           aRect = answer.getBoundingClientRect();
           var desiredLeft = aRect.right + gapR - itemRect.left;

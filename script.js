@@ -74,7 +74,10 @@
           // two visibly colliding, same as in the reference PDF), with the
           // mark following to its right
           var gapR = 24;
-          var centerLeft = Math.max(0, (itemRect.width - aRect.width) / 2 - 70);
+          // keep it on-screen: at narrow viewports this leftward shift can
+          // otherwise push the text almost entirely off the left edge
+          var minCenterLeft = 8 - itemRect.left;
+          var centerLeft = Math.max(minCenterLeft, (itemRect.width - aRect.width) / 2 - 240);
           answer.style.marginLeft = centerLeft + 'px';
           aRect = answer.getBoundingClientRect();
           var desiredLeft = aRect.right + gapR - itemRect.left;

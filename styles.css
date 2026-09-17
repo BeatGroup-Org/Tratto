@@ -228,6 +228,33 @@ main, header, footer, section{position:relative; z-index:1;}
 }
 .nav-list a:hover{color:var(--ink-30);}
 
+/* ---------- nav overlay handoff between pages (see script.js) ---------- */
+/* set on <html> by an inline <head> script, before body paints, when the
+   previous page left via a nav-overlay link: forces the overlay straight
+   into its open/opaque look with no transition, so the incoming page's
+   own content is never visible - not even for one frame - underneath it.
+   script.js takes over once it has run, then fades this out normally
+   (see the "reveal after a handoff" block there). */
+html.nav-transition-incoming .nav-overlay{
+  transition:none !important;
+  opacity:1; visibility:visible;
+  background:var(--paper);
+  pointer-events:auto;
+}
+html.nav-transition-incoming .nav-overlay .nav-list li{
+  transition:none !important;
+  opacity:1;
+  transform:translateY(0);
+}
+/* momentary escape hatch script.js uses to switch the overlay from the
+   ancestor-driven cover above to its real is-open state without any
+   transition playing for that one swap (see the "reveal after a handoff"
+   block in script.js) */
+.nav-overlay.no-transition,
+.nav-overlay.no-transition .nav-list li{
+  transition:none !important;
+}
+
 @media (max-width:640px){
   .nav-overlay{--nav-mark-w: clamp(38px, 11vw, 105px);}
   .nav-overlay-badge{font-size:9px; max-width:66px; line-height:1.4;}

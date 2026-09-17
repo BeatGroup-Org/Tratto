@@ -10,6 +10,27 @@
 <link rel="stylesheet" href="https://use.typekit.net/oei7udk.css">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="styles.css">
+<script>
+(function () {
+  // one-shot flag set by the nav-overlay link click on the previous page
+  // (see script.js) - consume it immediately so a later manual refresh of
+  // this same page (with no new click) doesn't retrigger the cover
+  var isNavTransition = sessionStorage.getItem('navTransition') === '1';
+  if (isNavTransition) sessionStorage.removeItem('navTransition');
+  // only cover if this really looks like the other end of that handoff
+  // (same-origin referrer), matching the check script.js uses for
+  // cameFromInternalNav - never on a genuine cold load (typed URL,
+  // external link, bookmark)
+  if (isNavTransition && document.referrer && document.referrer.indexOf(location.origin) === 0) {
+    document.documentElement.classList.add('nav-transition-incoming');
+    // safety net: if script.js fails to load/run for any reason, don't
+    // leave the page permanently covered
+    setTimeout(function () {
+      document.documentElement.classList.remove('nav-transition-incoming');
+    }, 4000);
+  }
+})();
+</script>
 </head>
 <body class="is-preloading">
 

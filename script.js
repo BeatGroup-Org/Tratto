@@ -684,8 +684,62 @@
   }
   navToggle.addEventListener('click', function () { setNav(!navOpen); });
   navOverlay.querySelectorAll('[data-nav-link]').forEach(function (a) {
-    a.addEventListener('click', function () { setNav(false); });
+    a.addEventListener('click', function () {
+      var href = a.getAttribute('href') || '';
+      if (href.charAt(0) === '#') {
+        // stays on this page (e.g. "Home" -> #top): close normally
+        setNav(false);
+        return;
+      }
+      // leaves for another page: DON'T close here. Closing would fade the
+      // overlay out (revealing this page's own content) while the browser
+      // is still loading the next document - that gap is exactly the
+      // flash this is meant to avoid. Instead leave the overlay open/
+      // opaque as-is and let the destination page take over the same
+      // covered look (see the inline <head> script + the block below),
+      // fading out only once it's actually ready to be seen.
+      sessionStorage.setItem('navTransition', '1');
+    });
   });
+
+  /* ---------------- nav overlay: reveal after a handoff from another page ---------------- */
+  // the inline <head> script (see index/manifesto/contatti.html) already
+  // covered this page with the same opaque overlay, with no transition,
+  // before anything else painted - so there's no gap where raw/unstyled
+  // content could show through. Coordinated with cameFromInternalNav
+  // above (same referrer check the <head> script uses to decide whether
+  // to cover in the first place) rather than a separate timer: by the
+  // time this runs, the preloader branches above have already settled
+  // this page into its resting, fully-visible state (or skipped the
+  // intro entirely), so it's safe to lift the cover right away.
+  if (document.documentElement.classList.contains('nav-transition-incoming')) {
+    // hand off from the CSS-only cover (driven by the ancestor class,
+    // active since before this file even loaded - see styles.css) to the
+    // real is-open state, with transitions held off for one frame so the
+    // switch itself is invisible. Trying to fade out directly from the
+    // ancestor-class override instead (removing it and hoping the base
+    // rule's own transition picks up where it left off) doesn't reliably
+    // animate - the opacity gets stuck instead of transitioning, which
+    // would then also silently break the *next* time this menu opens.
+    // Going through the real is-open state means the eventual close below
+    // just reuses setNav's normal, already-working transition.
+    navOverlay.classList.add('no-transition');
+    setNav(true);
+    // force a style flush so the no-transition + is-open state above is
+    // actually committed as its own step before the next one - reading
+    // an element's geometry is a synchronous, guaranteed way to do that
+    // (unlike requestAnimationFrame, which a backgrounded/inactive tab
+    // can defer indefinitely), so this works the same regardless of tab
+    // visibility or how busy the page is
+    navOverlay.offsetHeight;
+    document.documentElement.classList.remove('nav-transition-incoming');
+    navOverlay.classList.remove('no-transition');
+    // and again, so *this* becomes the committed "before" state that
+    // setNav(false) transitions away from, instead of both changes
+    // collapsing into a single recalc with no transition to observe
+    navOverlay.offsetHeight;
+    setNav(false);
+  }
 
   /* ---------------- hero intro ---------------- */
   function playHeroIntro() {

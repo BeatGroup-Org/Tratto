@@ -992,6 +992,8 @@ body:not(.is-locked) .site-lock{ display:none; }
 
 /* ---------- manifesto draft: bigger marks, question-less semibold answers ---------- */
 .manifesto-qa-draft .manifesto-qa-mark{width:clamp(90px, 34vw, 540px);}
+/* the bird-hat and eye marks (not the horse) are enlarged further */
+.manifesto-qa-draft .manifesto-qa-mark-big{width:clamp(110px, 41vw, 650px);}
 .manifesto-qa-draft .manifesto-qa-answer{max-width:900px;}
 .manifesto-qa-draft .manifesto-qa-item-reverse .manifesto-qa-answer{
   /* no line runs beside this item in the reference PDF, so its text isn't
@@ -1021,7 +1023,7 @@ body:not(.is-locked) .site-lock{ display:none; }
 }
 .manifesto-qa-decor img{
   display:block;
-  width:clamp(90px, 32vw, 520px);
+  width:clamp(110px, 39vw, 630px);
   height:auto;
   pointer-events:none;
 }

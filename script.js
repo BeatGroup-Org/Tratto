@@ -74,10 +74,7 @@
           // two visibly colliding, same as in the reference PDF), with the
           // mark following to its right
           var gapR = 24;
-          // keep it on-screen: at narrow viewports this leftward shift can
-          // otherwise push the text almost entirely off the left edge
-          var minCenterLeft = 8 - itemRect.left;
-          var centerLeft = Math.max(minCenterLeft, (itemRect.width - aRect.width) / 2 - 470);
+          var centerLeft = Math.max(0, (itemRect.width - aRect.width) / 2 - 70);
           answer.style.marginLeft = centerLeft + 'px';
           aRect = answer.getBoundingClientRect();
           var desiredLeft = aRect.right + gapR - itemRect.left;
@@ -96,6 +93,10 @@
             gap = Math.max(8, Math.min(140, maxGap));
           }
           left = edge - imgRect.width - gap - itemRect.left;
+          // a large mark can otherwise be pushed off the left edge of the
+          // viewport entirely when there isn't enough room before the line
+          var minLeftEdge = 16 - itemRect.left;
+          if (left < minLeftEdge) left = minLeftEdge;
         }
         // offset from a reference line, not centered on the whole
         // (multi-paragraph) answer block; the reference line and the offset

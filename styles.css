@@ -1017,6 +1017,7 @@ body:not(.is-locked) .site-lock{ display:none; }
 .manifesto-qa-decor{
   /* same left position as the item lines/marks, purely decorative */
   margin-left:calc(var(--hero-divider-gap) - var(--hero-gap));
+  margin-top:-80px;
 }
 .manifesto-qa-decor img{
   display:block;

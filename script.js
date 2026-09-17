@@ -94,6 +94,8 @@
             gap = Math.max(8, Math.min(140, maxGap));
           }
           left = edge - imgRect.width - gap - itemRect.left;
+          // per-item nudge left/right from that default position
+          left += parseFloat(img.getAttribute('data-mark-left-adjust')) || 0;
           // a large mark can otherwise be pushed off the left edge of the
           // viewport entirely when there isn't enough room before the line
           var minLeftEdge = 16 - itemRect.left;

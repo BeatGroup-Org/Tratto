@@ -557,6 +557,10 @@
   /* ---------------- preloader: big bottom-left counter, fades out ---------------- */
   var preloaderCount = document.getElementById('preloaderCount');
   var loadState = { n: 0 };
+  // the full counter/hero-intro animation is only for a genuine cold load
+  // (typed URL, external link, first visit); arriving here by clicking an
+  // internal nav link should feel instant, not replay a 1.6s intro
+  var cameFromInternalNav = document.referrer && document.referrer.indexOf(location.origin) === 0;
 
   function startHero() { playHeroIntro(); }
 
@@ -564,6 +568,13 @@
     // pages without the hero (e.g. manifesto) don't ship the counter markup
     document.body.classList.remove('is-preloading');
   } else if (reduce || !window.gsap) {
+    preloaderCount.style.display = 'none';
+    document.body.classList.remove('is-preloading');
+    document.querySelectorAll('.line').forEach(function (l) { l.style.transform = 'none'; });
+  } else if (cameFromInternalNav) {
+    // skip the counter AND the hero-intro fade/blur-in entirely: nothing
+    // was ever hidden by JS on this load, so the page is already showing
+    // its resting (fully visible) state the instant it paints
     preloaderCount.style.display = 'none';
     document.body.classList.remove('is-preloading');
     document.querySelectorAll('.line').forEach(function (l) { l.style.transform = 'none'; });

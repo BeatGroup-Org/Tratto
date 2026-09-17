@@ -11,42 +11,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body class="is-locked is-preloading">
-
-<div class="site-lock" id="siteLock">
-  <form class="site-lock-form" id="siteLockForm" autocomplete="off">
-    <input type="password" id="siteLockInput" placeholder="Password" autocomplete="off" required>
-    <button type="submit">Enter</button>
-    <p class="site-lock-error" id="siteLockError" hidden>Incorrect password.</p>
-  </form>
-</div>
-
-<script>
-(function () {
-  var PASSWORD = 'Tratto1234';
-  var body = document.body;
-  var form = document.getElementById('siteLockForm');
-  var input = document.getElementById('siteLockInput');
-  var error = document.getElementById('siteLockError');
-
-  if (sessionStorage.getItem('tratto_unlocked') === '1') {
-    body.classList.remove('is-locked');
-  }
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (input.value === PASSWORD) {
-      sessionStorage.setItem('tratto_unlocked', '1');
-      body.classList.remove('is-locked');
-      error.hidden = true;
-    } else {
-      error.hidden = false;
-      input.value = '';
-      input.focus();
-    }
-  });
-})();
-</script>
+<body class="is-preloading">
 
 <div class="preloader-count" id="preloaderCount">0%</div>
 

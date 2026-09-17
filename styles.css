@@ -921,55 +921,6 @@ a.dial-hole:hover{background:var(--ink); color:var(--paper);}
   *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;}
 }
 
-body.is-locked > *:not(.site-lock){ visibility:hidden; }
-body:not(.is-locked) .site-lock{ display:none; }
-.site-lock{
-  position:fixed; inset:0; z-index:9999;
-  display:flex; align-items:center; justify-content:center;
-  background:#fff;
-}
-.site-lock-form{
-  display:flex; flex-direction:column; gap:14px;
-  width:min(80vw, 260px);
-}
-.site-lock-title{
-  font-family:var(--font-mono);
-  font-size:13px;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  text-align:center;
-  margin:0 0 6px;
-}
-.site-lock-form input{
-  font-family:var(--font-mono);
-  font-size:14px;
-  padding:10px 12px;
-  border:1px solid #000;
-  border-radius:2px;
-  background:#fff;
-  outline:none;
-}
-.site-lock-form button{
-  font-family:var(--font-mono);
-  font-size:13px;
-  letter-spacing:.05em;
-  text-transform:uppercase;
-  padding:10px 12px;
-  border:1px solid #000;
-  border-radius:2px;
-  background:#000;
-  color:#fff;
-  cursor:pointer;
-}
-.site-lock-form button:hover{ opacity:.85; }
-.site-lock-error{
-  font-family:var(--font-mono);
-  font-size:12px;
-  color:#c0392b;
-  text-align:center;
-  margin:0;
-}
-
 /* ---------- manifesto ---------- */
 .manifesto-qa{
   padding:32px 0 clamp(120px, 14vw, 220px);

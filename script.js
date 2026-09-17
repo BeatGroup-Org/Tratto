@@ -56,7 +56,8 @@
         // together; reset first, or a previous run's push would compound
         answer.style.transform = '';
         if (item.hasAttribute('data-push-down')) {
-          var pushBy = answer.getBoundingClientRect().height * parseFloat(item.getAttribute('data-push-down'));
+          var pushAdjust = parseFloat(item.getAttribute('data-push-down-adjust')) || 0;
+          var pushBy = answer.getBoundingClientRect().height * parseFloat(item.getAttribute('data-push-down')) + pushAdjust;
           answer.style.transform = 'translateY(' + pushBy + 'px)';
         }
         var itemRect = item.getBoundingClientRect();

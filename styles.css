@@ -666,48 +666,6 @@ html.nav-transition-incoming .nav-overlay .nav-list li{
 .mail-link:hover [data-label]{transform:translateY(-100%);}
 .mail-link:hover [data-shadow]{transform:translateY(0);}
 
-.contact-form{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  max-width:320px;
-  margin-top:36px;
-}
-.contact-form input,
-.contact-form textarea{
-  font-family:var(--font-mono);
-  font-size:13px;
-  padding:10px 12px;
-  border:1px solid var(--ink-30);
-  border-radius:2px;
-  background:var(--paper);
-  color:var(--ink);
-  outline:none;
-  resize:vertical;
-}
-.contact-form input:focus,
-.contact-form textarea:focus{border-color:var(--ink);}
-.contact-form button{
-  font-family:var(--font-mono);
-  font-size:12px;
-  letter-spacing:.05em;
-  text-transform:uppercase;
-  padding:11px 12px;
-  border:1px solid var(--ink);
-  border-radius:2px;
-  background:var(--ink);
-  color:var(--paper);
-  cursor:pointer;
-  transition:opacity var(--dur-s) var(--ease-out);
-}
-.contact-form button:hover{opacity:.85;}
-.contact-form button:disabled{opacity:.5; cursor:default;}
-.contact-form-status{
-  font-family:var(--font-mono);
-  font-size:12px;
-  color:var(--ink-60);
-}
-.contact-form-status.is-error{color:#c0392b;}
 .footer-bottom{
   margin-top:64px;
   padding:18px 0 32px;
@@ -806,89 +764,6 @@ html.nav-transition-incoming .nav-overlay .nav-list li{
 }
 .ospiti[hidden]{display:none;}
 .ospiti-page{padding-top:clamp(120px, 18vh, 220px); min-height:60vh;}
-.contatti-page{
-  position:relative;
-  z-index:1;
-  max-width:var(--maxw);
-  margin:0 auto;
-  padding:clamp(120px, 18vh, 220px) var(--edge) clamp(160px, 22vh, 280px);
-  min-height:60vh;
-}
-.contatti-page .contact-form{margin:56px auto 0;}
-
-/* ---------- dial: rotary-phone style contact hub ---------- */
-.dial-wrap{
-  display:flex;
-  align-items:center;
-  gap:clamp(16px, 4vw, 48px);
-  width:100vw;
-  margin-left:calc(50% - 50vw);
-  margin-right:calc(50% - 50vw);
-  padding:0 var(--edge);
-}
-.dial-line{
-  flex:1 1 auto;
-  height:12px;
-  border-top:1px solid var(--ink-12);
-  border-bottom:1px solid var(--ink-12);
-}
-.dial{
-  position:relative;
-  flex:0 0 auto;
-  width:min(560px, 78vw);
-  aspect-ratio:1;
-}
-.dial-ring{position:absolute; inset:0; width:100%; height:100%;}
-.dial-hub{
-  position:absolute; top:50%; left:50%;
-  width:44%; aspect-ratio:1;
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  background:var(--ink);
-  color:var(--paper);
-  display:flex; align-items:center; justify-content:center;
-}
-.dial-hub::before{
-  content:"";
-  position:absolute;
-  inset:-4%;
-  border-radius:50%;
-  border:2px solid var(--ink);
-}
-.dial-hub svg{width:30%;}
-.dial-hole{
-  position:absolute;
-  width:15.5%;
-  aspect-ratio:1;
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  background:#f4f4f2;
-  border:1px solid var(--ink-12);
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-mono);
-  font-size:clamp(11px, 1.6vw, 15px);
-  font-weight:600;
-  color:var(--ink);
-  text-decoration:none;
-}
-a.dial-hole{transition:background var(--dur-s) var(--ease-out), color var(--dur-s) var(--ease-out);}
-a.dial-hole:hover{background:var(--ink); color:var(--paper);}
-.dial-hole svg{width:44%; height:44%;}
-.dial-hole-ring{
-  width:42%; aspect-ratio:1;
-  border-radius:50%;
-  border:1.5px solid var(--ink-30);
-}
-.dial-hole[data-ring="red"] .dial-hole-ring{border-color:#e0846f;}
-.dial-hole[data-ring="green"] .dial-hole-ring{border-color:#a9c08a;}
-.dial-hole-dot{
-  width:16%; aspect-ratio:1;
-  border-radius:50%;
-  background:var(--ink-30);
-}
-@media (max-width:640px){
-  .dial-line{display:none;}
-}
 .ospiti-empty{
   font-family:var(--font-mono);
   font-size:13px;

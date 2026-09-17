@@ -703,7 +703,7 @@
   });
 
   /* ---------------- nav overlay: reveal after a handoff from another page ---------------- */
-  // the inline <head> script (see index/manifesto/contatti.html) already
+  // the inline <head> script (see index.html/manifesto.html) already
   // covered this page with the same opaque overlay, with no transition,
   // before anything else painted - so there's no gap where raw/unstyled
   // content could show through. Coordinated with cameFromInternalNav
@@ -985,58 +985,6 @@
     .catch(function () {
       if (empty) empty.hidden = false;
     });
-})();
-
-/* ---------------- contact form: submit messages to Supabase ---------------- */
-(function () {
-  var SUPABASE_URL = 'https://mtunqzrmozbbhxezxmmc.supabase.co';
-  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dW5xenJtb3piYmh4ZXp4bW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg5NTYxNDUsImV4cCI6MjEwNDUzMjE0NX0.JKdcWHs3Ex_UZWKhYMv0Dzsu0mstTDOusyyr0jmqfCY';
-
-  var form = document.getElementById('contactForm');
-  var status = document.getElementById('contactFormStatus');
-  if (!form) return;
-
-  var button = form.querySelector('button');
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var name = form.name.value.trim();
-    var email = form.email.value.trim();
-    var message = form.message.value.trim();
-    if (!name || !email || !message) return;
-
-    button.disabled = true;
-    if (status) { status.hidden = true; status.classList.remove('is-error'); }
-
-    fetch(SUPABASE_URL + '/rest/v1/contact_messages', {
-      method: 'POST',
-      headers: {
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: 'Bearer ' + SUPABASE_ANON_KEY,
-        'Content-Type': 'application/json',
-        Prefer: 'return=minimal'
-      },
-      body: JSON.stringify({ name: name, email: email, message: message })
-    })
-      .then(function (res) {
-        if (!res.ok) throw new Error('request failed');
-        form.reset();
-        if (status) {
-          status.textContent = 'Messaggio inviato, grazie.';
-          status.hidden = false;
-        }
-      })
-      .catch(function () {
-        if (status) {
-          status.textContent = 'Errore nell\'invio, riprova.';
-          status.classList.add('is-error');
-          status.hidden = false;
-        }
-      })
-      .then(function () {
-        button.disabled = false;
-      });
-  });
 })();
 
 /* ---------------- privacy policy modal ---------------- */

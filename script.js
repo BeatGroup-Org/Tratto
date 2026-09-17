@@ -924,66 +924,6 @@
   }
 })();
 
-/* ---------------- ospiti: load guest cards from Supabase ---------------- */
-(function () {
-  var SUPABASE_URL = 'https://mtunqzrmozbbhxezxmmc.supabase.co';
-  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dW5xenJtb3piYmh4ZXp4bW1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg5NTYxNDUsImV4cCI6MjEwNDUzMjE0NX0.JKdcWHs3Ex_UZWKhYMv0Dzsu0mstTDOusyyr0jmqfCY';
-
-  var grid = document.getElementById('ospitiGrid');
-  var empty = document.getElementById('ospitiEmpty');
-  if (!grid) return;
-
-  function escapeHtml(value) {
-    return String(value)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
-  function initials(name) {
-    return name
-      .split(' ')
-      .filter(Boolean)
-      .slice(0, 2)
-      .map(function (part) { return part[0].toUpperCase(); })
-      .join('');
-  }
-
-  function renderCard(guest) {
-    var photo = guest.photo_url
-      ? '<img src="' + escapeHtml(guest.photo_url) + '" alt="' + escapeHtml(guest.name) + '" loading="lazy">'
-      : '<span class="initials">' + escapeHtml(initials(guest.name)) + '</span>';
-
-    return (
-      '<div class="ospiti-card">' +
-        '<div class="ospiti-card-photo">' + photo + '</div>' +
-        '<p class="ospiti-card-name">' + escapeHtml(guest.name) + '</p>' +
-        (guest.role ? '<p class="ospiti-card-role">' + escapeHtml(guest.role) + '</p>' : '') +
-        (guest.bio_short ? '<p class="ospiti-card-bio">' + escapeHtml(guest.bio_short) + '</p>' : '') +
-      '</div>'
-    );
-  }
-
-  fetch(SUPABASE_URL + '/rest/v1/guests?select=name,role,bio_short,photo_url&featured=eq.true&order=sort_order.asc,created_at.desc', {
-    headers: {
-      apikey: SUPABASE_ANON_KEY,
-      Authorization: 'Bearer ' + SUPABASE_ANON_KEY
-    }
-  })
-    .then(function (res) { return res.ok ? res.json() : []; })
-    .then(function (guests) {
-      if (!guests || !guests.length) {
-        if (empty) empty.hidden = false;
-        return;
-      }
-      grid.innerHTML = guests.map(renderCard).join('');
-    })
-    .catch(function () {
-      if (empty) empty.hidden = false;
-    });
-})();
-
 /* ---------------- privacy policy modal ---------------- */
 (function () {
   var modal = document.getElementById('privacyModal');

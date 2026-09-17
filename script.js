@@ -74,7 +74,7 @@
           // two visibly colliding, same as in the reference PDF), with the
           // mark following to its right
           var gapR = 24;
-          var centerLeft = Math.max(0, (itemRect.width - aRect.width) / 2 - 70);
+          var centerLeft = Math.max(0, (itemRect.width - aRect.width) / 2 - 420);
           answer.style.marginLeft = centerLeft + 'px';
           aRect = answer.getBoundingClientRect();
           var desiredLeft = aRect.right + gapR - itemRect.left;

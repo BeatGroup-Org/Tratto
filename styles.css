@@ -884,7 +884,7 @@ html.nav-transition-incoming .nav-overlay .nav-list li{
 /* the bird-hat and horse marks are enlarged further (matching size) */
 .manifesto-qa-draft .manifesto-qa-mark-big{width:clamp(110px, 41vw, 650px);}
 /* the horse (item 3 slot) specifically, a bit smaller than the bird-hat */
-.manifesto-qa-draft [data-push-down] .manifesto-qa-mark-big{width:clamp(80px, 30vw, 475px);}
+.manifesto-qa-draft [data-push-down] .manifesto-qa-mark-big{width:clamp(85px, 33vw, 500px);}
 .manifesto-qa-draft .manifesto-qa-answer{max-width:900px;}
 .manifesto-qa-draft .manifesto-qa-item-reverse .manifesto-qa-answer{
   /* no line runs beside this item in the reference PDF, so its text isn't

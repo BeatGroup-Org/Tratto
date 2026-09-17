@@ -607,7 +607,13 @@
 
   if (!preloaderCount) {
     // pages without the hero (e.g. manifesto) don't ship the counter markup
+    // or play the intro, but still share the footer's .line-mask reveal
+    // primitive - without resetting it here too, those lines stayed
+    // hidden until scrolled into view (the scroll-triggered reveal
+    // further below), instead of being visible right away like on the
+    // pages that DO have the counter/intro
     document.body.classList.remove('is-preloading');
+    document.querySelectorAll('.line').forEach(function (l) { l.style.transform = 'none'; });
   } else if (reduce || !window.gsap) {
     preloaderCount.style.display = 'none';
     document.body.classList.remove('is-preloading');
@@ -713,32 +719,23 @@
   // this page into its resting, fully-visible state (or skipped the
   // intro entirely), so it's safe to lift the cover right away.
   if (document.documentElement.classList.contains('nav-transition-incoming')) {
-    // hand off from the CSS-only cover (driven by the ancestor class,
-    // active since before this file even loaded - see styles.css) to the
-    // real is-open state, with transitions held off for one frame so the
-    // switch itself is invisible. Trying to fade out directly from the
-    // ancestor-class override instead (removing it and hoping the base
-    // rule's own transition picks up where it left off) doesn't reliably
-    // animate - the opacity gets stuck instead of transitioning, which
-    // would then also silently break the *next* time this menu opens.
-    // Going through the real is-open state means the eventual close below
-    // just reuses setNav's normal, already-working transition.
+    // this is a page-arrival handoff, not the user manually closing an
+    // open menu - the destination page's own content should appear
+    // instantly, with the nav-list never visibly shown here at all.
+    // Closing it the normal way (setNav's usual fade) made the nav-list
+    // text cross-fade visibly over this page's own text for about a
+    // second instead, so the close stays instant too (no-transition held
+    // through the whole handoff, not just lifting the CSS-only cover).
     navOverlay.classList.add('no-transition');
-    setNav(true);
-    // force a style flush so the no-transition + is-open state above is
-    // actually committed as its own step before the next one - reading
-    // an element's geometry is a synchronous, guaranteed way to do that
-    // (unlike requestAnimationFrame, which a backgrounded/inactive tab
-    // can defer indefinitely), so this works the same regardless of tab
-    // visibility or how busy the page is
-    navOverlay.offsetHeight;
     document.documentElement.classList.remove('nav-transition-incoming');
-    navOverlay.classList.remove('no-transition');
-    // and again, so *this* becomes the committed "before" state that
-    // setNav(false) transitions away from, instead of both changes
-    // collapsing into a single recalc with no transition to observe
-    navOverlay.offsetHeight;
     setNav(false);
+    // force a style flush so the instant close above is actually
+    // committed before no-transition comes off - reading an element's
+    // geometry is a synchronous, guaranteed way to do that (unlike
+    // requestAnimationFrame, which a backgrounded/inactive tab can defer
+    // indefinitely), so this works the same regardless of tab visibility
+    navOverlay.offsetHeight;
+    navOverlay.classList.remove('no-transition');
   }
 
   /* ---------------- hero intro ---------------- */

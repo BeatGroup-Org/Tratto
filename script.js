@@ -16,14 +16,6 @@
 
     function align() {
       if (preloadSettling) return;
-      // below 760px the hero grid stacks into one column (see CSS): the
-      // mark no longer shares a row with the meta-row text, so aligning
-      // its y-position to it would just push it down into the date/name
-      // text instead; the divider is hidden there too
-      if (window.matchMedia('(max-width:760px)').matches) {
-        mark.style.transform = 'none';
-        return;
-      }
 
       // logo, role and the statement all share the same left inset (set in
       // CSS via --hero-inset), so no horizontal JS positioning is needed here.

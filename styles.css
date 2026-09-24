@@ -745,6 +745,11 @@ html.nav-transition-incoming .nav-overlay .nav-list li{
      hero-col, that same inset eats nearly the whole column, leaving no
      room for the mark/role inside it; just the page edge margin instead */
   .hero-left{margin-left:var(--edge);}
+  /* 49px, matching the reference's title size exactly (measured from its
+     devtools inspector) - set directly rather than through --h1-min,
+     which also drives hero-cta-question/hero-second-question/
+     footer-statement further down the page, already independently tuned */
+  .hero-name{font-size:49px;}
   /* width:fit-content (set for desktop, where this fits on one line) sizes
      to the unwrapped text width instead, which is wider than the mobile
      column and overlaps the title next to it - let it wrap within the
@@ -752,8 +757,10 @@ html.nav-transition-incoming .nav-overlay .nav-list li{
      individual words ("RESERVED") too wide for that same narrow column,
      clipping instead of wrapping cleanly - sized down to fit, with a
      word-break safety net in case a future word is still too wide */
-  .hero-role{width:auto; font-size:11px; overflow-wrap:break-word; word-break:break-word;}
-  .hero-meta-row{transform:none;}
+  /* 13px, matching the reference's small caption text exactly (measured
+     from its devtools inspector) */
+  .hero-role{width:auto; font-size:13px; overflow-wrap:break-word; word-break:break-word;}
+  .hero-meta-row{transform:none; font-size:13px;}
   .nav-overlay-mark{left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px) + var(--hero-mark-shift)); top:88px;}
   .nav-overlay-badge{top:88px;}
   .nav-overlay-line{top:88px;}
@@ -763,7 +770,7 @@ html.nav-transition-incoming .nav-overlay .nav-list li{
      the mark's own left edge there too) - the previous mobile value
      aligned this with the title's column instead, sitting further right
      than the title above it, when desktop has it sitting further LEFT */
-  .hero-statement{margin-top:16px; margin-left:calc(var(--edge) + var(--hero-mark-shift));}
+  .hero-statement{margin-top:16px; margin-left:calc(var(--edge) + var(--hero-mark-shift)); font-size:49px;}
   .hero-statement-offset{margin-left:0;}
   .hero-grid{margin-bottom:28px;}
   .hero-meta-row{gap:6px;}

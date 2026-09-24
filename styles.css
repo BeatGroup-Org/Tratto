@@ -727,13 +727,7 @@ html.nav-transition-incoming .nav-overlay .nav-list li{
     --hero-gap: clamp(28px, 8vw, 57px);
     --h1-min: 28px;
   }
-  /* the divider itself starts at top:32px (unaffected by this padding,
-     since it's absolutely positioned against .hero's own border edge,
-     not its padding edge) - this used to leave a big stretch of "bare"
-     line above the logo/date row with nothing beside it; brought down
-     close to that same 32px, just enough lower to clear the fixed
-     Menu button (bottom ~64px) above it */
-  .hero{padding-top:72px;}
+  .hero{padding-top:100px;}
   /* keeps the same two-column structure as desktop (logo+copyright rail
      left of the divider, date/title right of it) instead of stacking -
      just with mobile-scaled proportions (--hero-col/--hero-gap already
@@ -781,32 +775,9 @@ html.nav-transition-incoming .nav-overlay .nav-list li{
   .hero-grid{margin-bottom:28px;}
   .hero-meta-row{gap:6px;}
   .hero-cta-line{min-height:180px;}
-  /* same 49px as the titles above, set directly rather than through
-     --h1-min for the same reason (footer-statement also reads that
-     variable and isn't part of this) */
-  .hero-cta-question{font-size:49px;}
-  /* at 49px, single words here ("significasse", "possibilità?") are wider
-     than the narrow right-of-the-divider column this was tuned for at the
-     old, much smaller size - silently clipped by the line-mask's own
-     overflow:clip (no scrollbar, so it doesn't show up as a scrollWidth
-     overflow either). Shifted back left to use the same near-full-width
-     span hero-statement already does, instead of trying to fit inside
-     that column - the vertical line itself (.hero-cta-line, a separate
-     element) isn't part of this and stays exactly where it was. See the
-     matching q1BaseMaxWidth() change in script.js. */
-  .hero-cta-question-right{
-    left:calc(var(--edge) - var(--hero-col) - var(--hero-divider-gap));
-    max-width:calc(100vw - 2 * var(--edge));
-  }
-  /* same widening as Q1 above, and for the same reason (49px words like
-     "a qualcosa"/"non esiste?" no longer fit the old, narrower column) -
-     Q2's own JS already derives its max-width live from this element's
-     actual position/width on every run, so no script.js change is needed
-     here the way Q1 needed one */
   .hero-second-question{
-    margin-left:var(--edge);
-    max-width:calc(100vw - 2 * var(--edge));
-    font-size:49px;
+    margin-left:calc(var(--hero-inset) + clamp(16px, 5.5vw, 90px) + var(--hero-mark-shift));
+    max-width:calc(100vw - var(--hero-inset) - clamp(16px, 5.5vw, 90px) - var(--hero-mark-shift) - var(--edge));
   }
 }
 

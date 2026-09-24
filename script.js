@@ -298,15 +298,6 @@
     // term back into a pixel number, so each boundary is recomputed here
     // from the same values the CSS itself uses.
     function q1BaseMaxWidth() {
-      if (window.innerWidth <= 760) {
-        // matches the CSS: .hero-cta-question-right now spans
-        // 100vw - 2*edge there (widened so 49px words fit - see the CSS
-        // comment) instead of the narrow column right of the divider that
-        // heroCta's own width reflects; --edge is always exactly 8px at
-        // these widths (clamp(8px, 1vw, 16px) only exceeds 8px once the
-        // viewport is wider than 800px)
-        return window.innerWidth - 16;
-      }
       if (!heroCta) return Infinity;
       return Math.min(850, heroCta.getBoundingClientRect().width - 48);
     }

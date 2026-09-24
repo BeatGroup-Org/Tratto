@@ -758,10 +758,12 @@ html.nav-transition-incoming .nav-overlay .nav-list li{
   .nav-overlay-badge{top:88px;}
   .nav-overlay-line{top:88px;}
   .nav-list{margin-top:52px;}
-  /* flush with the divider/title column, not with the far-left logo like
-     on desktop - matches the reference layout, where this line starts
-     right under the title rather than under the mark */
-  .hero-statement{margin-top:16px; margin-left:calc(var(--hero-col) + var(--hero-gap));}
+  /* flush with the mark, same as desktop's own
+     margin-left:hero-inset+hero-align-shift+hero-mark-shift (which equals
+     the mark's own left edge there too) - the previous mobile value
+     aligned this with the title's column instead, sitting further right
+     than the title above it, when desktop has it sitting further LEFT */
+  .hero-statement{margin-top:16px; margin-left:calc(var(--edge) + var(--hero-mark-shift));}
   .hero-statement-offset{margin-left:0;}
   .hero-grid{margin-bottom:28px;}
   .hero-meta-row{gap:6px;}

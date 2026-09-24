@@ -315,10 +315,27 @@
       });
     }
 
+    // the desktop step is shared with an unrelated footer element (see the
+    // name of this IIFE), tied to that element's own letter-kerning, not
+    // to hero-cta's width - it happens to read as ~13.8% of the text
+    // column's own max-width at desktop sizes. Reusing that same *pixel*
+    // value verbatim at mobile widths doesn't preserve that proportion
+    // (a much narrower column made the identical shift read as ~19.6% of
+    // its own max-width instead - a visibly more aggressive stagger than
+    // desktop's), so mobile instead re-derives the shift from the same
+    // ratio applied to its own (much narrower) max-width.
+    var DESKTOP_STEP_RATIO = 117 / 850;
+
     function align() {
-      var match = /translateX\(([-\d.]+)px\)/.exec(parteDaLine.style.transform);
-      var step = match ? parseFloat(match[1]) : 0;
-      stagger(q1Lines, step, q1BaseMaxWidth());
+      var baseMaxWidth = q1BaseMaxWidth();
+      var step;
+      if (window.innerWidth > 760) {
+        var match = /translateX\(([-\d.]+)px\)/.exec(parteDaLine.style.transform);
+        step = match ? parseFloat(match[1]) : 0;
+      } else {
+        step = isFinite(baseMaxWidth) ? baseMaxWidth * DESKTOP_STEP_RATIO : 0;
+      }
+      stagger(q1Lines, step, baseMaxWidth);
     }
 
     align();

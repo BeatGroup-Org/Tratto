@@ -354,10 +354,19 @@
     if (q2Lines.length < 4) return;
     var shiftedLines = [q2Lines[1], q2Lines[3]];
 
+    // 156px is tuned for the desktop column (max-width caps at 850px there,
+    // so it reads as ~18.4% of it); reusing that same pixel value verbatim
+    // at mobile's much narrower column instead read as ~58% of it - nearly
+    // snapping the shifted lines to the right edge instead of a subtle
+    // offset. Mobile re-derives the shift from that same ~18.4% ratio
+    // applied to its own (much narrower) width instead.
+    var DESKTOP_Q2_SHIFT_RATIO = 156 / 850;
+
     function align() {
       q2Lines.forEach(function (line) { line.style.transform = 'none'; line.style.maxWidth = ''; });
-      var containerRight = q2Container.getBoundingClientRect().right;
-      var shift = 156;
+      var containerRect = q2Container.getBoundingClientRect();
+      var containerRight = containerRect.right;
+      var shift = window.innerWidth > 760 ? 156 : containerRect.width * DESKTOP_Q2_SHIFT_RATIO;
       shiftedLines.forEach(function (line) {
         var rect = line.getBoundingClientRect();
         var maxWidth = Math.max(0, containerRight - (rect.left + shift));
